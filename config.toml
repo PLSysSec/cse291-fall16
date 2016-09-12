@@ -1,16 +1,19 @@
-baseurl = "https://cse291.programming.systems/"
+title        = "CSE 291"
+baseurl      = "https://plsyssec.github.io/cse291-fall16"
 languageCode = "en-us"
-
-title = "CSE 291"
-
-theme = "hyde-y"
+contentdir   = "content"
+layoutdir    = "layouts"
+publishdir   = "public"
+staticdir    = "static"
+canonifyurls = true
+theme        = "hyde-y"
 
 [taxonomies]
-    tag = "tags"
+    tag   = "tags"
     topic = "topics"
 
 [author]
-  name = "Deian Stefan"
+  name  = "Deian Stefan"
   email = "deian+cse291@cs.ucsd.edu"
 
 [params]
@@ -23,5 +26,5 @@ theme = "hyde-y"
     # Select a syntax highight.
     # Check the static/css/highlight directory for options.
     highlight = "default"
-    twitter = "deiandelmars"
-    github ="plsyssec"
+    twitter   = "deiandelmars"
+    github    = "plsyssec"
