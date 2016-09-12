@@ -24,6 +24,4 @@ theme = "hyde-y"
     # Check the static/css/highlight directory for options.
     highlight = "default"
     twitter = "deiandelmars"
-    #github ="plsyssec"
-
-
+    github ="plsyssec"
