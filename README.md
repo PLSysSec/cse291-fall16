@@ -8,5 +8,5 @@ git clone --recursive https://github.com/PLSysSec/cse291-fall16.git
 hugo
 ```
 
-Use `hugo server` if you want to run the local server.
+Use `hugo server` if you want to run the local server. You may need to remove the `baseurl` and `canonifyurls` from the `config.toml` file for this to actually work.
 

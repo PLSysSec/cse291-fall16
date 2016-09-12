@@ -1,5 +1,5 @@
 title        = "CSE 291"
-baseurl      = "https://plsyssec.github.io/cse291-fall16"
+baseurl      = "https://cse291.programming.systems"
 languageCode = "en-us"
 contentdir   = "content"
 layoutdir    = "layouts"
