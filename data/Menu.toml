@@ -1,0 +1,12 @@
+[0about]
+    Name = "Organization"
+    URL = "/about"
+
+[1syllabus]
+    Name = "Syllabus"
+    Title = "Course syllabus"
+    URL = "/syllabus"
+
+[2contact]
+    Name = "Contact"
+    URL = "/contact"

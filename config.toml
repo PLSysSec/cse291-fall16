@@ -1,0 +1,29 @@
+baseurl = "https://cse291.programming.systems/"
+languageCode = "en-us"
+
+title = "CSE 291"
+
+theme = "hyde-y"
+
+[taxonomies]
+    tag = "tags"
+    topic = "topics"
+
+[author]
+  name = "Deian Stefan"
+  email = "deian+cse291@cs.ucsd.edu"
+
+[params]
+    topline = "Building Secure Systems using Programming Languages and Analysis"
+
+    # Sidebar position
+    # false, true, "left", "right"
+    sidebar = "left"
+
+    # Select a syntax highight.
+    # Check the static/css/highlight directory for options.
+    highlight = "default"
+    twitter = "deiandelmars"
+    #github ="plsyssec"
+
+
