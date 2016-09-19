@@ -43,7 +43,7 @@ capabilities, symbolic execution, linear type systems).
 While this course is mostly self contained, students should have knowledge of
 programming languages (e.g., [CSE 130](http://www-cse.ucsd.edu/cse130)),
 operating systems (e.g., [CSE 120](http://www-cse.ucsd.edu/cse120)), and
-security (e.g., [CSE 127](http://www-cse.ucsd.edu/cse130)).  We will be reading
+security (e.g., [CSE 127](http://www-cse.ucsd.edu/cse127)).  We will be reading
 research papers on advanced topics with very brief introductions, so students
 should be familiar with topics in these areas (e.g., language semantics,
 virtual memory management, basic web security).
