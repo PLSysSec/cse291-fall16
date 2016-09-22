@@ -16,7 +16,7 @@ private question or contact the instructor by email.
 #### Instructor
 
 - **Name:** [Deian Stefan](https://cseweb.ucsd.edu/~dstefan/)
-- **Email:** <deian+cs291@cs.ucsd.edu>
+- **Email:** <deian+cse291@cs.ucsd.edu>
 - **Address:** CSE 3126 
 - **Office hours:** Wed 1:30-2:30 or by appointment
 

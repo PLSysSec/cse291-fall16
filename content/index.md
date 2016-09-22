@@ -34,7 +34,7 @@ capabilities, symbolic execution, linear type systems).
 #### Instructor
 
 - **Name:** [Deian Stefan](https://cseweb.ucsd.edu/~dstefan/)
-- **Email:** <deian+cs291@cs.ucsd.edu>
+- **Email:** <deian+cse291@cs.ucsd.edu>
 - **Address:** CSE 3126 
 - **Office Hours:** Wed 1:30-2:30 or by appointment
 
