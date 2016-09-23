@@ -10,3 +10,7 @@
 [2contact]
     Name = "Contact"
     URL = "/contact"
+
+[3notes]
+    Name = "Notes"
+    URL = "/notes"

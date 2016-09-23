@@ -8,10 +8,6 @@ staticdir    = "static"
 canonifyurls = true
 theme        = "hyde-y"
 
-[taxonomies]
-    tag   = "tags"
-    topic = "topics"
-
 [author]
   name  = "Deian Stefan"
   email = "deian+cse291@cs.ucsd.edu"
