@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Confused deputy  &middot; CSE 291</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="" />
+
+<meta name="keywords" content="">
+
+
+<meta property="og:title" content="Confused deputy  &middot; CSE 291 ">
+<meta property="og:site_name" content="CSE 291"/>
+<meta property="og:url" content="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/confused-deputy/" />
+<meta property="og:locale" content="en-us">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content=""/>
+<meta property="og:article:published_time" content="2016-09-23T01:37:21-07:00" />
+<meta property="og:article:modified_time" content="2016-09-23T01:37:21-07:00" />
+
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@deiandelmars" />
+<meta name="twitter:creator" content="@deiandelmars" />
+<meta name="twitter:title" content="Confused deputy" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:url" content="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/confused-deputy/" />
+<meta name="twitter:domain" content="https://cseweb.ucsd.edu/~dstefan/cse291-fall16">
+  
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Confused deputy",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/+?rel=author"
+    },
+    "datePublished": "2016-09-23",
+    "description": "",
+    "wordCount":  551 
+  }
+</script>
+
+
+
+<link rel="canonical" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/confused-deputy/" />
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/touch-icon-144-precomposed.png">
+<link href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/favicon.png" rel="icon">
+<meta name="theme-color" content="#2053AB">
+<meta name="generator" content="Hugo 0.16" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/css/style.css">
+<link rel="stylesheet" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/css/highlight/default.css">
+
+  
+</head>
+<body>
+  <main id="main-wrapper" class="container main_wrapper has-sidebar">
+    <header id="main-header" class="container main_header">
+  <div class="container brand">
+  <div class="container title h1-like">
+  <a class="baselink" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16">
+  CSE 291
+
+</a>
+
+</div>
+
+  
+<div class="container topline">
+  
+  Building Secure Systems using Programming Languages and Analysis
+
+
+</div>
+
+
+</div>
+
+  <nav class="container nav primary no-print">
+  
+
+
+  
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/about">Organization</a>
+
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/syllabus" title="Course syllabus">Syllabus</a>
+
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/contact">Contact</a>
+
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes">Notes</a>
+
+
+</nav>
+
+<div class="container nav secondary no-print">
+  
+<a id="contact-link-email" class="contact_link" href="mailto:deian&#43;cse291@cs.ucsd.edu">
+  <span class="fa fa-envelope-square"></span><span>email</span></a>
+
+
+
+<a id="contact-link-github" class="contact_link" href="https://github.com/plsyssec">
+  <span class="fa fa-github-square"></span><span>github</span></a>
+
+
+
+
+
+
+
+
+
+
+
+<a id="contact-link-twitter" class="contact_link" href="https://twitter.com/deiandelmars">
+  <span class="fa fa-twitter-square"></span><span>twitter</span></a>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+  
+
+</header>
+
+
+<article id="main-content" class="container main_content single">
+  <header class="container hat">
+  <h1>Confused deputy
+</h1>
+
+</header>
+
+  <div class="container content">
+  
+
+<h4 id="what-is-the-scenario-that-the-paper-is-describing">What is the scenario that the paper is describing?</h4>
+
+<p><code>(SYSX)FORT</code> is a fortran compiler, that:</p>
+
+<ol>
+<li>Needs to write stats to (SYSX)STAT</li>
+<li>Allows user to provide filename where debugging output is written to at run
+time.</li>
+</ol>
+
+<p>In order to do (1) the compiler is given the <em>home files license</em>. This allows
+the compiler to write files in its home directory.</p>
+
+<h4 id="to-protect-files-the-system-was-using-access-control-lists-whare-are-acls">To protect files the system was using access control lists. Whare are ACLs?</h4>
+
+<ul>
+<li>Lists associated with objects (files) that specify the subjects that are
+allowed to access the objects (and how).</li>
+<li>Processes run on behalf of subjects. When accessing object system checks
+if the object ACL permits the subject to access it.</li>
+</ul>
+
+<h4 id="what-s-the-concrete-problem-they-ran-into">What&rsquo;s the concrete problem they ran into?</h4>
+
+<p>Billing info is stored in the home directory. So user can provide billing
+filename to compiler and trash the directory with debugging info.</p>
+
+<h4 id="what-s-the-underlying-problem">What&rsquo;s the underlying problem?</h4>
+
+<ul>
+<li>Authority to write to stats file was used to writte debugging output.</li>
+<li>If, instead, the ivoking user&rsquo;s authority was used to write the debugging
+output instead, there would be no problem.</li>
+</ul>
+
+<p>This is called the confused deputy problem. The fortran compiler was confused
+into using the authority for one purpose towards another goal.</p>
+
+<h4 id="can-t-we-just-set-the-right-acls">Can&rsquo;t we just set the right ACLs?</h4>
+
+<ul>
+<li>No, this get super complicated. It sometimes breaks secure programs (too
+restricting). Other times it&rsquo;s insecure (not restricting enough).</li>
+<li>They had to write requirements as long boolean formulae.</li>
+</ul>
+
+<h4 id="what-is-the-switching-hat-idea-why-didn-t-it-work">What is the switching hat idea? Why didn&rsquo;t it work?</h4>
+
+<ul>
+<li>Syscall that allowed switching mode from one authority to another.</li>
+<li>Didn&rsquo;t generalize beyond file system or two authorities.</li>
+</ul>
+
+<p>Is this fundamental or mode a limitation of their exploration? Can you think of
+a way of making the &ldquo;swtching hats&rdquo; idea work if you can modify the programming
+language and have more than 1 single syscall change at your disposal.</p>
+
+<h4 id="what-are-capabilities-and-how-do-they-solve-this-problem">What are capabilities and how do they solve this problem?</h4>
+
+<ul>
+<li><p>A capability tells you which file to access and gives you the authority to do
+so. It removes the disconnect between naming and authority.</p></li>
+
+<li><p>With capabilities:</p>
+
+<ul>
+<li>The system gives the compiler the capability to the stats file.</li>
+<li>When invoking the compiler, the user must give the compiler the capabililty
+to the debugging file. If the user has this capablity, we know that they
+can write to the file. So the compiler can write to it too. Importantly, it
+cannot be confused into writing to the billing file since it doesn&rsquo;t have
+the capablity (name+authority) to this file. Something must grant it this
+capability.</li>
+</ul></li>
+</ul>
+
+<h4 id="capabilities-can-help-the-with-trojan-horses-problem-what-is-this-and-how-do-capabilties-help">Capabilities can help the with <em>Trojan horses</em> problem; what is this? And how do capabilties help?</h4>
+
+<ul>
+<li>Call program to do one thing and it does something else.</li>
+<li>Capabilities help by limiting what the program can do. Only give program
+least authority it needs. Consequence: &ldquo;principle of least surprise&rdquo;.</li>
+</ul>
+
+<h4 id="capabilities-can-help-the-with-the-mutually-suspicious-users-problem-what-is-this-and-how-do-capabilities-help">Capabilities can help the with the <em>mutually suspicious users problem</em>; what is this? And how do capabilities help?</h4>
+
+<ul>
+<li>Common scenario: Alice has sensitive data (taxes) and wisher to run Bob&rsquo;s
+accounting program. Bob doesn&rsquo;t want to share his super secret algorithm.</li>
+<li>Can run program with no capabilities other than the ones you grant it. This
+ensures that if you don&rsquo;t give it capability to talk to network, it can&rsquo;t do
+so.</li>
+</ul>
+
+<p>We&rsquo;ll see how information flow control helps address this problem and what the
+different trade offs are.</p>
+
+</div>
+
+
+  
+</article>
+      <footer id="main-footer" class="container main_footer">
+  
+
+  <div class="container nav foot no-print">
+  
+
+  <a class="toplink" href="#">back to top</a>
+
+</div>
+
+  <div class="container credits">
+  
+<div class="container footline">
+  
+
+</div>
+
+
+  
+
+</div>
+
+</footer>
+
+    </main>
+    
+
+
+<script src="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+    
+  </body>
+</html>
+
