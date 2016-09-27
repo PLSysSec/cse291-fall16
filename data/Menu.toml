@@ -14,3 +14,7 @@
 [3notes]
     Name = "Notes"
     URL = "/notes"
+
+[4assignments]
+    Name = "Assignments"
+    URL = "/assignments"
