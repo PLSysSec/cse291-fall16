@@ -119,6 +119,216 @@ different trade offs are.&lt;/p&gt;
     </item>
     
     <item>
+      <title>Shill</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/shill/</link>
+      <pubDate>Fri, 23 Sep 2016 01:37:21 -0700</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/shill/</guid>
+      <description>
+
+&lt;h1 id=&#34;what-is-the-problem-that-shill-is-trying-to-solve&#34;&gt;What is the problem that Shill is trying to solve?&lt;/h1&gt;
+
+&lt;p&gt;Writing more secure shell scripts. Especially when some of these scripts may
+not be trustworthy.&lt;/p&gt;
+
+&lt;h1 id=&#34;shill-s-goal-is-to-follow-the-polp-what-is-this&#34;&gt;Shill&amp;rsquo;s goal is to follow the POLP. What is this?&lt;/h1&gt;
+
+&lt;p&gt;Principle of least privilege: code should run only with the
+privileges (authority) it needs to complete its task.&lt;/p&gt;
+
+&lt;h1 id=&#34;what-is-their-driving-motivation-for-polp-what-are-their-security-requirements&#34;&gt;What is their driving motivation for POLP? What are their security requirements?&lt;/h1&gt;
+
+&lt;p&gt;They wish to safely grade student assignments.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;can&amp;rsquo;t corrupt server&lt;/li&gt;
+&lt;li&gt;can&amp;rsquo;t modify/leak test suite&lt;/li&gt;
+&lt;li&gt;can&amp;rsquo;t copy solution from another submission&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;why-do-commodity-systems-and-their-secure-tools-not-support-the-polp&#34;&gt;Why do &amp;ldquo;commodity systems and their secure tools&amp;rdquo; not support the POLP?&lt;/h1&gt;
+
+&lt;ol&gt;
+&lt;li&gt;It&amp;rsquo;s difficult to even figure out what authority code needs. This is a
+policy problem: it&amp;rsquo;s hard to specify policy today and it&amp;rsquo;s hard for others
+to inspect the policy.&lt;/li&gt;
+&lt;li&gt;Enforcement mechanisms are not good enough (too coarse grained, too
+intrusive, not widely available).&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&#34;how-does-shill-address-these-shortcomings&#34;&gt;How does Shill address these shortcomings?&lt;/h1&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Capabilities and contracts address policy specification and policy auditing.&lt;/li&gt;
+&lt;li&gt;Capabilities and contracts is used to enforce fine-grained policies at the
+language-level. MAC is used to extend the enforcement to arbitrary
+processes.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&#34;in-addition-to-capabilities-shill-has-contracts-what-is-a-contract-why-does-shill-use-contracts&#34;&gt;In addition to capabilities, shill has contracts. What is a contract? Why does Shill use contracts?&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Three kinds of contracts: function contracts, capability contracts, wallet contracts&lt;/li&gt;
+&lt;li&gt;Shill uses them to impose restrictions on how code can use capabilities. This
+is not only for security, but also for flexibility: You really want to make
+it easy to compose code. This means not restricting your caller (be general
+in what you accept and specific in what you produce): would be inflexible
+programming model if code had to drop capabilities/privileges before calling
+function.  Instead: can be privileged, but when you execute code the contract
+restricts how capabilities are used. (Excuse the loose language.)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;See Fig 5 contract.  This is what they&amp;rsquo;re referring to when talking about
+  bounded parametric-polymorphism.&lt;/p&gt;
+
+&lt;h1 id=&#34;how-does-shill-enforce-contracts-on-capabilities&#34;&gt;How does Shill enforce contracts on capabilities?&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Proxies: wrappers around capabilities that check contract before use.&lt;/li&gt;
+&lt;li&gt;This is interesting, because you can imagine a more complex contract that
+allows for revocation.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;in-addition-to-enforcing-contracts-the-language-level-implementation-ensures-capability-safety-what-does-this-mean-how-does-this-affect-the-language-design&#34;&gt;In addition to enforcing contracts, the language-level implementation ensures capability-safety. What does this mean? How does this affect the language design?&lt;/h1&gt;
+
+&lt;p&gt;Can only acquire caps:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;by introduction (from ambient script at script launch)&lt;/li&gt;
+&lt;li&gt;as arguments (from user)&lt;/li&gt;
+&lt;li&gt;deriving them from other capabilities&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Affects the language design:
+- can&amp;rsquo;t serialize capabilities (why?)
+- can&amp;rsquo;t have mutable variables (why?)&lt;/p&gt;
+
+&lt;h1 id=&#34;what-are-ambient-shill-scrips-why-are-they-necessary&#34;&gt;What are ambient shill scrips? Why are they necessary?&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Used to create initial set of caps to give to capability-safe scripts.&lt;/li&gt;
+&lt;li&gt;Without these capabilities most scripts would not be able to do anything
+useful. E.g., need to load libc.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;what-are-capability-wallets&#34;&gt;What are capability wallets?&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;p6: &amp;ldquo;mechanism to automate and simplify the discovery, packaging, and
+management of capabilities in a list&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Useful in writing real-world code that loads libraries and needs global
+access to various parts of the filesystem, etc.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;do-capability-wallets-reintroduce-some-of-the-ambient-authority-problem&#34;&gt;Do capability wallets reintroduce some of the ambient authority problem?&lt;/h1&gt;
+
+&lt;p&gt;Unclear from paper. Seems like it would make it easy to load a non-trivial
+number of caps, but then again it&amp;rsquo;s more declarative than today&amp;rsquo;s systems.
+Seems like this is a functionality-security trade-off: abstracting away
+capabilities is useful but may lead to cases where too many caps are left
+around. Consider the case where libraries themselves change and may need
+fewer privileges over time.&lt;/p&gt;
+
+&lt;h1 id=&#34;how-does-shill-extend-its-security-to-arbitrary-processes&#34;&gt;How does Shill extend its security to arbitrary processes?&lt;/h1&gt;
+
+&lt;p&gt;Creating sessions and associating process session. Each session has privilege
+map that record the privs that the session has for various kernel objects.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;MAC labels attached to kernel objects.&lt;/li&gt;
+&lt;li&gt;MAC labels are used to enforce capability privileges.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Could this have influenced the language design? :)&lt;/p&gt;
+
+&lt;h1 id=&#34;what-is-mac-why-does-shill-use-this-instead-of-extending-the-capability-model-to-the-os&#34;&gt;What is MAC? Why does Shill use this instead of extending the capability model to the OS?&lt;/h1&gt;
+
+&lt;p&gt;Mandatory access control. Labels on objects are checked whenever object is
+accessed. MAC doesn&amp;rsquo;t require changing code to use capability-style programming.&lt;/p&gt;
+
+&lt;h1 id=&#34;do-shill-scripts-and-capability-sandboxed-processes-have-the-same-security-guarantees&#34;&gt;Do shill scripts and capability-sandboxed processes have the same security guarantees?&lt;/h1&gt;
+
+&lt;p&gt;No. Sandboxed processes are vulnerable to confused deputy attacks: clients can
+use paths.  Moreover &amp;ldquo;capability model&amp;rdquo; is different: MAC enforcement checks
+permissions when accessing objects, so any permission will do &amp;ndash; don&amp;rsquo;t have to
+use a capability.&lt;/p&gt;
+
+&lt;h1 id=&#34;what-is-the-privilege-amplification-problem-how-do-they-address-this&#34;&gt;What is the privilege amplification problem? How do they address this?&lt;/h1&gt;
+
+&lt;p&gt;Having two differently-privileged capabilities to the same object and using one
+instead of the other.&lt;/p&gt;
+
+&lt;p&gt;At the language level Shill doesn&amp;rsquo;t have to worry about this since capabilities
+cannot be combined. They actually implement an &amp;ldquo;object capability&amp;rdquo; model.&lt;/p&gt;
+
+&lt;p&gt;At the OS level: they simply don&amp;rsquo;t allow multiple capabilities to the same object.&lt;/p&gt;
+
+&lt;h1 id=&#34;what-is-shill-s-threat-model-does-the-system-address-this&#34;&gt;What is Shill&amp;rsquo;s threat model? Does the system address this?&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Shill scripts and shill executables are not trusted.&lt;/li&gt;
+&lt;li&gt;Sometimes the contract may be untrustworthy.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;how-did-they-evaluate-shill&#34;&gt;How did they evaluate Shill?&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Expressiveness: case studies (grading submission, package manager, apache, find &amp;amp; exec)&lt;/li&gt;
+&lt;li&gt;Performance: some of the case studies, different implementation styles.&lt;/li&gt;
+&lt;li&gt;Security: mostly coarse-grained vs. fine-grained. LOC for ambient scripts is interesting.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;is-it-expressive&#34;&gt;Is it expressive?&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Seems like it. At least they looked at different case studies.&lt;/li&gt;
+&lt;li&gt;Polymorphic contracts are a huge plus.&lt;/li&gt;
+&lt;li&gt;How sandbox is used for apache is unclear. Mostly unclear how shill scripts fit in.&lt;/li&gt;
+&lt;li&gt;How would you evaluate this more methodically?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;where-is-most-of-the-overhead&#34;&gt;Where is most of the overhead?&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Contract checking.&lt;/li&gt;
+&lt;li&gt;Startup cost and creating sandboxes is also not cheap.&lt;/li&gt;
+&lt;li&gt;How can these be optimized?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;are-shill-scripts-more-secure-than-your-bash-scripts&#34;&gt;Are Shill scripts more secure than your bash scripts?&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Definitely!&lt;/li&gt;
+&lt;li&gt;The ambient scripts are not tiny. Would&amp;rsquo;ve been interesting to see if anybody
+messed up writing these or contracts and how that may change the design.&lt;/li&gt;
+&lt;li&gt;Can we evaluate the security more methodically?&lt;/li&gt;
+&lt;li&gt;What kind of security does Shill buy you?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;can-we-say-anything-about-the-implementation-of-the-runtime-itself&#34;&gt;Can we say anything about the implementation of the runtime itself?&lt;/h1&gt;
+
+&lt;p&gt;Their implementation uses the &lt;code&gt;*at&lt;/code&gt; family system calls (you should too!) which
+have a capability-like programming model. See
+&lt;a href=&#34;http://static.usenix.org/legacy/events/sec10/tech/full_papers/Watson.pdf&#34;&gt;Capsicum&lt;/a&gt;
+paper for more details.&lt;/p&gt;
+
+&lt;h2 id=&#34;why-did-they-add-linkat-flinkat-etc-what-is-the-toctou-vulnerability&#34;&gt;Why did they add linkat, flinkat, etc.? What is the TOCTOU vulnerability?&lt;/h2&gt;
+
+&lt;p&gt;Since their enforcement is not at the OS level they need the capability model
+to ensure that the filesystem doesn&amp;rsquo;t change from under them.&lt;/p&gt;
+
+&lt;p&gt;Suppose you want to open &lt;code&gt;/a/b/c&lt;/code&gt; for writing; the system would resolve
+&lt;code&gt;/a/b/c&lt;/code&gt; and check if you have access to this. Let&amp;rsquo;s say OKAY. Before it gets
+back to you, another process may have removed &lt;code&gt;c&lt;/code&gt; and created a link &lt;code&gt;c&lt;/code&gt; to
+something you don&amp;rsquo;t have access to.&lt;/p&gt;
+
+&lt;p&gt;See the &lt;a href=&#34;http://www.isoc.org/isoc/conferences/ndss/03/proceedings/papers/11.pdf&#34;&gt;Traps and
+Pitffals&lt;/a&gt;
+paper for more details.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Shill questions</title>
       <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/shill/</link>
       <pubDate>Fri, 23 Sep 2016 01:37:21 -0700</pubDate>
@@ -246,7 +456,9 @@ Sergio Benitez, and David Mazières!)&lt;/p&gt;
       &lt;div class=&#34;class-topic&#34;&gt;Contracts and object capabilities&lt;/div&gt;
       &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/shill.pdf&#34;&gt;Shill&lt;/a&gt;
       [
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/shill/&#34;&gt;questions&lt;/a&gt;
+      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/shill/&#34;&gt;questions&lt;/a&gt;,
+      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/shill/&#34;&gt;notes&lt;/a&gt;,
+      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/shill-annotated.pdf&#34;&gt;annotated&lt;/a&gt;
       ]
     &lt;/td&gt;
     &lt;td&gt;Deian&lt;/td&gt;
