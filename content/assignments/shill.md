@@ -14,8 +14,8 @@ In addition to the paper summary, please answer these two questions:
 2. Why are capability-sandboxed processes (not Shill scripts) vulnerable to the
    confused deputy problem?
 
-  You may find the [notes from last week's class](/notes/confused-deputy/)
-  useful if you missed the first class.
+   You may find the [notes from last week's class](/notes/confused-deputy/)
+   useful when aswering this questions.
 
 Please sign up for [Piazza](https://piazza.com/ucsd/fall2016/cse291) if you
 haven't done so already and use the GitHub classroom link (see relevant post on
