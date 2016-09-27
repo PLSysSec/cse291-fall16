@@ -119,6 +119,31 @@ different trade offs are.&lt;/p&gt;
     </item>
     
     <item>
+      <title>Shill questions</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/shill/</link>
+      <pubDate>Fri, 23 Sep 2016 01:37:21 -0700</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/shill/</guid>
+      <description>&lt;p&gt;In addition to the paper summary, please answer these two questions:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Why does Shill rely on contracts? Are capabilities not enough?&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Why are capability-sandboxed processes (not Shill scripts) vulnerable to the
+confused deputy problem?&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;You may find the &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/confused-deputy/&#34;&gt;notes from last week&amp;rsquo;s class&lt;/a&gt;
+  useful if you missed the first class.&lt;/p&gt;
+
+&lt;p&gt;Please sign up for &lt;a href=&#34;https://piazza.com/ucsd/fall2016/cse291&#34;&gt;Piazza&lt;/a&gt; if you
+haven&amp;rsquo;t done so already and use the GitHub classroom link (see relevant post on
+Piazza) to sign up for a private repository to which you will post your writing
+assignment.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Course organization</title>
       <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/about/</link>
       <pubDate>Mon, 05 Sep 2016 20:19:41 -0700</pubDate>
