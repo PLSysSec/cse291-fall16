@@ -2,7 +2,7 @@
 author = "Deian Stefan"
 date = "2016-09-23T01:37:21-07:00"
 title = "Shill questions"
-type = "post"
+type = "assignments"
 draft = false
 
 +++
