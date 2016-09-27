@@ -19,7 +19,7 @@
 
 <meta property="og:title" content="Shill  &middot; CSE 291 ">
 <meta property="og:site_name" content="CSE 291"/>
-<meta property="og:url" content="https://cse291.programming.systems/notes/shill/" />
+<meta property="og:url" content="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/shill/" />
 <meta property="og:locale" content="en-us">
 
 
@@ -36,8 +36,8 @@
 <meta name="twitter:creator" content="@deiandelmars" />
 <meta name="twitter:title" content="Shill" />
 <meta name="twitter:description" content="" />
-<meta name="twitter:url" content="https://cse291.programming.systems/notes/shill/" />
-<meta name="twitter:domain" content="https://cse291.programming.systems">
+<meta name="twitter:url" content="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/shill/" />
+<meta name="twitter:domain" content="https://cseweb.ucsd.edu/~dstefan/cse291-fall16">
   
 
 <script type="application/ld+json">
@@ -57,10 +57,10 @@
 
 
 
-<link rel="canonical" href="https://cse291.programming.systems/notes/shill/" />
+<link rel="canonical" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/shill/" />
 
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://cse291.programming.systems/touch-icon-144-precomposed.png">
-<link href="https://cse291.programming.systems/favicon.png" rel="icon">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/touch-icon-144-precomposed.png">
+<link href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/favicon.png" rel="icon">
 <meta name="theme-color" content="#2053AB">
 <meta name="generator" content="Hugo 0.16" />
 
@@ -70,9 +70,9 @@
 <![endif]-->
 
 <link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="https://cse291.programming.systems/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cse291.programming.systems/css/style.css">
-<link rel="stylesheet" href="https://cse291.programming.systems/css/highlight/default.css">
+<link rel="stylesheet" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/css/style.css">
+<link rel="stylesheet" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/css/highlight/default.css">
 
   
 </head>
@@ -81,7 +81,7 @@
     <header id="main-header" class="container main_header">
   <div class="container brand">
   <div class="container title h1-like">
-  <a class="baselink" href="https://cse291.programming.systems">
+  <a class="baselink" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16">
   CSE 291
 
 </a>
@@ -104,15 +104,15 @@
 
 
   
-<a href="https://cse291.programming.systems/about">Organization</a>
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/about">Organization</a>
 
-<a href="https://cse291.programming.systems/syllabus" title="Course syllabus">Syllabus</a>
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/syllabus" title="Course syllabus">Syllabus</a>
 
-<a href="https://cse291.programming.systems/contact">Contact</a>
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/contact">Contact</a>
 
-<a href="https://cse291.programming.systems/notes">Notes</a>
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes">Notes</a>
 
-<a href="https://cse291.programming.systems/assignments">Assignments</a>
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments">Assignments</a>
 
 
 </nav>
@@ -168,17 +168,17 @@
   <div class="container content">
   
 
-<h1 id="what-is-the-problem-that-shill-is-trying-to-solve">What is the problem that Shill is trying to solve?</h1>
+<h4 id="what-is-the-problem-that-shill-is-trying-to-solve">What is the problem that Shill is trying to solve?</h4>
 
 <p>Writing more secure shell scripts. Especially when some of these scripts may
 not be trustworthy.</p>
 
-<h1 id="shill-s-goal-is-to-follow-the-polp-what-is-this">Shill&rsquo;s goal is to follow the POLP. What is this?</h1>
+<h4 id="shill-s-goal-is-to-follow-the-polp-what-is-this">Shill&rsquo;s goal is to follow the POLP. What is this?</h4>
 
 <p>Principle of least privilege: code should run only with the
 privileges (authority) it needs to complete its task.</p>
 
-<h1 id="what-is-their-driving-motivation-for-polp-what-are-their-security-requirements">What is their driving motivation for POLP? What are their security requirements?</h1>
+<h4 id="what-is-their-driving-motivation-for-polp-what-are-their-security-requirements">What is their driving motivation for POLP? What are their security requirements?</h4>
 
 <p>They wish to safely grade student assignments.</p>
 
@@ -188,7 +188,7 @@ privileges (authority) it needs to complete its task.</p>
 <li>can&rsquo;t copy solution from another submission</li>
 </ul>
 
-<h1 id="why-do-commodity-systems-and-their-secure-tools-not-support-the-polp">Why do &ldquo;commodity systems and their secure tools&rdquo; not support the POLP?</h1>
+<h4 id="why-do-commodity-systems-and-their-secure-tools-not-support-the-polp">Why do &ldquo;commodity systems and their secure tools&rdquo; not support the POLP?</h4>
 
 <ol>
 <li>It&rsquo;s difficult to even figure out what authority code needs. This is a
@@ -198,7 +198,7 @@ to inspect the policy.</li>
 intrusive, not widely available).</li>
 </ol>
 
-<h1 id="how-does-shill-address-these-shortcomings">How does Shill address these shortcomings?</h1>
+<h4 id="how-does-shill-address-these-shortcomings">How does Shill address these shortcomings?</h4>
 
 <ol>
 <li>Capabilities and contracts address policy specification and policy auditing.</li>
@@ -207,7 +207,7 @@ language-level. MAC is used to extend the enforcement to arbitrary
 processes.</li>
 </ol>
 
-<h1 id="in-addition-to-capabilities-shill-has-contracts-what-is-a-contract-why-does-shill-use-contracts">In addition to capabilities, shill has contracts. What is a contract? Why does Shill use contracts?</h1>
+<h4 id="in-addition-to-capabilities-shill-has-contracts-what-is-a-contract-why-does-shill-use-contracts">In addition to capabilities, shill has contracts. What is a contract? Why does Shill use contracts?</h4>
 
 <ul>
 <li>Three kinds of contracts: function contracts, capability contracts, wallet contracts</li>
@@ -223,7 +223,7 @@ restricts how capabilities are used. (Excuse the loose language.)</li>
 <p>See Fig 5 contract.  This is what they&rsquo;re referring to when talking about
   bounded parametric-polymorphism.</p>
 
-<h1 id="how-does-shill-enforce-contracts-on-capabilities">How does Shill enforce contracts on capabilities?</h1>
+<h4 id="how-does-shill-enforce-contracts-on-capabilities">How does Shill enforce contracts on capabilities?</h4>
 
 <ul>
 <li>Proxies: wrappers around capabilities that check contract before use.</li>
@@ -231,7 +231,7 @@ restricts how capabilities are used. (Excuse the loose language.)</li>
 allows for revocation.</li>
 </ul>
 
-<h1 id="in-addition-to-enforcing-contracts-the-language-level-implementation-ensures-capability-safety-what-does-this-mean-how-does-this-affect-the-language-design">In addition to enforcing contracts, the language-level implementation ensures capability-safety. What does this mean? How does this affect the language design?</h1>
+<h4 id="in-addition-to-enforcing-contracts-the-language-level-implementation-ensures-capability-safety-what-does-this-mean-how-does-this-affect-the-language-design">In addition to enforcing contracts, the language-level implementation ensures capability-safety. What does this mean? How does this affect the language design?</h4>
 
 <p>Can only acquire caps:</p>
 
@@ -245,7 +245,7 @@ allows for revocation.</li>
 - can&rsquo;t serialize capabilities (why?)
 - can&rsquo;t have mutable variables (why?)</p>
 
-<h1 id="what-are-ambient-shill-scrips-why-are-they-necessary">What are ambient shill scrips? Why are they necessary?</h1>
+<h4 id="what-are-ambient-shill-scrips-why-are-they-necessary">What are ambient shill scrips? Why are they necessary?</h4>
 
 <ul>
 <li>Used to create initial set of caps to give to capability-safe scripts.</li>
@@ -253,7 +253,7 @@ allows for revocation.</li>
 useful. E.g., need to load libc.</li>
 </ul>
 
-<h1 id="what-are-capability-wallets">What are capability wallets?</h1>
+<h4 id="what-are-capability-wallets">What are capability wallets?</h4>
 
 <ul>
 <li>p6: &ldquo;mechanism to automate and simplify the discovery, packaging, and
@@ -262,7 +262,7 @@ management of capabilities in a list&rdquo;</li>
 access to various parts of the filesystem, etc.</li>
 </ul>
 
-<h1 id="do-capability-wallets-reintroduce-some-of-the-ambient-authority-problem">Do capability wallets reintroduce some of the ambient authority problem?</h1>
+<h4 id="do-capability-wallets-reintroduce-some-of-the-ambient-authority-problem">Do capability wallets reintroduce some of the ambient authority problem?</h4>
 
 <p>Unclear from paper. Seems like it would make it easy to load a non-trivial
 number of caps, but then again it&rsquo;s more declarative than today&rsquo;s systems.
@@ -271,7 +271,7 @@ capabilities is useful but may lead to cases where too many caps are left
 around. Consider the case where libraries themselves change and may need
 fewer privileges over time.</p>
 
-<h1 id="how-does-shill-extend-its-security-to-arbitrary-processes">How does Shill extend its security to arbitrary processes?</h1>
+<h4 id="how-does-shill-extend-its-security-to-arbitrary-processes">How does Shill extend its security to arbitrary processes?</h4>
 
 <p>Creating sessions and associating process session. Each session has privilege
 map that record the privs that the session has for various kernel objects.</p>
@@ -283,19 +283,19 @@ map that record the privs that the session has for various kernel objects.</p>
 
 <p>Could this have influenced the language design? :)</p>
 
-<h1 id="what-is-mac-why-does-shill-use-this-instead-of-extending-the-capability-model-to-the-os">What is MAC? Why does Shill use this instead of extending the capability model to the OS?</h1>
+<h4 id="what-is-mac-why-does-shill-use-this-instead-of-extending-the-capability-model-to-the-os">What is MAC? Why does Shill use this instead of extending the capability model to the OS?</h4>
 
 <p>Mandatory access control. Labels on objects are checked whenever object is
 accessed. MAC doesn&rsquo;t require changing code to use capability-style programming.</p>
 
-<h1 id="do-shill-scripts-and-capability-sandboxed-processes-have-the-same-security-guarantees">Do shill scripts and capability-sandboxed processes have the same security guarantees?</h1>
+<h4 id="do-shill-scripts-and-capability-sandboxed-processes-have-the-same-security-guarantees">Do shill scripts and capability-sandboxed processes have the same security guarantees?</h4>
 
 <p>No. Sandboxed processes are vulnerable to confused deputy attacks: clients can
 use paths.  Moreover &ldquo;capability model&rdquo; is different: MAC enforcement checks
 permissions when accessing objects, so any permission will do &ndash; don&rsquo;t have to
 use a capability.</p>
 
-<h1 id="what-is-the-privilege-amplification-problem-how-do-they-address-this">What is the privilege amplification problem? How do they address this?</h1>
+<h4 id="what-is-the-privilege-amplification-problem-how-do-they-address-this">What is the privilege amplification problem? How do they address this?</h4>
 
 <p>Having two differently-privileged capabilities to the same object and using one
 instead of the other.</p>
@@ -305,14 +305,14 @@ cannot be combined. They actually implement an &ldquo;object capability&rdquo; m
 
 <p>At the OS level: they simply don&rsquo;t allow multiple capabilities to the same object.</p>
 
-<h1 id="what-is-shill-s-threat-model-does-the-system-address-this">What is Shill&rsquo;s threat model? Does the system address this?</h1>
+<h4 id="what-is-shill-s-threat-model-does-the-system-address-this">What is Shill&rsquo;s threat model? Does the system address this?</h4>
 
 <ul>
 <li>Shill scripts and shill executables are not trusted.</li>
 <li>Sometimes the contract may be untrustworthy.</li>
 </ul>
 
-<h1 id="how-did-they-evaluate-shill">How did they evaluate Shill?</h1>
+<h4 id="how-did-they-evaluate-shill">How did they evaluate Shill?</h4>
 
 <ul>
 <li>Expressiveness: case studies (grading submission, package manager, apache, find &amp; exec)</li>
@@ -320,7 +320,7 @@ cannot be combined. They actually implement an &ldquo;object capability&rdquo; m
 <li>Security: mostly coarse-grained vs. fine-grained. LOC for ambient scripts is interesting.</li>
 </ul>
 
-<h1 id="is-it-expressive">Is it expressive?</h1>
+<h4 id="is-it-expressive">Is it expressive?</h4>
 
 <ul>
 <li>Seems like it. At least they looked at different case studies.</li>
@@ -329,7 +329,7 @@ cannot be combined. They actually implement an &ldquo;object capability&rdquo; m
 <li>How would you evaluate this more methodically?</li>
 </ul>
 
-<h1 id="where-is-most-of-the-overhead">Where is most of the overhead?</h1>
+<h4 id="where-is-most-of-the-overhead">Where is most of the overhead?</h4>
 
 <ul>
 <li>Contract checking.</li>
@@ -337,7 +337,7 @@ cannot be combined. They actually implement an &ldquo;object capability&rdquo; m
 <li>How can these be optimized?</li>
 </ul>
 
-<h1 id="are-shill-scripts-more-secure-than-your-bash-scripts">Are Shill scripts more secure than your bash scripts?</h1>
+<h4 id="are-shill-scripts-more-secure-than-your-bash-scripts">Are Shill scripts more secure than your bash scripts?</h4>
 
 <ul>
 <li>Definitely!</li>
@@ -347,14 +347,14 @@ messed up writing these or contracts and how that may change the design.</li>
 <li>What kind of security does Shill buy you?</li>
 </ul>
 
-<h1 id="can-we-say-anything-about-the-implementation-of-the-runtime-itself">Can we say anything about the implementation of the runtime itself?</h1>
+<h4 id="can-we-say-anything-about-the-implementation-of-the-runtime-itself">Can we say anything about the implementation of the runtime itself?</h4>
 
 <p>Their implementation uses the <code>*at</code> family system calls (you should too!) which
 have a capability-like programming model. See
 <a href="http://static.usenix.org/legacy/events/sec10/tech/full_papers/Watson.pdf">Capsicum</a>
 paper for more details.</p>
 
-<h2 id="why-did-they-add-linkat-flinkat-etc-what-is-the-toctou-vulnerability">Why did they add linkat, flinkat, etc.? What is the TOCTOU vulnerability?</h2>
+<h5 id="why-did-they-add-linkat-flinkat-etc-what-is-the-toctou-vulnerability">Why did they add linkat, flinkat, etc.? What is the TOCTOU vulnerability?</h5>
 
 <p>Since their enforcement is not at the OS level they need the capability model
 to ensure that the filesystem doesn&rsquo;t change from under them.</p>
@@ -401,7 +401,7 @@ paper for more details.</p>
     
 
 
-<script src="https://cse291.programming.systems/js/highlight.pack.js"></script>
+<script src="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/js/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
 
