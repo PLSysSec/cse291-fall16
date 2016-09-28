@@ -18,9 +18,11 @@
       <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
       <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/jif/</guid>
       <description>&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;What is the key difference between IFC and discretionary access or capabilities?&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;What is the key difference between IFC and discretionary access or
+capabilities?&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;What are the benefits of enforcing IFC statically? (Why doesn&amp;rsquo;t JIF take the dynamic route?)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;What are the benefits of enforcing IFC statically? (Why doesn&amp;rsquo;t JIF take the
+dynamic route?)&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </description>
     </item>
@@ -482,8 +484,13 @@ Sergio Benitez, and David Mazières!)&lt;/p&gt;
     &lt;td&gt;
       &lt;div class=&#34;class-topic&#34;&gt;Type systems for information flow control&lt;/div&gt;
       &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/jif.pdf&#34;&gt;JIF&lt;/a&gt;
+      [
+      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/shill/&#34;&gt;questions&lt;/a&gt;,
+      ]
     &lt;/td&gt;
-    &lt;td&gt;&lt;/td&gt;
+    &lt;td&gt;
+      Sunjay
+    &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
     &lt;th class=&#34;date&#34;&gt;Oct 04&lt;/th&gt;
