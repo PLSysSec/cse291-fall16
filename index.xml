@@ -434,6 +434,112 @@ Sergio Benitez, and David Mazières!)&lt;/p&gt;
     </item>
     
     <item>
+      <title>Porject ideas</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/ideas/</link>
+      <pubDate>Mon, 05 Sep 2016 20:19:41 -0700</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/ideas/</guid>
+      <description>&lt;p&gt;Below is a list of project ideas. Some are more open ended or more
+challenging than others. Hence, undertaking a (substantial) subset of
+any of these is a reasonable goal for this class.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Prototype a new extension system architecture (e.g., for Brave?)
+that has a stronger attacker model: malicious extensions.  (See
+&lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/pubs/heule:2015:the-most.pdf&#34;&gt;our position on browser extension
+design&lt;/a&gt;
+for motivation.) Studying how and what permissions existing
+extensions use today would be an interesting component to this.&lt;/li&gt;
+&lt;li&gt;Explore the use of Service workers, obfuscation (in the crypto
+sense), and CSP to implement security monitors like COWL in existing
+browsers.&lt;/li&gt;
+&lt;li&gt;Automatically rewrite and compartmentalize client-side web
+applications to leverage COWL.&lt;/li&gt;
+&lt;li&gt;Implement a discretionary access control (DAC) monad that ties in
+with a database library and the filesystem to enforce Hails-like
+policies.&lt;/li&gt;
+&lt;li&gt;Implement a Resin-like system for Node.js, using ES6 proxies and
+program rewriting to essentially implement taint tracking. (Credit:
+this idea came out of a discussion with Brad Karp who would be a
+natural collaborator.)&lt;/li&gt;
+&lt;li&gt;Develop domain-specific symbol execution. Consider, for example,
+finding (security) bugs in web (e.g., rails or express)
+applications.&lt;/li&gt;
+&lt;li&gt;Evaluate the Web Crypto API and design an alternative API that is
+less bug prone. Both  a simpler API and an API that uses IFC to
+ensure keys are not leaked are reasonable directions.&lt;/li&gt;
+&lt;li&gt;Develop a formal model for least privilege. What does it mean for a
+program to be least privileged? Given this model, look at a real
+applications within some domain (e.g., browser extensions, mobile
+apps) and either show that they are least privileged or that they are
+not. Alternatively, apply the model to IFC, capabilities, or other
+mechanisms.&lt;/li&gt;
+&lt;li&gt;Develop a Passe-like inference algorithm that uses tests to infer
+application security policies. Hypothesis: a type inference-like
+algorithm can be used to easily do this for ORM-based applications.
+Given enough access examples (traces) the policy become more
+general; but starts out very specific.&lt;/li&gt;
+&lt;li&gt;Use program synthesis to generate Hails and Passe-like policies from
+user-supplied examples.&lt;/li&gt;
+&lt;li&gt;Unify IFC, capabilities, MAC and DAC. Show how they are equivalent
+(e.g., an IFC-secure program can be enforced with capabilities and
+DAC). And show where the different mechanisms are not compatible
+(e.g., attacker models?). Working on an implementation or formal
+setting are both reasonable here.&lt;/li&gt;
+&lt;li&gt;Extend LIO with software transactional memory (STM) without
+introducing covert channels. This is especially interesting if the
+transactional model can be extended to the filesystem.&lt;/li&gt;
+&lt;li&gt;Model a real crypto-based protocol like FIDO or OpenID using a model
+checker (e.g.,
+&lt;a href=&#34;http://formalverification.cs.utah.edu/Murphi/&#34;&gt;Murphi&lt;/a&gt; or
+&lt;a href=&#34;http://alloy.mit.edu/alloy/&#34;&gt;Alloy&lt;/a&gt;).&lt;/li&gt;
+&lt;li&gt;Explore the interaction of garbage collection and information flow
+control. Can we have an IFC system that won&amp;rsquo;t leak via the GC?&lt;/li&gt;
+&lt;li&gt;Explore the interaction of IFC and foreign function interfaces. Can
+we safely extend IFC systems with FFIs? (Maybe using Dune?)&lt;/li&gt;
+&lt;li&gt;Design a new (graphical) language for describing secure systems
+(e.g.  dns servers, web servers, ssh servers) and generate the
+boilerplate security enforcement code to ensure security/isolation
+between different compartments (where untrusted code implements
+functionality).&lt;/li&gt;
+&lt;li&gt;Implement Singularity-like SIPs, but using
+&lt;a href=&#34;http://dune.scs.stanford.edu/&#34;&gt;Dune&lt;/a&gt; to do it in hardware. It would
+be interesting to do this in the context of a new
+&lt;a href=&#34;https://www.rust-lang.org/en-US/&#34;&gt;Rust&lt;/a&gt; OS or
+&lt;a href=&#34;https://servo.org/&#34;&gt;Servo&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Design language/DSL that makes it easy to securely write
+applications that rely on crypto (e.g., encrypted email, encrypted
+chat).&lt;/li&gt;
+&lt;li&gt;Implement a fast MPC language/DSL. E.g., by building on
+&lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/pubs/mitchell:2012:information.pdf&#34;&gt;λPS&lt;/a&gt;
+you can consider partially homomorphic encryption, network message
+batching, etc.&lt;/li&gt;
+&lt;li&gt;Design language/DSL that makes it easy to have certain sensitive
+computations execute in an environment that is protected from the
+rest of the application/OS (e.g., by using SGX (enclaves) or
+offloading to SMC cloud).&lt;/li&gt;
+&lt;li&gt;Design (monadic) DSL for expressing garbled circuits with the goal of
+proving security about arbitrary circuits (via composition) and
+generating efficient implementations (e.g., for x86 or FPGAs). This
+is joint work with Daniele Micciancio.&lt;/li&gt;
+&lt;li&gt;Develop a formal model for browser binding code. This would make it
+possible to reason about security across languages like C++ and
+JavaScript. See &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/pubs/brown:2016:superhacks.pdf&#34;&gt;our position paper on binding-layer
+CVEs&lt;/a&gt;
+for motivation.  Using
+&lt;a href=&#34;http://blog.brownplt.org/2012/01/31/s5-wat.html&#34;&gt;S5&lt;/a&gt; and maybe
+Rust (motivated by &lt;a href=&#34;https://servo.org/&#34;&gt;Servo&lt;/a&gt;) may be intersting.&lt;/li&gt;
+&lt;li&gt;Implement
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Password-authenticated_key_agreement&#34;&gt;PAKE&lt;/a&gt;
+in existing browsers (similar to
+&lt;a href=&#34;https://www.henrycg.com/pubs/w2sp15stickler/&#34;&gt;Stickler&lt;/a&gt;. (Credit:
+David Mazières and Quinn Slack did this by modifying the browser
+several years ago.)&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Syllabus</title>
       <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/syllabus/</link>
       <pubDate>Mon, 05 Sep 2016 20:19:41 -0700</pubDate>
