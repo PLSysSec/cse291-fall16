@@ -18,8 +18,8 @@
       <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
       <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/jif/</guid>
       <description>&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;What is the key difference between IFC and discretionary access or
-capabilities?&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;What is the key difference between IFC and discretionary access
+control or capabilities?&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;What are the benefits of enforcing IFC statically? (Why doesn&amp;rsquo;t JIF take the
 dynamic route?)&lt;/p&gt;&lt;/li&gt;
@@ -28,116 +28,9 @@ dynamic route?)&lt;/p&gt;&lt;/li&gt;
     </item>
     
     <item>
-      <title>Confused deputy</title>
-      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/confused-deputy/</link>
-      <pubDate>Fri, 23 Sep 2016 01:37:21 -0700</pubDate>
-      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
-      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/confused-deputy/</guid>
-      <description>
-
-&lt;h4 id=&#34;what-is-the-scenario-that-the-paper-is-describing&#34;&gt;What is the scenario that the paper is describing?&lt;/h4&gt;
-
-&lt;p&gt;&lt;code&gt;(SYSX)FORT&lt;/code&gt; is a fortran compiler, that:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Needs to write stats to (SYSX)STAT&lt;/li&gt;
-&lt;li&gt;Allows user to provide filename where debugging output is written to at run
-time.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;In order to do (1) the compiler is given the &lt;em&gt;home files license&lt;/em&gt;. This allows
-the compiler to write files in its home directory.&lt;/p&gt;
-
-&lt;h4 id=&#34;to-protect-files-the-system-was-using-access-control-lists-whare-are-acls&#34;&gt;To protect files the system was using access control lists. Whare are ACLs?&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Lists associated with objects (files) that specify the subjects that are
-allowed to access the objects (and how).&lt;/li&gt;
-&lt;li&gt;Processes run on behalf of subjects. When accessing object system checks
-if the object ACL permits the subject to access it.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#34;what-s-the-concrete-problem-they-ran-into&#34;&gt;What&amp;rsquo;s the concrete problem they ran into?&lt;/h4&gt;
-
-&lt;p&gt;Billing info is stored in the home directory. So user can provide billing
-filename to compiler and trash the directory with debugging info.&lt;/p&gt;
-
-&lt;h4 id=&#34;what-s-the-underlying-problem&#34;&gt;What&amp;rsquo;s the underlying problem?&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Authority to write to stats file was used to writte debugging output.&lt;/li&gt;
-&lt;li&gt;If, instead, the ivoking user&amp;rsquo;s authority was used to write the debugging
-output instead, there would be no problem.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;This is called the confused deputy problem. The fortran compiler was confused
-into using the authority for one purpose towards another goal.&lt;/p&gt;
-
-&lt;h4 id=&#34;can-t-we-just-set-the-right-acls&#34;&gt;Can&amp;rsquo;t we just set the right ACLs?&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;No, this get super complicated. It sometimes breaks secure programs (too
-restricting). Other times it&amp;rsquo;s insecure (not restricting enough).&lt;/li&gt;
-&lt;li&gt;They had to write requirements as long boolean formulae.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#34;what-is-the-switching-hat-idea-why-didn-t-it-work&#34;&gt;What is the switching hat idea? Why didn&amp;rsquo;t it work?&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Syscall that allowed switching mode from one authority to another.&lt;/li&gt;
-&lt;li&gt;Didn&amp;rsquo;t generalize beyond file system or two authorities.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Is this fundamental or mode a limitation of their exploration? Can you think of
-a way of making the &amp;ldquo;swtching hats&amp;rdquo; idea work if you can modify the programming
-language and have more than 1 single syscall change at your disposal.&lt;/p&gt;
-
-&lt;h4 id=&#34;what-are-capabilities-and-how-do-they-solve-this-problem&#34;&gt;What are capabilities and how do they solve this problem?&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;A capability tells you which file to access and gives you the authority to do
-so. It removes the disconnect between naming and authority.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;With capabilities:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;The system gives the compiler the capability to the stats file.&lt;/li&gt;
-&lt;li&gt;When invoking the compiler, the user must give the compiler the capabililty
-to the debugging file. If the user has this capablity, we know that they
-can write to the file. So the compiler can write to it too. Importantly, it
-cannot be confused into writing to the billing file since it doesn&amp;rsquo;t have
-the capablity (name+authority) to this file. Something must grant it this
-capability.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#34;capabilities-can-help-the-with-trojan-horses-problem-what-is-this-and-how-do-capabilties-help&#34;&gt;Capabilities can help the with &lt;em&gt;Trojan horses&lt;/em&gt; problem; what is this? And how do capabilties help?&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Call program to do one thing and it does something else.&lt;/li&gt;
-&lt;li&gt;Capabilities help by limiting what the program can do. Only give program
-least authority it needs. Consequence: &amp;ldquo;principle of least surprise&amp;rdquo;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#34;capabilities-can-help-the-with-the-mutually-suspicious-users-problem-what-is-this-and-how-do-capabilities-help&#34;&gt;Capabilities can help the with the &lt;em&gt;mutually suspicious users problem&lt;/em&gt;; what is this? And how do capabilities help?&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Common scenario: Alice has sensitive data (taxes) and wisher to run Bob&amp;rsquo;s
-accounting program. Bob doesn&amp;rsquo;t want to share his super secret algorithm.&lt;/li&gt;
-&lt;li&gt;Can run program with no capabilities other than the ones you grant it. This
-ensures that if you don&amp;rsquo;t give it capability to talk to network, it can&amp;rsquo;t do
-so.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;We&amp;rsquo;ll see how information flow control helps address this problem and what the
-different trade offs are.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
       <title>Shill</title>
       <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/shill/</link>
-      <pubDate>Fri, 23 Sep 2016 01:37:21 -0700</pubDate>
+      <pubDate>Fri, 23 Sep 2016 01:37:21 -0701</pubDate>
       <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
       <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/shill/</guid>
       <description>
@@ -345,6 +238,113 @@ paper for more details.&lt;/p&gt;
     </item>
     
     <item>
+      <title>Confused deputy</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/confused-deputy/</link>
+      <pubDate>Fri, 23 Sep 2016 01:37:21 -0700</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/confused-deputy/</guid>
+      <description>
+
+&lt;h4 id=&#34;what-is-the-scenario-that-the-paper-is-describing&#34;&gt;What is the scenario that the paper is describing?&lt;/h4&gt;
+
+&lt;p&gt;&lt;code&gt;(SYSX)FORT&lt;/code&gt; is a fortran compiler, that:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Needs to write stats to (SYSX)STAT&lt;/li&gt;
+&lt;li&gt;Allows user to provide filename where debugging output is written to at run
+time.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;In order to do (1) the compiler is given the &lt;em&gt;home files license&lt;/em&gt;. This allows
+the compiler to write files in its home directory.&lt;/p&gt;
+
+&lt;h4 id=&#34;to-protect-files-the-system-was-using-access-control-lists-whare-are-acls&#34;&gt;To protect files the system was using access control lists. Whare are ACLs?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Lists associated with objects (files) that specify the subjects that are
+allowed to access the objects (and how).&lt;/li&gt;
+&lt;li&gt;Processes run on behalf of subjects. When accessing object system checks
+if the object ACL permits the subject to access it.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-s-the-concrete-problem-they-ran-into&#34;&gt;What&amp;rsquo;s the concrete problem they ran into?&lt;/h4&gt;
+
+&lt;p&gt;Billing info is stored in the home directory. So user can provide billing
+filename to compiler and trash the directory with debugging info.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-s-the-underlying-problem&#34;&gt;What&amp;rsquo;s the underlying problem?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Authority to write to stats file was used to writte debugging output.&lt;/li&gt;
+&lt;li&gt;If, instead, the ivoking user&amp;rsquo;s authority was used to write the debugging
+output instead, there would be no problem.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This is called the confused deputy problem. The fortran compiler was confused
+into using the authority for one purpose towards another goal.&lt;/p&gt;
+
+&lt;h4 id=&#34;can-t-we-just-set-the-right-acls&#34;&gt;Can&amp;rsquo;t we just set the right ACLs?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;No, this get super complicated. It sometimes breaks secure programs (too
+restricting). Other times it&amp;rsquo;s insecure (not restricting enough).&lt;/li&gt;
+&lt;li&gt;They had to write requirements as long boolean formulae.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-is-the-switching-hat-idea-why-didn-t-it-work&#34;&gt;What is the switching hat idea? Why didn&amp;rsquo;t it work?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Syscall that allowed switching mode from one authority to another.&lt;/li&gt;
+&lt;li&gt;Didn&amp;rsquo;t generalize beyond file system or two authorities.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Is this fundamental or mode a limitation of their exploration? Can you think of
+a way of making the &amp;ldquo;swtching hats&amp;rdquo; idea work if you can modify the programming
+language and have more than 1 single syscall change at your disposal.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-are-capabilities-and-how-do-they-solve-this-problem&#34;&gt;What are capabilities and how do they solve this problem?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;A capability tells you which file to access and gives you the authority to do
+so. It removes the disconnect between naming and authority.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;With capabilities:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The system gives the compiler the capability to the stats file.&lt;/li&gt;
+&lt;li&gt;When invoking the compiler, the user must give the compiler the capabililty
+to the debugging file. If the user has this capablity, we know that they
+can write to the file. So the compiler can write to it too. Importantly, it
+cannot be confused into writing to the billing file since it doesn&amp;rsquo;t have
+the capablity (name+authority) to this file. Something must grant it this
+capability.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;capabilities-can-help-the-with-trojan-horses-problem-what-is-this-and-how-do-capabilties-help&#34;&gt;Capabilities can help the with &lt;em&gt;Trojan horses&lt;/em&gt; problem; what is this? And how do capabilties help?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Call program to do one thing and it does something else.&lt;/li&gt;
+&lt;li&gt;Capabilities help by limiting what the program can do. Only give program
+least authority it needs. Consequence: &amp;ldquo;principle of least surprise&amp;rdquo;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;capabilities-can-help-the-with-the-mutually-suspicious-users-problem-what-is-this-and-how-do-capabilities-help&#34;&gt;Capabilities can help the with the &lt;em&gt;mutually suspicious users problem&lt;/em&gt;; what is this? And how do capabilities help?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Common scenario: Alice has sensitive data (taxes) and wisher to run Bob&amp;rsquo;s
+accounting program. Bob doesn&amp;rsquo;t want to share his super secret algorithm.&lt;/li&gt;
+&lt;li&gt;Can run program with no capabilities other than the ones you grant it. This
+ensures that if you don&amp;rsquo;t give it capability to talk to network, it can&amp;rsquo;t do
+so.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We&amp;rsquo;ll see how information flow control helps address this problem and what the
+different trade offs are.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Shill questions</title>
       <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/shill/</link>
       <pubDate>Fri, 23 Sep 2016 01:37:21 -0700</pubDate>
@@ -434,7 +434,7 @@ Sergio Benitez, and David Mazières!)&lt;/p&gt;
     </item>
     
     <item>
-      <title>Porject ideas</title>
+      <title>Project ideas</title>
       <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/ideas/</link>
       <pubDate>Mon, 05 Sep 2016 20:19:41 -0700</pubDate>
       <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
@@ -534,7 +534,7 @@ Rust (motivated by &lt;a href=&#34;https://servo.org/&#34;&gt;Servo&lt;/a&gt;) m
 in existing browsers (similar to
 &lt;a href=&#34;https://www.henrycg.com/pubs/w2sp15stickler/&#34;&gt;Stickler&lt;/a&gt;. (Credit:
 David Mazières and Quinn Slack did this by modifying the browser
-several years ago. Shravan reminded me of this idea.)&lt;/li&gt;
+several years ago. Shravan is working on something similar and reminded me of this idea.)&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>

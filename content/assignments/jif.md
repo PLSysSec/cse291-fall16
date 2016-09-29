@@ -7,8 +7,8 @@ draft = false
 
 +++
 
-1. What is the key difference between IFC and discretionary access or
-   capabilities?
+1. What is the key difference between IFC and discretionary access
+   control or capabilities?
 
 2. What are the benefits of enforcing IFC statically? (Why doesn't JIF take the
    dynamic route?)
