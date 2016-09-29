@@ -18,3 +18,7 @@
 [4assignments]
     Name = "Assignments"
     URL = "/assignments"
+
+[5ideas]
+    Name = "Project ideas"
+    URL = "/ideas"
