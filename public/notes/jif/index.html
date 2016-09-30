@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>JIF  &middot; CSE 291</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="" />
+
+<meta name="keywords" content="">
+
+
+<meta property="og:title" content="JIF  &middot; CSE 291 ">
+<meta property="og:site_name" content="CSE 291"/>
+<meta property="og:url" content="https://cse291.programming.systems/notes/jif/" />
+<meta property="og:locale" content="en-us">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content=""/>
+<meta property="og:article:published_time" content="2016-09-23T01:37:21-07:02" />
+<meta property="og:article:modified_time" content="2016-09-23T01:37:21-07:02" />
+
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@deiandelmars" />
+<meta name="twitter:creator" content="@deiandelmars" />
+<meta name="twitter:title" content="JIF" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:url" content="https://cse291.programming.systems/notes/jif/" />
+<meta name="twitter:domain" content="https://cse291.programming.systems">
+  
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "JIF",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/+?rel=author"
+    },
+    "datePublished": "2016-09-23",
+    "description": "",
+    "wordCount":  486 
+  }
+</script>
+
+
+
+<link rel="canonical" href="https://cse291.programming.systems/notes/jif/" />
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://cse291.programming.systems/touch-icon-144-precomposed.png">
+<link href="https://cse291.programming.systems/favicon.png" rel="icon">
+<meta name="theme-color" content="#2053AB">
+<meta name="generator" content="Hugo 0.16" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://cse291.programming.systems/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cse291.programming.systems/css/style.css">
+<link rel="stylesheet" href="https://cse291.programming.systems/css/highlight/default.css">
+
+  
+</head>
+<body>
+  <main id="main-wrapper" class="container main_wrapper has-sidebar">
+    <header id="main-header" class="container main_header">
+  <div class="container brand">
+  <div class="container title h1-like">
+  <a class="baselink" href="https://cse291.programming.systems">
+  CSE 291
+
+</a>
+
+</div>
+
+  
+<div class="container topline">
+  
+  Building Secure Systems using Programming Languages and Analysis
+
+
+</div>
+
+
+</div>
+
+  <nav class="container nav primary no-print">
+  
+
+
+  
+<a href="https://cse291.programming.systems/about">Organization</a>
+
+<a href="https://cse291.programming.systems/syllabus" title="Course syllabus">Syllabus</a>
+
+<a href="https://cse291.programming.systems/contact">Contact</a>
+
+<a href="https://cse291.programming.systems/notes">Notes</a>
+
+<a href="https://cse291.programming.systems/assignments">Assignments</a>
+
+<a href="https://cse291.programming.systems/ideas">Project ideas</a>
+
+
+</nav>
+
+<div class="container nav secondary no-print">
+  
+<a id="contact-link-email" class="contact_link" href="mailto:deian&#43;cse291@cs.ucsd.edu">
+  <span class="fa fa-envelope-square"></span><span>email</span></a>
+
+
+
+<a id="contact-link-github" class="contact_link" href="https://github.com/plsyssec/cse291-fall16">
+  <span class="fa fa-github-square"></span><span>github</span></a>
+
+
+
+
+
+
+
+
+
+
+
+<a id="contact-link-twitter" class="contact_link" href="https://twitter.com/deiandelmars">
+  <span class="fa fa-twitter-square"></span><span>twitter</span></a>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+  
+
+</header>
+
+
+<article id="main-content" class="container main_content single">
+  <header class="container hat">
+  <h1>JIF
+</h1>
+
+</header>
+
+  <div class="container content">
+  
+
+<h1 id="jif">JIF</h1>
+
+<p>Author: Sunjay Cauligi</p>
+
+<h4 id="what-specific-guarantees-does-jif-give-what-don-t-they-give">What specific guarantees does JIF give? What don&rsquo;t they give?</h4>
+
+<p>No data leaks from within their framework, but no guarantees about certain
+timing channels or other covert channels.</p>
+
+<h4 id="how-does-jif-compare-to-conventional-ifc">How does JIF compare to conventional IFC?</h4>
+
+<p>The main difference is the concept of multiple owners, each specifying their
+own reader sets.</p>
+
+<h4 id="slots-and-channels">Slots and channels</h4>
+
+<p>Slots (variables) and channels cannot be relabeled; any data coming out of a
+slot/channel takes on the label of that slot/channel.</p>
+
+<p>This means that data written to a variable is relabeled with that variable&rsquo;s
+label. (Why do it this way?)</p>
+
+<h4 id="labels">Labels</h4>
+
+<p>The effective reader set of any labeled data is the intersection of all reader
+sets in that label.</p>
+
+<p>Declassification can only occur on a per-owner basis.</p>
+
+<p>Access-control checks are done on writes, and so aren&rsquo;t necessary on reads.</p>
+
+<h4 id="database-of-principal-hierarchies">Database of principal hierarchies</h4>
+
+<p>If there is a centralized database, is this system truly decentralized?</p>
+
+<p>What challenges arise out of having this database?</p>
+
+<p>What happens if the database is modified while code is executing?</p>
+
+<h4 id="why-does-jif-still-have-some-lightweight-dynamic-label-checking">Why does JIF still have some lightweight dynamic label checking?</h4>
+
+<p>It needs dynamic label checking for more complex external sources of data, such
+as filesystem or database access, to ensure its non-leakage property.</p>
+
+<h4 id="how-does-jif-prevent-implicit-information-leakage">How does JIF prevent implicit information leakage?</h4>
+
+<p>Blocks within if/while constructs are labeled according to their respective
+branch conditions. Thus anything that happens inside one of these blocks is at
+least as restricted as the knowledge of the branch condition.</p>
+
+<h4 id="how-could-jif-be-improved-to-handle-timing-information-leaks">How could JIF be improved to handle timing information leaks?</h4>
+
+<p>Open question.</p>
+
+<h4 id="why-is-if-acts-for-necessary">Why is <code>if_acts_for</code> necessary?</h4>
+
+<p>JIF needs to check at run time whether the function has the correct authority
+to act on the specified principal&rsquo;s behalf.</p>
+
+<h4 id="what-might-be-a-use-case-of-having-a-record-r-with-a-more-restrictive-label-than-a-field-r-f-in-r">What might be a use case of having a record <code>r</code> with a more restrictive label than a field <code>r.f</code> in <code>r</code>?</h4>
+
+<p>Incidentally, what is the label of <code>r.f</code>? Is it <u><code>f</code></u>? <u><code>r</code></u> ⊔ <u><code>f</code></u>?</p>
+
+<h4 id="what-is-the-use-case-for-the-labelcase-construct">What is the use case for the <code>labelcase</code> construct?</h4>
+
+<p>When might one want to branch on a label&rsquo;s runtime value?</p>
+
+<h4 id="why-does-protected-t-exist-what-is-it-used-for">Why does <code>protected[T]</code> exist? What is it used for?</h4>
+
+<p>It&rsquo;s used to implement the lightweight dynamic label checking mentioned above.</p>
+
+<h4 id="what-is-the-use-case-for-the-get-label-function">What is the use case for the <code>get_label</code> function?</h4>
+
+<p>When might one want to examine the contained label inside a <code>protected[T]</code>?</p>
+
+<h4 id="why-does-get-expect-a-label-to-be-passed-in-what-prevents-one-from-simply-passing-in-the-label-returned-by-get-label">Why does <code>get</code> expect a label to be passed in? What prevents one from simply passing in the label returned by <code>get_label</code>?</h4>
+
+<p>The label returned by <code>get_label</code> is itself guarded with the label <u><code>p</code></u>,
+which is the original guard on the original contained label. Since both the
+<code>success</code> and <code>v</code> return values from <code>get</code> are guarded by <u><code>expect</code></u>, only
+someone with permissions for the original protected data can examine whether or
+not they were able to successfully retrieve the value using <code>get</code>.</p>
+
+<h4 id="in-what-ways-is-a-protected-t-similar-to-a-capability-model">In what ways is a <code>protected[T]</code> similar to a capability model?</h4>
+
+<p>One can think of the <code>expect</code> parameter as a capability for retrieving a value from a <code>protected[T]</code>.</p>
+
+</div>
+
+
+  
+</article>
+      <footer id="main-footer" class="container main_footer">
+  
+
+  <div class="container nav foot no-print">
+  
+
+  <a class="toplink" href="#">back to top</a>
+
+</div>
+
+  <div class="container credits">
+  
+<div class="container footline">
+  
+
+</div>
+
+
+  
+
+</div>
+
+</footer>
+
+    </main>
+    
+
+
+<script src="https://cse291.programming.systems/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+    
+  </body>
+</html>
+
