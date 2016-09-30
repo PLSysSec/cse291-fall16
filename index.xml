@@ -591,7 +591,8 @@ several years ago. Shravan is working on something similar and reminded me of th
       &lt;div class=&#34;class-topic&#34;&gt;Type systems for information flow control&lt;/div&gt;
       &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/jif.pdf&#34;&gt;JIF&lt;/a&gt;
       [
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/jif/&#34;&gt;questions&lt;/a&gt;
+      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/jif/&#34;&gt;questions&lt;/a&gt;,
+      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/jif-annotated.pdf&#34;&gt;annotated&lt;/a&gt;
       ]
     &lt;/td&gt;
     &lt;td&gt;
@@ -604,7 +605,7 @@ several years ago. Shravan is working on something similar and reminded me of th
       &lt;div class=&#34;class-topic&#34;&gt;Runtime monitors for information flow control&lt;/div&gt;
       &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/lio.pdf&#34;&gt;LIO&lt;/a&gt;
     &lt;/td&gt;
-    &lt;td&gt;Fucheng&lt;/td&gt;
+    &lt;td&gt;Deian&lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
     &lt;td colspan=&#34;3&#34; class=&#34;topic&#34;&gt;Server-side web security&lt;/td&gt;
