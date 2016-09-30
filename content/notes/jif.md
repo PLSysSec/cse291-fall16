@@ -7,8 +7,6 @@ draft = false
 
 +++
 
-# JIF
-
 Author: Sunjay Cauligi 
 
 #### What specific guarantees does JIF give? What don't they give?
