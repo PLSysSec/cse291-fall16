@@ -8,8 +8,35 @@
     <language>en-us</language>
     <managingEditor>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</managingEditor>
     <webMaster>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</webMaster>
-    <lastBuildDate>Wed, 28 Sep 2016 15:44:04 -0700</lastBuildDate>
+    <lastBuildDate>Wed, 28 Sep 2016 15:44:04 -0702</lastBuildDate>
     <atom:link href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>LIO questions</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/lio/</link>
+      <pubDate>Wed, 28 Sep 2016 15:44:04 -0702</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/lio/</guid>
+      <description>&lt;p&gt;Please answer any 2 from the following list. We will discuss all of them in class.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;LIO has a notion of clearance. Why? What is the purpose of clearance at a
+high level?&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;How does LIO side-step the &lt;em&gt;implicit flows problem&lt;/em&gt;? What&amp;rsquo;s the downside to
+the approach?&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;What is the difference between the termination channel, the internal timing
+channel, and the external timing channel?&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;How can hardware features such as the cache be used to re-introduce the
+internal timing channel?&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;LIO only mitigates the external timing channel. Can you think of a way to
+eliminate the channel? And what is the tradeoff to your approach?&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>JIF questions</title>
@@ -747,7 +774,7 @@ several years ago. Shravan is working on something similar and reminded me of th
       &lt;div class=&#34;class-topic&#34;&gt;Software-based fault isolation&lt;/div&gt;
       &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/nacl.pdf&#34;&gt;NaCl&lt;/a&gt;
     &lt;/td&gt;
-    &lt;td&gt;&lt;/td&gt;
+    &lt;td&gt;Shravan&lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr class=&#34;info&#34;&gt;
     &lt;th class=&#34;date&#34;&gt;Oct 25&lt;/th&gt;
