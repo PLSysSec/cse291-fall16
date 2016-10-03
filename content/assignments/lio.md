@@ -7,7 +7,8 @@ draft = false
 
 +++
 
-Please answer any 2 from the following list. We will discuss all of them in class.
+Please answer any 2 questions from the following list. We will discuss all of
+them in class.
 
 1. LIO has a notion of clearance. Why? What is the purpose of clearance at a
    high level?
