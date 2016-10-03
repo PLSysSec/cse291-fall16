@@ -23,4 +23,8 @@ them in class.
    internal timing channel?
 
 5. LIO only mitigates the external timing channel. Can you think of a way to
-   eliminate the channel? And what is the tradeoff to your approach?
+   eliminate the channel? And what is the trade-off to your approach?
+
+For some of these you may want to look at the journal version of the
+[sequential LIO
+system](https://cseweb.ucsd.edu/~dstefan/pubs/stefan:2012:flexible.pdf).
