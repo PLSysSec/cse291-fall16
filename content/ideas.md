@@ -28,9 +28,10 @@ any of these is a reasonable goal for this class.
   program rewriting to essentially implement taint tracking. (Credit:
   this idea came out of a discussion with Brad Karp who would be a
   natural collaborator.)
-- Develop domain-specific symbol execution. Consider, for example,
-  finding (security) bugs in web (e.g., rails or express)
-  applications.
+- Develop domain-specific symbol execution. Consider, for example, finding
+  (security) bugs in web (e.g., rails or express) applications. Or, consider,
+  for example, using symbolic execution to reverse-engineer custom hardware
+  protocols -- come chat with me and Kirill Levchenko about this.
 - Evaluate the Web Crypto API and design an alternative API that is
   less bug prone. Both  a simpler API and an API that uses IFC to
   ensure keys are not leaked are reasonable directions.
@@ -101,3 +102,12 @@ any of these is a reasonable goal for this class.
   [Stickler](https://www.henrycg.com/pubs/w2sp15stickler/). (Credit:
   David Mazières and Quinn Slack did this by modifying the browser
   several years ago. Shravan is working on something similar and reminded me of this idea.)
+- Devise a policy language (maybe by extending Hails') to account for
+  information leakage and an enforcement system for it. It would be interesting
+  to tie this in with the external mitigation techniques we discussed in class
+  or other equines like [differential privacy](https://en.wikipedia.org/wiki/Differential_privacy).
+- Design a language that gives you similar capabilities as
+  [BPF](https://en.wikipedia.org/wiki/Berkeley_Packet_Filter) but is amendable
+  to analysis and query. For example, given a program written in this language
+  you may wish to ask if the only thing it allows is TCP traffic on port 80. If
+  this is interesting to you, come chat with me and Kirill Levchenko.
