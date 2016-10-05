@@ -743,21 +743,22 @@ this is interesting to you, come chat with me and Kirill Levchenko.&lt;/li&gt;
       &lt;div class=&#34;class-topic&#34;&gt;Runtime monitors for information flow control&lt;/div&gt;
       &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/lio.pdf&#34;&gt;LIO&lt;/a&gt;
       [
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/lio/&#34;&gt;questions&lt;/a&gt;
+      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/lio/&#34;&gt;questions&lt;/a&gt;,
+      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/lio-annotated.pdf&#34;&gt;annotated&lt;/a&gt;
       ]
     &lt;/td&gt;
     &lt;td&gt;Deian&lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-    &lt;td colspan=&#34;3&#34; class=&#34;topic&#34;&gt;Server-side web security&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
     &lt;th class=&#34;date&#34;&gt;Oct 06&lt;/th&gt;
     &lt;td&gt;
-      &lt;div class=&#34;class-topic&#34;&gt;Privilege separation and least privilege&lt;/div&gt;
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/passe.pdf&#34;&gt;Passe&lt;/a&gt;
+      &lt;div class=&#34;class-topic&#34;&gt;Structural Operational Semantics&lt;/div&gt;
+      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/lio-sequential.pdf&#34;&gt;Sequential LIO&lt;/a&gt;
     &lt;/td&gt;
-    &lt;td&gt;&lt;/td&gt;
+    &lt;td&gt;Deian&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td colspan=&#34;3&#34; class=&#34;topic&#34;&gt;Server-side web security&lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
     &lt;th class=&#34;date&#34;&gt;Oct 11&lt;/th&gt;
