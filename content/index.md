@@ -28,7 +28,7 @@ capabilities, symbolic execution, linear type systems).
 
 #### Lecture
 
-* **Location:** HSS 1138
+* **Location:** CSE 3109
 * **Time:** Tuesdays and Thursdays 5:00-6:20PM
 
 #### Instructor
