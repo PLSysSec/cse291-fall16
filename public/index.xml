@@ -8,13 +8,13 @@
     <language>en-us</language>
     <managingEditor>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</managingEditor>
     <webMaster>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</webMaster>
-    <lastBuildDate>Wed, 28 Sep 2016 15:44:04 -0703</lastBuildDate>
+    <lastBuildDate>Wed, 28 Sep 2016 15:44:04 -0704</lastBuildDate>
     <atom:link href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Resin questions</title>
       <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/resin/</link>
-      <pubDate>Wed, 28 Sep 2016 15:44:04 -0703</pubDate>
+      <pubDate>Wed, 28 Sep 2016 15:44:04 -0704</pubDate>
       <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
       <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/resin/</guid>
       <description>&lt;ol&gt;
@@ -782,6 +782,10 @@ this is interesting to you, come chat with me and Kirill Levchenko.&lt;/li&gt;
     &lt;td&gt;
       &lt;div class=&#34;class-topic&#34;&gt;Taint tracking and data flow assertions&lt;/div&gt;
       &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/resin.pdf&#34;&gt;Resin&lt;/a&gt;
+      [
+      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/resin/&#34;&gt;questions&lt;/a&gt;,
+      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/resin-annotated.pdf&#34;&gt;annotated&lt;/a&gt;
+      ]
     &lt;/td&gt;
     &lt;td&gt;Caroline&lt;/td&gt;
   &lt;/tr&gt;
