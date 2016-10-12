@@ -18,8 +18,9 @@
       <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
       <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/resin/</guid>
       <description>&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;We discussed an alternative approach to the Resin implementation via code
-rewriting. What are 2-3 challenges with this approach? (Hint: some language
+&lt;li&gt;&lt;p&gt;An alternative approach to hacking the runtime to implement Resin is to use
+code rewriting, i.e., rewrite applications to perform the data flow tracking
+inline. What are 2-3 challenges with this approach? (Hint: some language
 features may make this more difficult than others.)&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;What are some advantages and disadvantages to Resin&amp;rsquo;s policy specification
