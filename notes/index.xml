@@ -180,7 +180,7 @@ noninterference (leaks via termination channel possible).&lt;/li&gt;
 
 &lt;p&gt;Author: Caroline Kim&lt;/p&gt;
 
-&lt;h4 id=&#34;what-challenge-does-resin-aim-to-address&#34;&gt;What challenge does Resin aim to address?&lt;/h4&gt;
+&lt;h4 id=&#34;what-challenges-does-resin-aim-to-address&#34;&gt;What challenges does Resin aim to address?&lt;/h4&gt;
 
 &lt;p&gt;Resin is a language runtime that equips programmers with the ability to encode and enforce data flow assertions. Resin provides data flow tracking while requiring few changes to the existing code.&lt;/p&gt;
 
