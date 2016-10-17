@@ -12,6 +12,26 @@
     <atom:link href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Hails questions</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/hails/</link>
+      <pubDate>Wed, 28 Sep 2016 15:44:04 -0704</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/hails/</guid>
+      <description>&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Does Hails suffer from the external timing channel? If so, explain the
+attack. If not, explain why this is not a concern. Consider the scenario
+where an attacker is able to execute code server-side (e.g., as part of a
+VC).&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Hails relies on COWL to enforce IFC in the browser. Suppose that was not the
+case. Can you think of a way of addressing leaks due to untrusted HTML using
+a server-side only solution? (&lt;em&gt;Hint:&lt;/em&gt; you may want to look at the resin
+assignment for inspiration.) Bonus: What about untrusted JavaScript?&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Resin questions</title>
       <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/resin/</link>
       <pubDate>Wed, 28 Sep 2016 15:44:04 -0704</pubDate>

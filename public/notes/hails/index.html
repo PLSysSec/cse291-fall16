@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Hails  &middot; CSE 291</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="" />
+
+<meta name="keywords" content="">
+
+
+<meta property="og:title" content="Hails  &middot; CSE 291 ">
+<meta property="og:site_name" content="CSE 291"/>
+<meta property="og:url" content="https://cse291.programming.systems/notes/hails/" />
+<meta property="og:locale" content="en-us">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content=""/>
+<meta property="og:article:published_time" content="2016-09-23T01:37:21-07:04" />
+<meta property="og:article:modified_time" content="2016-09-23T01:37:21-07:04" />
+
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@deiandelmars" />
+<meta name="twitter:creator" content="@deiandelmars" />
+<meta name="twitter:title" content="Hails" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:url" content="https://cse291.programming.systems/notes/hails/" />
+<meta name="twitter:domain" content="https://cse291.programming.systems">
+  
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Hails",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/+?rel=author"
+    },
+    "datePublished": "2016-09-23",
+    "description": "",
+    "wordCount":  804 
+  }
+</script>
+
+
+
+<link rel="canonical" href="https://cse291.programming.systems/notes/hails/" />
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://cse291.programming.systems/touch-icon-144-precomposed.png">
+<link href="https://cse291.programming.systems/favicon.png" rel="icon">
+<meta name="theme-color" content="#2053AB">
+<meta name="generator" content="Hugo 0.16" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://cse291.programming.systems/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cse291.programming.systems/css/style.css">
+<link rel="stylesheet" href="https://cse291.programming.systems/css/highlight/default.css">
+
+  
+</head>
+<body>
+  <main id="main-wrapper" class="container main_wrapper has-sidebar">
+    <header id="main-header" class="container main_header">
+  <div class="container brand">
+  <div class="container title h1-like">
+  <a class="baselink" href="https://cse291.programming.systems">
+  CSE 291
+
+</a>
+
+</div>
+
+  
+<div class="container topline">
+  
+  Building Secure Systems using Programming Languages and Analysis
+
+
+</div>
+
+
+</div>
+
+  <nav class="container nav primary no-print">
+  
+
+
+  
+<a href="https://cse291.programming.systems/about">Organization</a>
+
+<a href="https://cse291.programming.systems/syllabus" title="Course syllabus">Syllabus</a>
+
+<a href="https://cse291.programming.systems/contact">Contact</a>
+
+<a href="https://cse291.programming.systems/notes">Notes</a>
+
+<a href="https://cse291.programming.systems/assignments">Assignments</a>
+
+<a href="https://cse291.programming.systems/ideas">Project ideas</a>
+
+
+</nav>
+
+<div class="container nav secondary no-print">
+  
+<a id="contact-link-email" class="contact_link" href="mailto:deian&#43;cse291@cs.ucsd.edu">
+  <span class="fa fa-envelope-square"></span><span>email</span></a>
+
+
+
+<a id="contact-link-github" class="contact_link" href="https://github.com/plsyssec/cse291-fall16">
+  <span class="fa fa-github-square"></span><span>github</span></a>
+
+
+
+
+
+
+
+
+
+
+
+<a id="contact-link-twitter" class="contact_link" href="https://twitter.com/deiandelmars">
+  <span class="fa fa-twitter-square"></span><span>twitter</span></a>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+  
+
+</header>
+
+
+<article id="main-content" class="container main_content single">
+  <header class="container hat">
+  <h1>Hails
+</h1>
+
+</header>
+
+  <div class="container content">
+  
+
+<p>Author: Matthew Chan</p>
+
+<h3 id="what-is-the-main-contribution-of-the-paper">What is the main contribution of the paper?</h3>
+
+<p>Aside from the artefact, the Model-<em>Policy</em>-View-Controller architecture, which
+provides a framework for building IFC enabled web applications.</p>
+
+<h3 id="what-problem-does-mpvc-solve">What problem does MPVC solve?</h3>
+
+<p>Traditional web application structure (i.e. MVC) has security checks littered
+across the code base, mostly in the controllers &ndash; the situation does not
+improve across different kinds of frameworks, both client and server side View
+frameworks suffer from the same problem (e.g. user metadata sanitization in the
+view).  Specifying policy this way has two major disadvantages (a) policies have
+to be specified multiple times for the same piece of data, leading to (b)
+forgotten checks, inconsistent policies, and difficulties with revising the policies.</p>
+
+<p>MPVC allows for the centralised specification of security policies where they
+logically belong (with the data) thus simplifying the view and controller by
+making redundant checks in those components. This needs to be supported by a
+runtime =&gt; Hails.</p>
+
+<h3 id="what-are-principals-what-are-the-three-types-of-principals-in-hails">What are principals? What are the three types of principals in Hails?</h3>
+
+<p>A principal is a participant in the system who is allowed to read and write
+data. Policies are specified in terms of principals. Unforgeable tokens called
+<em>privileges</em> represent the authority of principals at runtime.</p>
+
+<ul>
+<li>Users</li>
+<li>VCs and remote resources they communicate with</li>
+<li>MPs</li>
+</ul>
+
+<h3 id="the-hails-dsl-allows-policies-to-be-specified-via-arbitrary-actions-does-this-affect-the-design-of-dclabels">The Hails DSL allows policies to be specified via arbitrary actions. Does this affect the design of DCLabels?</h3>
+
+<p>It should not, since the labels evaluate to the same thing cf. policies
+specified as pure functions, you still get a label in the DCLabels format. The
+DSL affects only expressivity, and is safe with IFC controlled effects.</p>
+
+<h3 id="how-is-the-hails-labelled-db-api-different-from-the-mp-dsl-does-one-get-the-same-guarantees-if-she-does-not-use-the-dsl">How is the Hails labelled DB API different from the MP DSL? Does one get the same guarantees if she does not use the DSL?</h3>
+
+<ul>
+<li>Hails DB API: wraps the underlying DB API with labels, part of the Hails TCB.</li>
+<li>MP DSL: for describing MPs, which translate to calls to the DB API.</li>
+</ul>
+
+<p>The DB API can be used to express things that the DSL cannot, and things are
+safe as long as one expresses policies by specifying the correct labels. The MP
+DSL makes this much easier to do.</p>
+
+<h3 id="how-are-things-labelled-in-hails">How are things labelled in Hails?</h3>
+
+<p>See Fig. 2 on pg. 7</p>
+
+<p>The Hails MP persistence model is based on a document-oriented model (similar to Mongo), where</p>
+
+<ul>
+<li>DB = { collection } (≈ tables)</li>
+</ul>
+
+<p>Every database has a label</p>
+
+<ul>
+<li>collection = { document } (≈ rows)</li>
+</ul>
+
+<p>Every collection in a database has a collection label</p>
+
+<p>MPs can specify coarse-grained DB and coll labels.</p>
+
+<ul>
+<li>document = { field } (≈ K-V mappings).</li>
+</ul>
+
+<p>Fields can be indexed <em>keys</em> identifying the document or non-indexed
+  <em>elements</em></p>
+
+<p>Documents and Fields can be labelled via a function of type <code>Doc -&gt; Label</code>,
+  i.e. label depends on document contents.</p>
+
+<h3 id="why-does-hails-need-os-level-confinement-and-how-is-this-different-from-threads-are-there-alternative-designs-for-this-mechanism">Why does Hails need OS level confinement and how is this different from threads? Are there alternative designs for this mechanism?</h3>
+
+<ul>
+<li>For running external programs, i.e. <code>splint</code> linter in the <code>gitstar</code> example</li>
+<li>Threads =/= Processes; a process can have many threads. Spawning threads in
+Hails/LIO is completely fine, the child thread acquires the label of its
+parent.</li>
+<li>This confinement does not extend to spawned processes, so we need a kernel
+level confinement solution. Hails uses standard Linux isolation mechanisms,
+but other sandbox/container solutions might also work, i.e. Docker.</li>
+<li>As discussed in class, a possible design might be to &ldquo;flip&rdquo; the process model and
+have all processes communicate via the safe Hails/LIO process. This way all IO
+is labelled and spawned processes can have access to the network and other
+resources. Sadly this doesn&rsquo;t work because of label creep. (explain the
+problem in detail?)</li>
+</ul>
+
+<h3 id="how-is-hails-evaluated">How is Hails evaluated?</h3>
+
+<p>Same as Shill:</p>
+
+<ul>
+<li><p><strong>Expressiveness/usability:</strong> built a few applications with Hails, including one
+by a team of undergraduate research interns who were novices in Haskell and
+Hails. Found that MP was hard to get right but extension with VC is easy.</p></li>
+
+<li><p><strong>Performance:</strong> Evaluation against existing mainstream web frameworks, mostly
+demonstrating that interpreted languages (like Ruby) are terrible.</p>
+
+<ul>
+<li>Performance is competitive cf. Java but&hellip;</li>
+<li>DB performance is bad (mostly due to the Haskell Mongo library implementation,
+according to Deian)</li>
+</ul></li>
+
+<li><p><strong>Security:</strong> this is the focal point. Tiny TCB in application code across all
+examples. How big is the TCB for the Hails library + runtime +
+LIO/DCLabels/COWL ecosystem?</p>
+
+<ul>
+<li>The other parts are formalized :+1:</li>
+</ul></li>
+</ul>
+
+<h3 id="another-policy-enforcing-framework-is-jeeves-how-is-hails-different">Another policy enforcing framework is Jeeves. How is Hails different?</h3>
+
+<p>See pg. 26. Hails is faster (Jeeves&rsquo; measurements are non-standard, but still
+slow), and because of LIO: provides stronger security guarantees and allows for
+modern language features. Hail&rsquo;s programming model requires developers to
+handle IFC violations; Jeeves does not. Instead, Jeeves uses faceted values
+(default values) to avoid throwing exceptions. Both have a similar negativity:
+not handling exceptions (in hails) means propagating an error that is not easy
+to understand; propagating and choosing default values is similarly hard.</p>
+
+</div>
+
+
+  
+</article>
+      <footer id="main-footer" class="container main_footer">
+  
+
+  <div class="container nav foot no-print">
+  
+
+  <a class="toplink" href="#">back to top</a>
+
+</div>
+
+  <div class="container credits">
+  
+<div class="container footline">
+  
+
+</div>
+
+
+  
+
+</div>
+
+</footer>
+
+    </main>
+    
+
+
+<script src="https://cse291.programming.systems/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+    
+  </body>
+</html>
+

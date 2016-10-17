@@ -8,8 +8,206 @@
     <language>en-us</language>
     <managingEditor>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</managingEditor>
     <webMaster>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</webMaster>
-    <lastBuildDate>Fri, 23 Sep 2016 01:37:21 -0702</lastBuildDate>
+    <lastBuildDate>Fri, 23 Sep 2016 01:37:21 -0704</lastBuildDate>
     <atom:link href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Hails</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/hails/</link>
+      <pubDate>Fri, 23 Sep 2016 01:37:21 -0704</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/hails/</guid>
+      <description>
+
+&lt;p&gt;Author: Matthew Chan&lt;/p&gt;
+
+&lt;h3 id=&#34;what-is-the-main-contribution-of-the-paper&#34;&gt;What is the main contribution of the paper?&lt;/h3&gt;
+
+&lt;p&gt;Aside from the artefact, the Model-&lt;em&gt;Policy&lt;/em&gt;-View-Controller architecture, which
+provides a framework for building IFC enabled web applications.&lt;/p&gt;
+
+&lt;h3 id=&#34;what-problem-does-mpvc-solve&#34;&gt;What problem does MPVC solve?&lt;/h3&gt;
+
+&lt;p&gt;Traditional web application structure (i.e. MVC) has security checks littered
+across the code base, mostly in the controllers &amp;ndash; the situation does not
+improve across different kinds of frameworks, both client and server side View
+frameworks suffer from the same problem (e.g. user metadata sanitization in the
+view).  Specifying policy this way has two major disadvantages (a) policies have
+to be specified multiple times for the same piece of data, leading to (b)
+forgotten checks, inconsistent policies, and difficulties with revising the policies.&lt;/p&gt;
+
+&lt;p&gt;MPVC allows for the centralised specification of security policies where they
+logically belong (with the data) thus simplifying the view and controller by
+making redundant checks in those components. This needs to be supported by a
+runtime =&amp;gt; Hails.&lt;/p&gt;
+
+&lt;h3 id=&#34;what-are-principals-what-are-the-three-types-of-principals-in-hails&#34;&gt;What are principals? What are the three types of principals in Hails?&lt;/h3&gt;
+
+&lt;p&gt;A principal is a participant in the system who is allowed to read and write
+data. Policies are specified in terms of principals. Unforgeable tokens called
+&lt;em&gt;privileges&lt;/em&gt; represent the authority of principals at runtime.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Users&lt;/li&gt;
+&lt;li&gt;VCs and remote resources they communicate with&lt;/li&gt;
+&lt;li&gt;MPs&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;the-hails-dsl-allows-policies-to-be-specified-via-arbitrary-actions-does-this-affect-the-design-of-dclabels&#34;&gt;The Hails DSL allows policies to be specified via arbitrary actions. Does this affect the design of DCLabels?&lt;/h3&gt;
+
+&lt;p&gt;It should not, since the labels evaluate to the same thing cf. policies
+specified as pure functions, you still get a label in the DCLabels format. The
+DSL affects only expressivity, and is safe with IFC controlled effects.&lt;/p&gt;
+
+&lt;h3 id=&#34;how-is-the-hails-labelled-db-api-different-from-the-mp-dsl-does-one-get-the-same-guarantees-if-she-does-not-use-the-dsl&#34;&gt;How is the Hails labelled DB API different from the MP DSL? Does one get the same guarantees if she does not use the DSL?&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Hails DB API: wraps the underlying DB API with labels, part of the Hails TCB.&lt;/li&gt;
+&lt;li&gt;MP DSL: for describing MPs, which translate to calls to the DB API.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The DB API can be used to express things that the DSL cannot, and things are
+safe as long as one expresses policies by specifying the correct labels. The MP
+DSL makes this much easier to do.&lt;/p&gt;
+
+&lt;h3 id=&#34;how-are-things-labelled-in-hails&#34;&gt;How are things labelled in Hails?&lt;/h3&gt;
+
+&lt;p&gt;See Fig. 2 on pg. 7&lt;/p&gt;
+
+&lt;p&gt;The Hails MP persistence model is based on a document-oriented model (similar to Mongo), where&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;DB = { collection } (≈ tables)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Every database has a label&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;collection = { document } (≈ rows)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Every collection in a database has a collection label&lt;/p&gt;
+
+&lt;p&gt;MPs can specify coarse-grained DB and coll labels.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;document = { field } (≈ K-V mappings).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Fields can be indexed &lt;em&gt;keys&lt;/em&gt; identifying the document or non-indexed
+  &lt;em&gt;elements&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Documents and Fields can be labelled via a function of type &lt;code&gt;Doc -&amp;gt; Label&lt;/code&gt;,
+  i.e. label depends on document contents.&lt;/p&gt;
+
+&lt;h3 id=&#34;why-does-hails-need-os-level-confinement-and-how-is-this-different-from-threads-are-there-alternative-designs-for-this-mechanism&#34;&gt;Why does Hails need OS level confinement and how is this different from threads? Are there alternative designs for this mechanism?&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;For running external programs, i.e. &lt;code&gt;splint&lt;/code&gt; linter in the &lt;code&gt;gitstar&lt;/code&gt; example&lt;/li&gt;
+&lt;li&gt;Threads =/= Processes; a process can have many threads. Spawning threads in
+Hails/LIO is completely fine, the child thread acquires the label of its
+parent.&lt;/li&gt;
+&lt;li&gt;This confinement does not extend to spawned processes, so we need a kernel
+level confinement solution. Hails uses standard Linux isolation mechanisms,
+but other sandbox/container solutions might also work, i.e. Docker.&lt;/li&gt;
+&lt;li&gt;As discussed in class, a possible design might be to &amp;ldquo;flip&amp;rdquo; the process model and
+have all processes communicate via the safe Hails/LIO process. This way all IO
+is labelled and spawned processes can have access to the network and other
+resources. Sadly this doesn&amp;rsquo;t work because of label creep. (explain the
+problem in detail?)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;how-is-hails-evaluated&#34;&gt;How is Hails evaluated?&lt;/h3&gt;
+
+&lt;p&gt;Same as Shill:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Expressiveness/usability:&lt;/strong&gt; built a few applications with Hails, including one
+by a team of undergraduate research interns who were novices in Haskell and
+Hails. Found that MP was hard to get right but extension with VC is easy.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Performance:&lt;/strong&gt; Evaluation against existing mainstream web frameworks, mostly
+demonstrating that interpreted languages (like Ruby) are terrible.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Performance is competitive cf. Java but&amp;hellip;&lt;/li&gt;
+&lt;li&gt;DB performance is bad (mostly due to the Haskell Mongo library implementation,
+according to Deian)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Security:&lt;/strong&gt; this is the focal point. Tiny TCB in application code across all
+examples. How big is the TCB for the Hails library + runtime +
+LIO/DCLabels/COWL ecosystem?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The other parts are formalized :+1:&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;another-policy-enforcing-framework-is-jeeves-how-is-hails-different&#34;&gt;Another policy enforcing framework is Jeeves. How is Hails different?&lt;/h3&gt;
+
+&lt;p&gt;See pg. 26. Hails is faster (Jeeves&amp;rsquo; measurements are non-standard, but still
+slow), and because of LIO: provides stronger security guarantees and allows for
+modern language features. Hail&amp;rsquo;s programming model requires developers to
+handle IFC violations; Jeeves does not. Instead, Jeeves uses faceted values
+(default values) to avoid throwing exceptions. Both have a similar negativity:
+not handling exceptions (in hails) means propagating an error that is not easy
+to understand; propagating and choosing default values is similarly hard.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Resin</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/resin/</link>
+      <pubDate>Fri, 23 Sep 2016 01:37:21 -0703</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/resin/</guid>
+      <description>
+
+&lt;p&gt;Author: Caroline Kim&lt;/p&gt;
+
+&lt;h4 id=&#34;what-challenge-does-resin-aim-to-address&#34;&gt;What challenge does Resin aim to address?&lt;/h4&gt;
+
+&lt;p&gt;Resin is a language runtime that equips programmers with the ability to encode and enforce data flow assertions. Resin provides data flow tracking while requiring few changes to the existing code.&lt;/p&gt;
+
+&lt;h4 id=&#34;which-security-vulnerabilities-would-resin-catch-and-which-would-it-not&#34;&gt;Which security vulnerabilities would Resin catch and which would it not?&lt;/h4&gt;
+
+&lt;p&gt;Main use case is protecting against web application vulnerabilities such as SQLi/XSS. It is assumed that both the entire language runtime and the application code itself is trustworthy &amp;ndash; Resin does not protect against bugs in this code.&lt;/p&gt;
+
+&lt;p&gt;Resin does not catch implicit data flows such as those resulting from conditional branch and ordering of data.  Hence, the attacker model assumes that the application code itself is also trustworthy.&lt;/p&gt;
+
+&lt;h4 id=&#34;how-does-resin-enforce-assertions&#34;&gt;How does Resin enforce assertions?&lt;/h4&gt;
+
+&lt;p&gt;Through filter objects and policy objects. Policy objects are defined for data and filter objects are defined for channels. Assertions for data can be specified in policy objects through &lt;code&gt;export_check&lt;/code&gt; which will be called by filter objects.&lt;/p&gt;
+
+&lt;p&gt;By having this separation, developers can revise policy objects without having to worry about all the filter objects.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-are-default-filter-objects&#34;&gt;What are default filter objects?&lt;/h4&gt;
+
+&lt;p&gt;By default, Resin creates filter objects at the &amp;ldquo;edge of the runtime.&amp;rdquo; This encompasses all the runtime I/O, including sockets, HTTP layer, SQL layer, and other code imports. Less work for developers!&lt;/p&gt;
+
+&lt;h4 id=&#34;how-does-resin-handle-data-tracking&#34;&gt;How does Resin handle data tracking?&lt;/h4&gt;
+
+&lt;p&gt;Data objects are tagged with policy objects at the primitive-level (integer, character in a string, and files).&lt;/p&gt;
+
+&lt;h4 id=&#34;how-do-several-assertions-co-exist-for-a-file&#34;&gt;How do several assertions co-exist for a file?&lt;/h4&gt;
+
+&lt;p&gt;Multiple policy objects can be attached to a file as part of a policy set.  Policy objects are attached to data in a fine-grained manner via a merge. When a merge is needed Resin, by default, takes the union of policy objects. But this merge policy can be overridden.&lt;/p&gt;
+
+&lt;h4 id=&#34;why-does-resin-serialize-policy-objects&#34;&gt;Why does Resin serialize policy objects?&lt;/h4&gt;
+
+&lt;p&gt;For persistently stored data, Resin serializes policy objects so they don&amp;rsquo;t have to be saved manually.&lt;/p&gt;
+
+&lt;p&gt;Importantly, only class names and field values are serialized; this allows policy object code to change without having to rewrite serialized policies.&lt;/p&gt;
+
+&lt;h4 id=&#34;how-do-the-authors-evaluate-resin&#34;&gt;How do the authors evaluate Resin?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Security: Lines of code (how easy is it for developers), preventing vulnerability (100%?), whether it works properly on edge cases&lt;/li&gt;
+&lt;li&gt;Performance: Overhead is 33%, overall. Higher when policy is present and a lot higher for those involving SQL operations (parsing the query is required)&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>JIF</title>
