@@ -27,6 +27,10 @@ VC).&lt;/p&gt;&lt;/li&gt;
 case. Can you think of a way of addressing leaks due to untrusted HTML using
 a server-side only solution? (&lt;em&gt;Hint:&lt;/em&gt; you may want to look at the resin
 assignment for inspiration.) Bonus: What about untrusted JavaScript?&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Why did Hails eventually move from policies as pure functions (&lt;code&gt;Document -&amp;gt;
+Label&lt;/code&gt;) to side-effecting ones (&lt;code&gt;Document -&amp;gt; LIO Label&lt;/code&gt;)?  What is a
+negative trade-offs due to this?&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </description>
     </item>
@@ -147,14 +151,18 @@ DSL affects only expressivity, and is safe with IFC controlled effects.&lt;/p&gt
 
 &lt;h3 id=&#34;how-is-the-hails-labelled-db-api-different-from-the-mp-dsl-does-one-get-the-same-guarantees-if-she-does-not-use-the-dsl&#34;&gt;How is the Hails labelled DB API different from the MP DSL? Does one get the same guarantees if she does not use the DSL?&lt;/h3&gt;
 
+&lt;blockquote&gt;
+&lt;p&gt;MPs may contain arbitrary code and can expose an arbitrary API&lt;/p&gt;
+&lt;/blockquote&gt;
+
 &lt;ul&gt;
 &lt;li&gt;Hails DB API: wraps the underlying DB API with labels, part of the Hails TCB.&lt;/li&gt;
 &lt;li&gt;MP DSL: for describing MPs, which translate to calls to the DB API.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;The DB API can be used to express things that the DSL cannot, and things are
-safe as long as one expresses policies by specifying the correct labels. The MP
-DSL makes this much easier to do.&lt;/p&gt;
+&lt;p&gt;The DB API can be used to express things that maybe the DSL cannot. This is
+purely a matter of convenience; things are safe as long as the Hails libraries
+are used (policy is mandated by the Hails runtime anyways).&lt;/p&gt;
 
 &lt;h3 id=&#34;how-are-things-labelled-in-hails&#34;&gt;How are things labelled in Hails?&lt;/h3&gt;
 
@@ -226,19 +234,29 @@ examples. How big is the TCB for the Hails library + runtime +
 LIO/DCLabels/COWL ecosystem?&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;The other parts are formalized :+1:&lt;/li&gt;
+&lt;li&gt;The other parts are formalized in Coq :+1:&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;another-policy-enforcing-framework-is-jeeves-how-is-hails-different&#34;&gt;Another policy enforcing framework is Jeeves. How is Hails different?&lt;/h3&gt;
+&lt;h3 id=&#34;another-policy-enforcing-framework-is-jeeves-jacqueline-how-is-hails-different&#34;&gt;Another policy enforcing framework is Jeeves/Jacqueline. How is Hails different?&lt;/h3&gt;
 
-&lt;p&gt;See pg. 26. Hails is faster (Jeeves&amp;rsquo; measurements are non-standard, but still
-slow), and because of LIO: provides stronger security guarantees and allows for
-modern language features. Hail&amp;rsquo;s programming model requires developers to
-handle IFC violations; Jeeves does not. Instead, Jeeves uses faceted values
-(default values) to avoid throwing exceptions. Both have a similar negativity:
-not handling exceptions (in hails) means propagating an error that is not easy
-to understand; propagating and choosing default values is similarly hard.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Jeeves is a language, whereas Hails is a library/EDSL. This makes Hails more
+flexible and easier to change from a language design point of view. (+ usual
+host-language features for free argument for EDSLs)&lt;/li&gt;
+&lt;li&gt;LIO&amp;rsquo;s programming model is more flexible (e.g., LIO has exceptions and threads).&lt;/li&gt;
+&lt;li&gt;Jeeves is completely policy agnostic; Hails is &lt;em&gt;mostly&lt;/em&gt; policy agnostic. The
+authors make a case for requiring policies be inspectable, i.e. to recover
+from failures (see concurrent LIO).&lt;/li&gt;
+&lt;li&gt;Jeeves can specify policies on concrete data stored in DB directly, Hails
+requires a layer of indirection at the MP level. Unclear which is better.&lt;/li&gt;
+&lt;li&gt;Hails has a story for confinement in the browser, via COWL, and for
+enforcement at the OS level.&lt;/li&gt;
+&lt;li&gt;LIO addresses covert channels and generally has a stronger attacker model.
+Specifically, LIO supports termination sensitive noninterference (no leaks
+via termination channel). Jeeves supports termination insensitive
+noninterference (leaks via termination channel possible).&lt;/li&gt;
+&lt;/ul&gt;
 </description>
     </item>
     

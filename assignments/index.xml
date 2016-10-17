@@ -27,6 +27,10 @@ VC).&lt;/p&gt;&lt;/li&gt;
 case. Can you think of a way of addressing leaks due to untrusted HTML using
 a server-side only solution? (&lt;em&gt;Hint:&lt;/em&gt; you may want to look at the resin
 assignment for inspiration.) Bonus: What about untrusted JavaScript?&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Why did Hails eventually move from policies as pure functions (&lt;code&gt;Document -&amp;gt;
+Label&lt;/code&gt;) to side-effecting ones (&lt;code&gt;Document -&amp;gt; LIO Label&lt;/code&gt;)?  What is a
+negative trade-offs due to this?&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </description>
     </item>
