@@ -19,7 +19,7 @@
 
 <meta property="og:title" content="Hails  &middot; CSE 291 ">
 <meta property="og:site_name" content="CSE 291"/>
-<meta property="og:url" content="https://cse291.programming.systems/notes/hails/" />
+<meta property="og:url" content="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/hails/" />
 <meta property="og:locale" content="en-us">
 
 
@@ -36,8 +36,8 @@
 <meta name="twitter:creator" content="@deiandelmars" />
 <meta name="twitter:title" content="Hails" />
 <meta name="twitter:description" content="" />
-<meta name="twitter:url" content="https://cse291.programming.systems/notes/hails/" />
-<meta name="twitter:domain" content="https://cse291.programming.systems">
+<meta name="twitter:url" content="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/hails/" />
+<meta name="twitter:domain" content="https://cseweb.ucsd.edu/~dstefan/cse291-fall16">
   
 
 <script type="application/ld+json">
@@ -51,16 +51,16 @@
     },
     "datePublished": "2016-09-23",
     "description": "",
-    "wordCount":  804 
+    "wordCount":  891 
   }
 </script>
 
 
 
-<link rel="canonical" href="https://cse291.programming.systems/notes/hails/" />
+<link rel="canonical" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/hails/" />
 
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://cse291.programming.systems/touch-icon-144-precomposed.png">
-<link href="https://cse291.programming.systems/favicon.png" rel="icon">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/touch-icon-144-precomposed.png">
+<link href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/favicon.png" rel="icon">
 <meta name="theme-color" content="#2053AB">
 <meta name="generator" content="Hugo 0.16" />
 
@@ -70,9 +70,9 @@
 <![endif]-->
 
 <link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="https://cse291.programming.systems/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cse291.programming.systems/css/style.css">
-<link rel="stylesheet" href="https://cse291.programming.systems/css/highlight/default.css">
+<link rel="stylesheet" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/css/style.css">
+<link rel="stylesheet" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/css/highlight/default.css">
 
   
 </head>
@@ -81,7 +81,7 @@
     <header id="main-header" class="container main_header">
   <div class="container brand">
   <div class="container title h1-like">
-  <a class="baselink" href="https://cse291.programming.systems">
+  <a class="baselink" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16">
   CSE 291
 
 </a>
@@ -104,17 +104,17 @@
 
 
   
-<a href="https://cse291.programming.systems/about">Organization</a>
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/about">Organization</a>
 
-<a href="https://cse291.programming.systems/syllabus" title="Course syllabus">Syllabus</a>
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/syllabus" title="Course syllabus">Syllabus</a>
 
-<a href="https://cse291.programming.systems/contact">Contact</a>
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/contact">Contact</a>
 
-<a href="https://cse291.programming.systems/notes">Notes</a>
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes">Notes</a>
 
-<a href="https://cse291.programming.systems/assignments">Assignments</a>
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments">Assignments</a>
 
-<a href="https://cse291.programming.systems/ideas">Project ideas</a>
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/ideas">Project ideas</a>
 
 
 </nav>
@@ -212,14 +212,18 @@ DSL affects only expressivity, and is safe with IFC controlled effects.</p>
 
 <h3 id="how-is-the-hails-labelled-db-api-different-from-the-mp-dsl-does-one-get-the-same-guarantees-if-she-does-not-use-the-dsl">How is the Hails labelled DB API different from the MP DSL? Does one get the same guarantees if she does not use the DSL?</h3>
 
+<blockquote>
+<p>MPs may contain arbitrary code and can expose an arbitrary API</p>
+</blockquote>
+
 <ul>
 <li>Hails DB API: wraps the underlying DB API with labels, part of the Hails TCB.</li>
 <li>MP DSL: for describing MPs, which translate to calls to the DB API.</li>
 </ul>
 
-<p>The DB API can be used to express things that the DSL cannot, and things are
-safe as long as one expresses policies by specifying the correct labels. The MP
-DSL makes this much easier to do.</p>
+<p>The DB API can be used to express things that maybe the DSL cannot. This is
+purely a matter of convenience; things are safe as long as the Hails libraries
+are used (policy is mandated by the Hails runtime anyways).</p>
 
 <h3 id="how-are-things-labelled-in-hails">How are things labelled in Hails?</h3>
 
@@ -291,19 +295,29 @@ examples. How big is the TCB for the Hails library + runtime +
 LIO/DCLabels/COWL ecosystem?</p>
 
 <ul>
-<li>The other parts are formalized :+1:</li>
+<li>The other parts are formalized in Coq :+1:</li>
 </ul></li>
 </ul>
 
-<h3 id="another-policy-enforcing-framework-is-jeeves-how-is-hails-different">Another policy enforcing framework is Jeeves. How is Hails different?</h3>
+<h3 id="another-policy-enforcing-framework-is-jeeves-jacqueline-how-is-hails-different">Another policy enforcing framework is Jeeves/Jacqueline. How is Hails different?</h3>
 
-<p>See pg. 26. Hails is faster (Jeeves&rsquo; measurements are non-standard, but still
-slow), and because of LIO: provides stronger security guarantees and allows for
-modern language features. Hail&rsquo;s programming model requires developers to
-handle IFC violations; Jeeves does not. Instead, Jeeves uses faceted values
-(default values) to avoid throwing exceptions. Both have a similar negativity:
-not handling exceptions (in hails) means propagating an error that is not easy
-to understand; propagating and choosing default values is similarly hard.</p>
+<ul>
+<li>Jeeves is a language, whereas Hails is a library/EDSL. This makes Hails more
+flexible and easier to change from a language design point of view. (+ usual
+host-language features for free argument for EDSLs)</li>
+<li>LIO&rsquo;s programming model is more flexible (e.g., LIO has exceptions and threads).</li>
+<li>Jeeves is completely policy agnostic; Hails is <em>mostly</em> policy agnostic. The
+authors make a case for requiring policies be inspectable, i.e. to recover
+from failures (see concurrent LIO).</li>
+<li>Jeeves can specify policies on concrete data stored in DB directly, Hails
+requires a layer of indirection at the MP level. Unclear which is better.</li>
+<li>Hails has a story for confinement in the browser, via COWL, and for
+enforcement at the OS level.</li>
+<li>LIO addresses covert channels and generally has a stronger attacker model.
+Specifically, LIO supports termination sensitive noninterference (no leaks
+via termination channel). Jeeves supports termination insensitive
+noninterference (leaks via termination channel possible).</li>
+</ul>
 
 </div>
 
@@ -338,7 +352,7 @@ to understand; propagating and choosing default values is similarly hard.</p>
     
 
 
-<script src="https://cse291.programming.systems/js/highlight.pack.js"></script>
+<script src="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/js/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
 
