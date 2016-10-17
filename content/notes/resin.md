@@ -8,7 +8,7 @@ draft = false
 
 Author: Caroline Kim 
 
-#### What challenge does Resin aim to address?
+#### What challenges does Resin aim to address?
 
 Resin is a language runtime that equips programmers with the ability to encode and enforce data flow assertions. Resin provides data flow tracking while requiring few changes to the existing code.
 
