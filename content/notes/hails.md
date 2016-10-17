@@ -46,12 +46,15 @@ DSL affects only expressivity, and is safe with IFC controlled effects.
 
 ### How is the Hails labelled DB API different from the MP DSL? Does one get the same guarantees if she does not use the DSL?
 
+> MPs may contain arbitrary code and can expose an arbitrary API
+
 - Hails DB API: wraps the underlying DB API with labels, part of the Hails TCB.
 - MP DSL: for describing MPs, which translate to calls to the DB API.
 
-The DB API can be used to express things that the DSL cannot, and things are
-safe as long as one expresses policies by specifying the correct labels. The MP
-DSL makes this much easier to do.
+The DB API can be used to express things that maybe the DSL cannot. This is
+purely a matter of convenience; things are safe as long as the Hails libraries
+are used (policy is mandated by the Hails runtime anyways).
+
 
 ### How are things labelled in Hails?
 
@@ -110,14 +113,22 @@ Same as Shill:
 - **Security:** this is the focal point. Tiny TCB in application code across all
   examples. How big is the TCB for the Hails library + runtime +
   LIO/DCLabels/COWL ecosystem?
-  + The other parts are formalized :+1:
+  + The other parts are formalized in Coq :+1:
 
-### Another policy enforcing framework is Jeeves. How is Hails different?
+### Another policy enforcing framework is Jeeves/Jacqueline. How is Hails different?
 
-See pg. 26. Hails is faster (Jeeves' measurements are non-standard, but still
-slow), and because of LIO: provides stronger security guarantees and allows for
-modern language features. Hail's programming model requires developers to
-handle IFC violations; Jeeves does not. Instead, Jeeves uses faceted values
-(default values) to avoid throwing exceptions. Both have a similar negativity:
-not handling exceptions (in hails) means propagating an error that is not easy
-to understand; propagating and choosing default values is similarly hard.
+- Jeeves is a language, whereas Hails is a library/EDSL. This makes Hails more
+  flexible and easier to change from a language design point of view. (+ usual
+  host-language features for free argument for EDSLs)
+- LIO's programming model is more flexible (e.g., LIO has exceptions and threads).
+- Jeeves is completely policy agnostic; Hails is *mostly* policy agnostic. The
+  authors make a case for requiring policies be inspectable, i.e. to recover
+  from failures (see concurrent LIO).
+- Jeeves can specify policies on concrete data stored in DB directly, Hails
+  requires a layer of indirection at the MP level. Unclear which is better.
+- Hails has a story for confinement in the browser, via COWL, and for
+  enforcement at the OS level.
+- LIO addresses covert channels and generally has a stronger attacker model.
+  Specifically, LIO supports termination sensitive noninterference (no leaks
+  via termination channel). Jeeves supports termination insensitive
+  noninterference (leaks via termination channel possible).

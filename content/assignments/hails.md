@@ -16,3 +16,7 @@ draft = false
    case. Can you think of a way of addressing leaks due to untrusted HTML using
    a server-side only solution? (_Hint:_ you may want to look at the resin
    assignment for inspiration.) Bonus: What about untrusted JavaScript? 
+
+3. Why did Hails eventually move from policies as pure functions (`Document ->
+   Label`) to side-effecting ones (`Document -> LIO Label`)?  What is a
+   negative trade-offs due to this?
