@@ -11,9 +11,10 @@ draft = false
    Instead think about different stages (e.g., server was not compromised then
    it was compromised, what can the attacker do?).
 
-2. Describe the components that make up Verena's architecture and their roles.
+2. Describe the components that make up Verena's architecture and their
+   individual roles.
 
-3. What are trust contexts and why are they necessary?
+3. What are _trust contexts_ and why are they necessary?
 
 4. How do Verena's integrity guarantees differ from Hails' integrity
    guarantees?
