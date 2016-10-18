@@ -22,9 +22,10 @@
 Instead think about different stages (e.g., server was not compromised then
 it was compromised, what can the attacker do?).&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;Describe the components that make up Verena&amp;rsquo;s architecture and their roles.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Describe the components that make up Verena&amp;rsquo;s architecture and their
+individual roles.&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;What are trust contexts and why are they necessary?&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;What are &lt;em&gt;trust contexts&lt;/em&gt; and why are they necessary?&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;How do Verena&amp;rsquo;s integrity guarantees differ from Hails&amp;rsquo; integrity
 guarantees?&lt;/p&gt;&lt;/li&gt;
