@@ -8,8 +8,29 @@
     <language>en-us</language>
     <managingEditor>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</managingEditor>
     <webMaster>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</webMaster>
-    <lastBuildDate>Wed, 28 Sep 2016 15:44:04 -0704</lastBuildDate>
+    <lastBuildDate>Wed, 28 Sep 2016 15:44:04 -0705</lastBuildDate>
     <atom:link href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Verena questions</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/verena/</link>
+      <pubDate>Wed, 28 Sep 2016 15:44:04 -0705</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/verena/</guid>
+      <description>&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;What is Verena&amp;rsquo;s attacker model? Don&amp;rsquo;t just rehash what&amp;rsquo;s in the paper.
+Instead think about different stages (e.g., server was not compromised then
+it was compromised, what can the attacker do?).&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Describe the components that make up Verena&amp;rsquo;s architecture and their roles.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;What are trust contexts and why are they necessary?&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;How do Verena&amp;rsquo;s integrity guarantees differ from Hails&amp;rsquo; integrity
+guarantees?&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>Hails questions</title>
@@ -1237,32 +1258,6 @@ security (e.g., &lt;a href=&#34;http://www-cse.ucsd.edu/cse127&#34;&gt;CSE 127&l
 research papers on advanced topics with very brief introductions, so students
 should be familiar with topics in these areas (e.g., language semantics,
 virtual memory management, basic web security).&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Contact information</title>
-      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/contact/</link>
-      <pubDate>Tue, 23 Aug 2016 01:59:45 -0700</pubDate>
-      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
-      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/contact/</guid>
-      <description>
-
-&lt;p&gt;For general information and questions, please post to the class
-&lt;a href=&#34;https://piazza.com/ucsd/fall2016/cse291&#34;&gt;Piazza&lt;/a&gt;.  (It&amp;rsquo;s likely that
-other students will have the same question.) We will post
-announcements on Piazza (in addition to the course page), so please make
-sure to sign up.  For urgent or personal matters matters, please post a
-private question or contact the instructor by email.&lt;/p&gt;
-
-&lt;h4 id=&#34;instructor&#34;&gt;Instructor&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Name:&lt;/strong&gt; &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/&#34;&gt;Deian Stefan&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Email:&lt;/strong&gt; &lt;a href=&#34;mailto:deian+cse291@cs.ucsd.edu&#34;&gt;deian+cse291@cs.ucsd.edu&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Address:&lt;/strong&gt; CSE 3126&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Office hours:&lt;/strong&gt; Wed 1:30-2:30 or by appointment&lt;/li&gt;
-&lt;/ul&gt;
 </description>
     </item>
     
