@@ -7,6 +7,8 @@ draft = false
 
 +++
 
+Answer any 2:
+
 1. What is Verena's attacker model? Don't just rehash what's in the paper.
    Instead think about different stages (e.g., server was not compromised then
    it was compromised, what can the attacker do?).
