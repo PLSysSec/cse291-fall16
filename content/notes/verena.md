@@ -24,16 +24,20 @@ Specifically, the authors assume:
 
 Verena consists of the following parts:
 
-- The browser that runs the client-side program (including the app client and the Verena client)
+- The browser that runs the client-side program (including the app client and
+  the Verena client)
 
-- The server that runs the server-side program (including the app server and the Verena server)
+- The server that runs the server-side program (including the app server and
+  the Verena server)
 
 The app client and the app server are just normal web app clients and servers.
 The Verena client and the Verena server speak the Verena protocol. There are places where the Verena mechanisms operate.
 
-- The identity provider (IDP) provides the public key for a given user (The paper doesn't really talk about it too much).
+- The identity provider (IDP) provides the public key for a given user (The
+  paper doesn't really talk about it too much).
 
-- The hash server (HS) provides signed hashes, which can help the client verify the proofs received from the server.
+- The hash server (HS) provides signed hashes, which can help the client verify
+  the proofs received from the server.
 
 #### Thread model and goal
 
