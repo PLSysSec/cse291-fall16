@@ -154,18 +154,22 @@ let&amp;rsquo;s assume that the web page has verified.&lt;/p&gt;&lt;/li&gt;
 &lt;p&gt;Verena consists of the following parts:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;The browser that runs the client-side program (including the app client and the Verena client)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;The browser that runs the client-side program (including the app client and
+the Verena client)&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;The server that runs the server-side program (including the app server and the Verena server)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;The server that runs the server-side program (including the app server and
+the Verena server)&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;The app client and the app server are just normal web app clients and servers.
 The Verena client and the Verena server speak the Verena protocol. There are places where the Verena mechanisms operate.&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;The identity provider (IDP) provides the public key for a given user (The paper doesn&amp;rsquo;t really talk about it too much).&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;The identity provider (IDP) provides the public key for a given user (The
+paper doesn&amp;rsquo;t really talk about it too much).&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;The hash server (HS) provides signed hashes, which can help the client verify the proofs received from the server.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;The hash server (HS) provides signed hashes, which can help the client verify
+the proofs received from the server.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h4 id=&#34;thread-model-and-goal&#34;&gt;Thread model and goal&lt;/h4&gt;
