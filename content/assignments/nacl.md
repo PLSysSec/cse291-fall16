@@ -10,8 +10,8 @@ draft = false
 1. What the purpose of the inner sandbox? What guarantees does it provide and
    how does NaCl implement it?
 
-2. What the purpose of the outer sandbox? What guarantees does it provide
-   and how does NaCl implement it?
+2. What the purpose of the outer sandbox? What guarantees does it provide and
+   how does NaCl implement it?
 
 3. Why did NaCl take the approach of statically verifying that a piece of x86
    is safe instead of providing a trusted compiler approach?
