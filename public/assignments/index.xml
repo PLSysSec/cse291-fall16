@@ -17,7 +17,9 @@
       <pubDate>Wed, 28 Sep 2016 15:44:04 -0706</pubDate>
       <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
       <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/nacl/</guid>
-      <description>&lt;ol&gt;
+      <description>&lt;p&gt;Answer any 3:&lt;/p&gt;
+
+&lt;ol&gt;
 &lt;li&gt;&lt;p&gt;What the purpose of the inner sandbox? What guarantees does it provide and
 how does NaCl implement it?&lt;/p&gt;&lt;/li&gt;
 
