@@ -8,8 +8,32 @@
     <language>en-us</language>
     <managingEditor>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</managingEditor>
     <webMaster>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</webMaster>
-    <lastBuildDate>Wed, 28 Sep 2016 15:44:04 -0705</lastBuildDate>
+    <lastBuildDate>Wed, 28 Sep 2016 15:44:04 -0706</lastBuildDate>
     <atom:link href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>NaCl questions</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/nacl/</link>
+      <pubDate>Wed, 28 Sep 2016 15:44:04 -0706</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/nacl/</guid>
+      <description>&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;What the purpose of the inner sandbox? What guarantees does it provide and
+how does NaCl implement it?&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;What the purpose of the outer sandbox? What guarantees does it provide
+and how does NaCl implement it?&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Why did NaCl take the approach of statically verifying that a piece of x86
+is safe instead of providing a trusted compiler approach?&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Why is it not possible to dynamically load a library with NaCl? What makes
+this hard to do?&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Why does NaCl not support JITed language runtimes?&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>Verena questions</title>
@@ -1074,267 +1098,6 @@ to analysis and query. For example, given a program written in this language
 you may wish to ask if the only thing it allows is TCP traffic on port 80. If
 this is interesting to you, come chat with me and Kirill Levchenko.&lt;/li&gt;
 &lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Syllabus</title>
-      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/syllabus/</link>
-      <pubDate>Mon, 05 Sep 2016 20:19:41 -0700</pubDate>
-      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
-      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/syllabus/</guid>
-      <description>&lt;link rel=&#34;stylesheet&#34; href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/css/bootstrap-table.css&#34;&gt;
-
-&lt;table class=&#34;table table-hover&#34;&gt;
-  &lt;thead&gt;
-  &lt;tr&gt;
-    &lt;th&gt;Date&lt;/th&gt;
-    &lt;th&gt;Topic&lt;/th&gt;
-    &lt;th&gt;Lead&lt;/th&gt;
-  &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tr&gt;
-    &lt;th class=&#34;date&#34;&gt;Sept 22&lt;/th&gt;
-    &lt;td&gt;
-      &lt;div class=&#34;class-topic&#34;&gt;Overview and introduction&lt;/div&gt;
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/confused-deputy.pdf&#34;&gt;Confused deputy&lt;/a&gt;
-      [
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/slides/lecture1.pdf&#34;&gt;slides&lt;/a&gt;,
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/confused-deputy/&#34;&gt;notes&lt;/a&gt;
-      ]
-    &lt;/td&gt;
-    &lt;td&gt;
-      Deian
-    &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td colspan=&#34;3&#34; class=&#34;topic&#34;&gt;A sample of language-based techniques&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;th class=&#34;date&#34;&gt;Sept 27&lt;/th&gt;
-    &lt;td&gt;
-      &lt;div class=&#34;class-topic&#34;&gt;Contracts and object capabilities&lt;/div&gt;
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/shill.pdf&#34;&gt;Shill&lt;/a&gt;
-      [
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/shill/&#34;&gt;questions&lt;/a&gt;,
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/shill/&#34;&gt;notes&lt;/a&gt;,
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/shill-annotated.pdf&#34;&gt;annotated&lt;/a&gt;
-      ]
-    &lt;/td&gt;
-    &lt;td&gt;Deian&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;th class=&#34;date&#34;&gt;Sept 29&lt;/th&gt;
-    &lt;td&gt;
-      &lt;div class=&#34;class-topic&#34;&gt;Type systems for information flow control&lt;/div&gt;
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/jif.pdf&#34;&gt;JIF&lt;/a&gt;
-      [
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/jif/&#34;&gt;questions&lt;/a&gt;,
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/jif/&#34;&gt;notes&lt;/a&gt;,
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/jif-annotated.pdf&#34;&gt;annotated&lt;/a&gt;
-      ]
-    &lt;/td&gt;
-    &lt;td&gt;
-      Sunjay
-    &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;th class=&#34;date&#34;&gt;Oct 04&lt;/th&gt;
-    &lt;td&gt;
-      &lt;div class=&#34;class-topic&#34;&gt;Runtime monitors for information flow control&lt;/div&gt;
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/lio.pdf&#34;&gt;LIO&lt;/a&gt;
-      [
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/lio/&#34;&gt;questions&lt;/a&gt;,
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/lio-annotated.pdf&#34;&gt;annotated&lt;/a&gt;
-      ]
-    &lt;/td&gt;
-    &lt;td&gt;Deian&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;th class=&#34;date&#34;&gt;Oct 06&lt;/th&gt;
-    &lt;td&gt;
-      &lt;div class=&#34;class-topic&#34;&gt;Structural Operational Semantics&lt;/div&gt;
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/lio-sequential.pdf&#34;&gt;Sequential LIO&lt;/a&gt;
-      [&lt;a href=&#34;https://www.cs.umd.edu/~dvanhorn/slides/plmw-2016.pdf&#34;&gt;excellent supplemental material&lt;/a&gt;]
-    &lt;/td&gt;
-    &lt;td&gt;Deian&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td colspan=&#34;3&#34; class=&#34;topic&#34;&gt;Server-side web security&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;th class=&#34;date&#34;&gt;Oct 11&lt;/th&gt;
-    &lt;td&gt;
-      &lt;div class=&#34;class-topic&#34;&gt;Taint tracking and data flow assertions&lt;/div&gt;
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/resin.pdf&#34;&gt;Resin&lt;/a&gt;
-      [
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/resin/&#34;&gt;questions&lt;/a&gt;,
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/resin/&#34;&gt;notes&lt;/a&gt;,
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/resin-annotated.pdf&#34;&gt;annotated&lt;/a&gt;
-      ]
-    &lt;/td&gt;
-    &lt;td&gt;Caroline&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;th class=&#34;date&#34;&gt;Oct 13&lt;/th&gt;
-    &lt;td&gt;
-      &lt;div class=&#34;class-topic&#34;&gt;Information flow control and policy specification&lt;/div&gt;
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/hails.pdf&#34;&gt;Hails&lt;/a&gt;
-      [
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/hails/&#34;&gt;questions&lt;/a&gt;,
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/hails/&#34;&gt;notes&lt;/a&gt;
-      ]
-    &lt;/td&gt;
-    &lt;td&gt;Matt&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;th class=&#34;date&#34;&gt;Oct 18&lt;/th&gt;
-    &lt;td&gt;
-      &lt;div class=&#34;class-topic&#34;&gt;Integrity and authenticated data structures&lt;/div&gt;
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/verena.pdf&#34;&gt;Verena&lt;/a&gt;
-      [
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/verena/&#34;&gt;questions&lt;/a&gt;,
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/verena-annotated.pdf&#34;&gt;annotated&lt;/a&gt;,
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/verena/&#34;&gt;notes&lt;/a&gt;
-      ]
-    &lt;/td&gt;
-    &lt;td&gt;Zhaomo&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td colspan=&#34;3&#34; class=&#34;topic&#34;&gt;Browser and client-side web security&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;th class=&#34;date&#34;&gt;Oct 20&lt;/th&gt;
-    &lt;td&gt;
-      &lt;div class=&#34;class-topic&#34;&gt;Software-based fault isolation&lt;/div&gt;
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/nacl.pdf&#34;&gt;NaCl&lt;/a&gt;
-      [
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/nacl/&#34;&gt;questions&lt;/a&gt;,
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/nacl-annotated.pdf&#34;&gt;annotated&lt;/a&gt;
-      ]
-    &lt;/td&gt;
-    &lt;td&gt;Shravan&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr class=&#34;info&#34;&gt;
-    &lt;th class=&#34;date&#34;&gt;Oct 25&lt;/th&gt;
-    &lt;td colspan=&#34;2&#34;&gt;Hack time (no class, Deian at PLAS 2016)&lt;/td&gt;
-    &lt;!-- &lt;td&gt; --&gt;
-    &lt;!--   &lt;div class=&#34;class&amp;#45;topic&#34;&gt;Shim verification&lt;/div&gt; --&gt;
-    &lt;!--   &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/quark.pdf&#34;&gt;Quark&lt;/a&gt; --&gt;
-    &lt;!-- &lt;/td&gt; --&gt;
-    &lt;!-- &lt;td&gt;&lt;/td&gt; --&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;th class=&#34;date&#34;&gt;Oct 27&lt;/th&gt;
-    &lt;td&gt;
-      &lt;div class=&#34;class-topic&#34;&gt;Permissions and privilege separation&lt;/div&gt;
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/chrome-extension-system.pdf&#34;&gt;Chrome extension system&lt;/a&gt;
-    &lt;/td&gt;
-    &lt;td&gt;
-      Ariana
-    &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;th class=&#34;date&#34;&gt;Nov 01&lt;/th&gt;
-    &lt;td&gt;
-      &lt;div class=&#34;class-topic&#34;&gt;Label-based mandatory access control&lt;/div&gt;
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/cowl.pdf&#34;&gt;COWL&lt;/a&gt;
-    &lt;/td&gt;
-    &lt;td&gt;Rohit&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td colspan=&#34;3&#34; class=&#34;topic&#34;&gt;Operating systems security&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;th class=&#34;date&#34;&gt;Nov 03&lt;/th&gt;
-    &lt;td&gt;
-      &lt;div class=&#34;class-topic&#34;&gt;Micro-grammars and static bug checkers&lt;/div&gt;
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/uchex.pdf&#34;&gt;&amp;#181;chex&lt;/a&gt;
-    &lt;/td&gt;
-    &lt;td&gt;Gary&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;th class=&#34;date&#34;&gt;Nov 08&lt;/th&gt;
-    &lt;td&gt;
-      &lt;div class=&#34;class-topic&#34;&gt;Symbolic execution&lt;/div&gt;
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/s2e.pdf&#34;&gt;S2E&lt;/a&gt;
-    &lt;/td&gt;
-    &lt;td&gt;Brian&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;th class=&#34;date&#34;&gt;Nov 10&lt;/th&gt;
-    &lt;td&gt;
-      &lt;div class=&#34;class-topic&#34;&gt;Software-isolated processes and manifest-based programs&lt;/div&gt;
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/singularity.pdf&#34;&gt;Singularity&lt;/a&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;th class=&#34;date&#34;&gt;Nov 15&lt;/th&gt;
-    &lt;td&gt;
-      &lt;div class=&#34;class-topic&#34;&gt;Full-system verification&lt;/div&gt;
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/ironclad-apps.pdf&#34;&gt;Ironclad Apps&lt;/a&gt;
-      &lt;!-- See also Verve --&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td colspan=&#34;3&#34; class=&#34;topic&#34;&gt;Hardware security&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;th class=&#34;date&#34;&gt;Nov 17&lt;/th&gt;
-    &lt;td&gt;
-      &lt;div class=&#34;class-topic&#34;&gt;Type systems for secure hardware development&lt;/div&gt;
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/secverilog.pdf&#34;&gt;SecVerilog&lt;/a&gt;
-    &lt;/td&gt;
-    &lt;td&gt;Abdul&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;th class=&#34;date&#34;&gt;Nov 22&lt;/th&gt;
-    &lt;td&gt;
-      &lt;div class=&#34;class-topic&#34;&gt;Security monitors for tagged hardware&lt;/div&gt;
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/micro-policies.pdf&#34;&gt;Micro-policies&lt;/a&gt;
-    &lt;/td&gt;
-    &lt;td&gt;Hannah&lt;/td&gt;
-  &lt;/tr&gt;
-&lt;tr class=&#34;info&#34;&gt;
-  &lt;th class=&#34;date&#34;&gt;Nov 24&lt;/th&gt;
-  &lt;td colspan=&#34;2&#34;&gt;Thanksgiving break&lt;/td&gt;
-&lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td colspan=&#34;3&#34; class=&#34;topic&#34;&gt;Cryptography&lt;/td&gt;
-  &lt;/tr&gt;
-&lt;tr&gt;
-  &lt;th class=&#34;date&#34;&gt;Nov 29&lt;/th&gt;
-  &lt;td&gt;
-      &lt;div class=&#34;class-topic&#34;&gt;Refinement types and verified protocols&lt;/div&gt;
-      &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/mitls.pdf&#34;&gt;miTLS&lt;/a&gt;
-      &lt;!-- &lt;div class=&#34;class&amp;#45;topic&#34;&gt;Full abstraction and ASLR&lt;/div&gt; --&gt;
-      &lt;!-- &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/protection&amp;#45;by&amp;#45;aslr.pdf&#34;&gt;On Protection by Layout Randomization&lt;/a&gt; --&gt;
-&lt;!-- Fides --&gt;
-&lt;!-- https://lirias.kuleuven.be/bitstream/123456789/474809/1/scoo&amp;#45;j.pdf --&gt;
-&lt;!-- See also Haven --&gt;
-  &lt;/td&gt;
-  &lt;td&gt;AJ&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-  &lt;th class=&#34;date&#34;&gt;Dec 01&lt;/th&gt;
-  &lt;td&gt;
-    &lt;div class=&#34;class-topic&#34;&gt;Domain-specific languages for multi-party computations&lt;/div&gt;
-    &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/cse291-fall16/papers/wys*.pdf&#34;&gt;Wys&lt;sup&gt;*&lt;/sup&gt;&lt;/a&gt;
-  &lt;/td&gt;
-  &lt;td&gt;Frank&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;info&#34;&gt;
-  &lt;th class=&#34;date&#34;&gt;Dec 09&lt;/th&gt;
-  &lt;td&gt;Project presentations&lt;/td&gt;
-  &lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/table&gt;
-
-&lt;p&gt;
-Please note that this syllabus is subject to change.
-&lt;/p&gt;
 </description>
     </item>
     
