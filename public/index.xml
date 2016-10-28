@@ -152,6 +152,189 @@ dynamic route?)&lt;/p&gt;&lt;/li&gt;
     </item>
     
     <item>
+      <title>NaCl</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/nacl/</link>
+      <pubDate>Fri, 23 Sep 2016 01:37:21 -0706</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/nacl/</guid>
+      <description>
+
+&lt;p&gt;Author: Shravan Narayan&lt;/p&gt;
+
+&lt;h4 id=&#34;what-is-the-high-level-goal&#34;&gt;What is the high level goal?&lt;/h4&gt;
+
+&lt;p&gt;To be able to run native binaries securely, while incurring as little overhead
+as possible to ensure the safety of the system.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-is-the-high-level-strategy&#34;&gt;What is the high level strategy?&lt;/h4&gt;
+
+&lt;p&gt;This is done by ensuring that any faults or bug are isolated to the module, i.e.
+the bug cannot be used to take over the entire system.&lt;/p&gt;
+
+&lt;h4 id=&#34;why-do-you-want-native-code&#34;&gt;Why do you want native code?&lt;/h4&gt;
+
+&lt;p&gt;Native code has the benefit of running on bare metal, i.e. there are no layers
+of interpreters or virtual machines that are needed for them to operate. Thus
+the performance of native code is significantly better than interpreted code of
+virtual machine code.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-is-the-threat-model&#34;&gt;What is the threat model?&lt;/h4&gt;
+
+&lt;p&gt;The threat model is one of where a malicious website creator may use native
+binaries to take over your computer, or a malicious entity could try to take
+over the computer by abusing a bug in one of the native binaries that are
+currently loaded on to the browser by a website.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-are-the-inner-and-outer-sandboxes&#34;&gt;What are the inner and outer sandboxes?&lt;/h4&gt;
+
+&lt;p&gt;NaCl implements its security by running native binaries on 2 layers of
+sandboxes. The inner layer is a sandbox that implements fault isolation - i.e.
+any bug in the program is isolated such that it cannot have an effect on the
+rest on the system. The outer sandbox is an added safety mechanism - this is a
+layer that restricts system calls to only a subset of allowed ones.  In the
+Linux Chromium version, this is currently implemented via
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Seccomp&#34;&gt;seccomp-bpf&lt;/a&gt; which allow this sort of
+system call filtering.&lt;/p&gt;
+
+&lt;h4 id=&#34;how-is-the-software-isolation-enforced-in-the-inner-sandbox-in-nacl&#34;&gt;How is the software isolation enforced in the inner sandbox in NaCl?&lt;/h4&gt;
+
+&lt;p&gt;Software isolation is enforced with the help of the x86 memory segmentation
+features and an instruction verifier.  Segments ensure that the program cannot
+read/write to parts of memory outside the untrusted code&amp;rsquo;s bounds. The
+instruction verifier ensures that only safe (e.g., no memory jumps),
+properly-aligned instructions are allowed. Bit masks are used to ensure that
+jump instructions cannot jump to the middle of existing instructions.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-are-some-of-the-complications-with-parsing-x86-code-what-steps-are-taken-to-mitigate-these-complications&#34;&gt;What are some of the complications with parsing x86 code? What steps are taken to mitigate these complications?&lt;/h4&gt;
+
+&lt;p&gt;x86 code has variable sized instructions. Even a particular instruction may
+have representations in multiple lengths. This may be lead to non-aligned
+overlapping instructions. Another challenge is self modifying code - which is
+used in applications such as JIT code generation etc.&lt;/p&gt;
+
+&lt;p&gt;To reduce the complexity, all instructions are aligned at word boundaries (aka
+32 bit aligned), self modifying code is not allowed and all jump instructions
+are forced to jump to word boundaries.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-are-examples-of-instructions-or-other-operations-not-allowed-by-nacl&#34;&gt;What are examples of instructions or other operations not allowed by NaCl?&lt;/h4&gt;
+
+&lt;p&gt;NaCl blocks any instructions that allow changing the segment state, system
+calls, interrupts and return aka long jump instructions (a modified long jump
+called NaCl jump which is an and instruction followed jump is allowed. The and
+instruction ensures that the jump instruction stays at word boundaries.)&lt;/p&gt;
+
+&lt;h4 id=&#34;what-happens-if-we-don-t-mask-jumps-i-e-what-happens-if-we-allow-regular-jump-or-return-instructions-instead-of-nacl-jump&#34;&gt;What happens if we don&amp;rsquo;t mask jumps, i.e. what happens if we allow regular jump or return instructions instead of NaCl jump?&lt;/h4&gt;
+
+&lt;p&gt;If we don&amp;rsquo;t mask jumps, a program vulnerability could allow the execution of
+instructions that are not allowed such as segment instructions, by creatively
+jumping in the middle of an existing instruction. If the location for the jump
+is picked carefully, the middle of a target instruction could be read by the
+processor as an instruction which we want to block.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-happens-if-we-don-t-use-segmented-memory&#34;&gt;What happens if we don&amp;rsquo;t use segmented memory?&lt;/h4&gt;
+
+&lt;p&gt;Without segmented memory, there is nothing stopping a jump instruction to jump
+to an arbitrary location outside the segment (e.g., to parts of the trusted
+reference monitor). Thus we would need some other mechanism to enforce the
+program memory isolation. One such technique is used in one of the papers
+referred to in the NaCl paper - PittsField. The PittsField paper enforces this
+isolation without segments by applying a bit mask on the most significant bits
+before every jump to ensure the jump is confined to a part of the memory.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-are-the-various-components-included-in-a-nacl-applications-runtime&#34;&gt;What are the various components included in a NaCl applications runtime?&lt;/h4&gt;
+
+&lt;p&gt;Each sandboxed application is run in an environment with the following pieces
+- an inter module communications service: which allows communication between
+  components, components and the browser via messages, shared memory segments
+  and synchronization objects
+- service runtime: which allows memory management APIs, thread creation interfaces etc.&lt;/p&gt;
+
+&lt;h4 id=&#34;why-does-nacl-have-srpc-and-npapi&#34;&gt;Why does NaCl have SRPC and NPAPI?&lt;/h4&gt;
+
+&lt;p&gt;SRPC is a protocol that allows communication between NaCl modules as well as
+the JavaScript in the browser by declaring the procedural interface with basic
+data types. NPAPI (Netscape Plugin API) is a protocol which is used to interact
+with DOM, JS objects directly, etc. NPAPI is actually quite an old protocol
+that is no longer used by NaCl. They have replaced this with a new protocol
+called Pepper with the goal of better platform portability and security.&lt;/p&gt;
+
+&lt;h4 id=&#34;how-is-the-isolation-provided-by-nacl-thwart-a-simple-buffer-overflow-vulnerability-that-gives-arbitrary-code-execution&#34;&gt;How is the isolation provided by NaCl thwart a simple buffer overflow vulnerability that gives arbitrary code execution?&lt;/h4&gt;
+
+&lt;p&gt;NaCl does not prevent the buffer overflow, however, the buffer is stored in a
+separate data segment. So, a buffer overflow cannot be used to overwrite the
+return pointer on the stack. Also, this segment is separated from the rest of
+the call stack and the memory page containing the data segment is marked as
+no-execute and so cannot be executed.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-is-the-validator-what-are-the-use-cases-and-constraints&#34;&gt;What is the validator? What are the use cases and constraints?&lt;/h4&gt;
+
+&lt;p&gt;The validator is a program that is used prior to loading a NaCl binary. This
+program validates that a given NaCl binary confirms to all the rules about
+using only allowed and word aligned instructions, masking jump locations, etc.
+The validator thus needs to be able to efficiently parse x86 instructions - the
+word alignment restriction as well as a small subset of allowed instructions
+makes this simpler. As the validator is used just before loading the binary, it
+is required that this operate with minimum overhead, so as to not introduce any
+latency.&lt;/p&gt;
+
+&lt;h4 id=&#34;the-paper-talks-about-exceptions-what-are-they-how-are-they-supported&#34;&gt;The paper talks about exceptions. What are they? How are they supported?&lt;/h4&gt;
+
+&lt;p&gt;There are 2 types of exceptions:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Hardware exceptions: interrupts delivered by the OS such as floating point exceptions&lt;/li&gt;
+&lt;li&gt;Software exceptions: the regular exceptions encountered by the language which
+are handled by the try catch syntax.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Hardware exceptions are not supported and will cause the NaCl program to be
+terminated. This is because segmented memory modes were not very well supported
+by the OS - i.e. the OS doesn&amp;rsquo;t have a mechanism to deliver exceptions to
+processed which have modified the stack segment register.  Software exceptions
+function as expected.&lt;/p&gt;
+
+&lt;h4 id=&#34;are-system-calls-allowed-in-nacl-describe-the-mechanism-used-to-enable-block-this&#34;&gt;Are system calls allowed in NaCl? Describe the mechanism used to enable/block this?&lt;/h4&gt;
+
+&lt;p&gt;System calls are not directly allowed. However NaCl provides a mediated
+approach to some functions, including system calls, with the help of trampolines
+and springboards. These mechanisms are implemented as part of the Service
+Runtime. Trampolines are trusted code that removes the segment restrictions,
+and calls into unsandboxed code. This code executes and returns via the
+springboard. The springboard resets these stack restrictions. Note that the
+springboard code is also used as to provide the threading interface for a NaCl
+binary - however this cannot be invoked directly by the sanboxed NaCl app.&lt;/p&gt;
+
+&lt;h4 id=&#34;the-paper-describes-a-particular-memory-layout-for-nacl-binaries-what-are-the-benefits&#34;&gt;The paper describes a particular memory layout for NaCl binaries? What are the benefits?&lt;/h4&gt;
+
+&lt;p&gt;The memory layout starts with one page (4kb) of unallocated space - this is
+used to detect null pointer exceptions as any reference to this memory will
+cause a page fault. The next 60 KB is used by the service runtime to load the
+trusted trampoline and springboard code. Trampolines can only contain function
+whose entries are at word boundaries as they need to be callable by the NaCl
+binary. The springboard should not be called directly by the NaCl binary as it
+manipulates segment information and so have entries that are not word aligned.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-were-some-of-the-modifications-required-to-the-compilers-to-generate-nacl-binaries&#34;&gt;What were some of the modifications required to the compilers to generate NaCl binaries?&lt;/h4&gt;
+
+&lt;p&gt;GCC was modified to ensure&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;function entries were only at word boundaries&lt;/li&gt;
+&lt;li&gt;branch targets are 32 bit aligned&lt;/li&gt;
+&lt;li&gt;to use nacljump for indirect transfers&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-is-the-overhead-of-a-nacl-binary&#34;&gt;What is the overhead of a NaCl binary?&lt;/h4&gt;
+
+&lt;p&gt;Several benchmarks were run to estimate overhead - the average overhead seems
+to be about 5%. Benchmarks included SPEC2000, graphics tests, video decoding,
+physics simulations, and games. The equally important metric was the latency
+overhead of the NaCl verifier, which was measured to be on the order of
+30MB/second (small compared to download time).&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Verena</title>
       <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/verena/</link>
       <pubDate>Fri, 23 Sep 2016 01:37:21 -0705</pubDate>
@@ -984,122 +1167,6 @@ doing so).&lt;/p&gt;
 &lt;p&gt;The organization of this course was inspired by the Stanford &lt;a
 href=&#34;https://cs240.stanford.edu&#34;&gt;CS 240&lt;/a&gt; course. (Thanks to Dawson Engler,
 Sergio Benitez, and David Mazières!)&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Project ideas</title>
-      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/ideas/</link>
-      <pubDate>Mon, 05 Sep 2016 20:19:41 -0700</pubDate>
-      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
-      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/ideas/</guid>
-      <description>&lt;p&gt;Below is a list of project ideas. Some are more open ended or more
-challenging than others. Hence, undertaking a substantial subset of
-any of these is a reasonable goal for this class.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Prototype a new extension system architecture (e.g., for Brave?)
-that has a stronger attacker model: malicious extensions.  (See
-&lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/pubs/heule:2015:the-most.pdf&#34;&gt;our position on browser extension
-design&lt;/a&gt;
-for motivation.) Studying how and what permissions existing
-extensions use today would be an interesting component to this.&lt;/li&gt;
-&lt;li&gt;Explore the use of Service workers, obfuscation (in the crypto
-sense), and CSP to implement security monitors like COWL in existing
-browsers.&lt;/li&gt;
-&lt;li&gt;Automatically rewrite and compartmentalize client-side web
-applications to leverage COWL.&lt;/li&gt;
-&lt;li&gt;Implement a discretionary access control (DAC) monad that ties in
-with a database library and the filesystem to enforce Hails-like
-policies.&lt;/li&gt;
-&lt;li&gt;Implement a Resin-like system for Node.js, using ES6 proxies and
-program rewriting to essentially implement taint tracking. (Credit:
-this idea came out of a discussion with Brad Karp who would be a
-natural collaborator.)&lt;/li&gt;
-&lt;li&gt;Develop domain-specific symbol execution. Consider, for example, finding
-(security) bugs in web (e.g., rails or express) applications. Or, consider,
-for example, using symbolic execution to reverse-engineer custom hardware
-protocols &amp;ndash; come chat with me and Kirill Levchenko about this.&lt;/li&gt;
-&lt;li&gt;Evaluate the Web Crypto API and design an alternative API that is
-less bug prone. Both  a simpler API and an API that uses IFC to
-ensure keys are not leaked are reasonable directions.&lt;/li&gt;
-&lt;li&gt;Develop a formal model for least privilege. What does it mean for a
-program to be least privileged? Given this model, look at a real
-applications within some domain (e.g., browser extensions, mobile
-apps) and either show that they are least privileged or that they are
-not. Alternatively, apply the model to IFC, capabilities, or other
-mechanisms.&lt;/li&gt;
-&lt;li&gt;Develop a Passe-like inference algorithm that uses tests to infer
-application security policies. Hypothesis: a type inference-like
-algorithm can be used to easily do this for ORM-based applications.
-Given enough access examples (traces) the policy become more
-general; but starts out very specific.&lt;/li&gt;
-&lt;li&gt;Use program synthesis to generate Hails and Passe-like policies from
-user-supplied examples.&lt;/li&gt;
-&lt;li&gt;Unify IFC, capabilities, MAC and DAC. Show how they are equivalent
-(e.g., an IFC-secure program can be enforced with capabilities and
-DAC). And show where the different mechanisms are not compatible
-(e.g., attacker models?). Working on an implementation or formal
-setting are both reasonable here.&lt;/li&gt;
-&lt;li&gt;Extend LIO with software transactional memory (STM) without
-introducing covert channels. This is especially interesting if the
-transactional model can be extended to the filesystem.&lt;/li&gt;
-&lt;li&gt;Model a real crypto-based protocol like FIDO or OpenID using a model
-checker (e.g.,
-&lt;a href=&#34;http://formalverification.cs.utah.edu/Murphi/&#34;&gt;Murphi&lt;/a&gt; or
-&lt;a href=&#34;http://alloy.mit.edu/alloy/&#34;&gt;Alloy&lt;/a&gt;).&lt;/li&gt;
-&lt;li&gt;Explore the interaction of garbage collection and information flow
-control. Can we have an IFC system that won&amp;rsquo;t leak via the GC?&lt;/li&gt;
-&lt;li&gt;Explore the interaction of IFC and foreign function interfaces. Can
-we safely extend IFC systems with FFIs? (Maybe using Dune?)&lt;/li&gt;
-&lt;li&gt;Design a new (graphical) language for describing secure systems
-(e.g.  dns servers, web servers, ssh servers) and generate the
-boilerplate security enforcement code to ensure security/isolation
-between different compartments (where untrusted code implements
-functionality).&lt;/li&gt;
-&lt;li&gt;Implement Singularity-like SIPs, but using
-&lt;a href=&#34;http://dune.scs.stanford.edu/&#34;&gt;Dune&lt;/a&gt; to do it in hardware. It would
-be interesting to do this in the context of a new
-&lt;a href=&#34;https://www.rust-lang.org/en-US/&#34;&gt;Rust&lt;/a&gt; OS or
-&lt;a href=&#34;https://servo.org/&#34;&gt;Servo&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Design language/DSL that makes it easy to securely write
-applications that rely on crypto (e.g., encrypted email, encrypted
-chat).&lt;/li&gt;
-&lt;li&gt;Implement a fast MPC language/DSL. E.g., by building on
-&lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/pubs/mitchell:2012:information.pdf&#34;&gt;λPS&lt;/a&gt;
-you can consider partially homomorphic encryption, network message
-batching, etc.&lt;/li&gt;
-&lt;li&gt;Design language/DSL that makes it easy to have certain sensitive
-computations execute in an environment that is protected from the
-rest of the application/OS (e.g., by using SGX (enclaves) or
-offloading to SMC cloud).&lt;/li&gt;
-&lt;li&gt;Design (monadic) DSL for expressing garbled circuits with the goal of
-proving security about arbitrary circuits (via composition) and
-generating efficient implementations (e.g., for x86 or FPGAs). This
-is joint work with Daniele Micciancio.&lt;/li&gt;
-&lt;li&gt;Develop a formal model for browser binding code. This would make it
-possible to reason about security across languages like C++ and
-JavaScript. See &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/pubs/brown:2016:superhacks.pdf&#34;&gt;our position paper on binding-layer
-CVEs&lt;/a&gt;
-for motivation.  Using
-&lt;a href=&#34;http://blog.brownplt.org/2012/01/31/s5-wat.html&#34;&gt;S5&lt;/a&gt; and maybe
-Rust (motivated by &lt;a href=&#34;https://servo.org/&#34;&gt;Servo&lt;/a&gt;) may be intersting.&lt;/li&gt;
-&lt;li&gt;Implement
-&lt;a href=&#34;https://en.wikipedia.org/wiki/Password-authenticated_key_agreement&#34;&gt;PAKE&lt;/a&gt;
-in existing browsers (similar to
-&lt;a href=&#34;https://www.henrycg.com/pubs/w2sp15stickler/&#34;&gt;Stickler&lt;/a&gt;. (Credit:
-David Mazières and Quinn Slack did this by modifying the browser
-several years ago. Shravan is working on something similar and reminded me of this idea.)&lt;/li&gt;
-&lt;li&gt;Devise a policy language (maybe by extending Hails&amp;rsquo;) to account for
-information leakage and an enforcement system for it. It would be interesting
-to tie this in with the external mitigation techniques we discussed in class
-or other equines like &lt;a href=&#34;https://en.wikipedia.org/wiki/Differential_privacy&#34;&gt;differential privacy&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Design a language that gives you similar capabilities as
-&lt;a href=&#34;https://en.wikipedia.org/wiki/Berkeley_Packet_Filter&#34;&gt;BPF&lt;/a&gt; but is amendable
-to analysis and query. For example, given a program written in this language
-you may wish to ask if the only thing it allows is TCP traffic on port 80. If
-this is interesting to you, come chat with me and Kirill Levchenko.&lt;/li&gt;
-&lt;/ul&gt;
 </description>
     </item>
     
