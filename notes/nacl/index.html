@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>NaCl  &middot; CSE 291</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="" />
+
+<meta name="keywords" content="">
+
+
+<meta property="og:title" content="NaCl  &middot; CSE 291 ">
+<meta property="og:site_name" content="CSE 291"/>
+<meta property="og:url" content="https://cse291.programming.systems/notes/nacl/" />
+<meta property="og:locale" content="en-us">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content=""/>
+<meta property="og:article:published_time" content="2016-09-23T01:37:21-07:06" />
+<meta property="og:article:modified_time" content="2016-09-23T01:37:21-07:06" />
+
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@deiandelmars" />
+<meta name="twitter:creator" content="@deiandelmars" />
+<meta name="twitter:title" content="NaCl" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:url" content="https://cse291.programming.systems/notes/nacl/" />
+<meta name="twitter:domain" content="https://cse291.programming.systems">
+  
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "NaCl",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/+?rel=author"
+    },
+    "datePublished": "2016-09-23",
+    "description": "",
+    "wordCount":  1418 
+  }
+</script>
+
+
+
+<link rel="canonical" href="https://cse291.programming.systems/notes/nacl/" />
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://cse291.programming.systems/touch-icon-144-precomposed.png">
+<link href="https://cse291.programming.systems/favicon.png" rel="icon">
+<meta name="theme-color" content="#2053AB">
+<meta name="generator" content="Hugo 0.16" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://cse291.programming.systems/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cse291.programming.systems/css/style.css">
+<link rel="stylesheet" href="https://cse291.programming.systems/css/highlight/default.css">
+
+  
+</head>
+<body>
+  <main id="main-wrapper" class="container main_wrapper has-sidebar">
+    <header id="main-header" class="container main_header">
+  <div class="container brand">
+  <div class="container title h1-like">
+  <a class="baselink" href="https://cse291.programming.systems">
+  CSE 291
+
+</a>
+
+</div>
+
+  
+<div class="container topline">
+  
+  Building Secure Systems using Programming Languages and Analysis
+
+
+</div>
+
+
+</div>
+
+  <nav class="container nav primary no-print">
+  
+
+
+  
+<a href="https://cse291.programming.systems/about">Organization</a>
+
+<a href="https://cse291.programming.systems/syllabus" title="Course syllabus">Syllabus</a>
+
+<a href="https://cse291.programming.systems/contact">Contact</a>
+
+<a href="https://cse291.programming.systems/notes">Notes</a>
+
+<a href="https://cse291.programming.systems/assignments">Assignments</a>
+
+<a href="https://cse291.programming.systems/ideas">Project ideas</a>
+
+
+</nav>
+
+<div class="container nav secondary no-print">
+  
+<a id="contact-link-email" class="contact_link" href="mailto:deian&#43;cse291@cs.ucsd.edu">
+  <span class="fa fa-envelope-square"></span><span>email</span></a>
+
+
+
+<a id="contact-link-github" class="contact_link" href="https://github.com/plsyssec/cse291-fall16">
+  <span class="fa fa-github-square"></span><span>github</span></a>
+
+
+
+
+
+
+
+
+
+
+
+<a id="contact-link-twitter" class="contact_link" href="https://twitter.com/deiandelmars">
+  <span class="fa fa-twitter-square"></span><span>twitter</span></a>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+  
+
+</header>
+
+
+<article id="main-content" class="container main_content single">
+  <header class="container hat">
+  <h1>NaCl
+</h1>
+
+</header>
+
+  <div class="container content">
+  
+
+<p>Author: Shravan Narayan</p>
+
+<h4 id="what-is-the-paper-s-high-level-goal">What is the paper&rsquo;s high level goal?</h4>
+
+<p>To be able to run native binaries securely, while incurring as little overhead
+as possible to ensure the safety of the system.</p>
+
+<h4 id="what-is-the-high-level-strategy">What is the high level strategy?</h4>
+
+<p>This is done by ensuring that any faults or bug are isolated to the module, i.e.
+the bug cannot be used to take over the entire system.</p>
+
+<h4 id="why-do-you-want-native-code">Why do you want native code?</h4>
+
+<p>Native code has the benefit of running on bare metal, i.e. there are no layers
+of interpreters or virtual machines that are needed for them to operate. Thus
+the performance of native code is significantly better than interpreted code of
+virtual machine code.</p>
+
+<h4 id="what-is-the-threat-model">What is the threat model?</h4>
+
+<p>The threat model is one of where a malicious website creator may use native
+binaries to take over your computer, or a malicious entity could try to take
+over the computer by abusing a bug in one of the native binaries that are
+currently loaded on to the browser by a website.</p>
+
+<h4 id="what-are-the-inner-and-outer-sandboxes">What are the inner and outer sandboxes?</h4>
+
+<p>NaCl implements its security by running native binaries on 2 layers of
+sandboxes. The inner layer is a sandbox that implements fault isolation - i.e.
+any bug in the program is isolated such that it cannot have an effect on the
+rest on the system. The outer sandbox is an added safety mechanism - this is a
+layer that restricts system calls to only a subset of allowed ones.  In the
+Linux Chromium version, this is currently implemented via
+<a href="https://en.wikipedia.org/wiki/Seccomp">seccomp-bpf</a> which allow this sort of
+system call filtering.</p>
+
+<h4 id="how-is-the-software-isolation-enforced-in-the-inner-sandbox-in-nacl">How is the software isolation enforced in the inner sandbox in NaCl?</h4>
+
+<p>Software isolation is enforced with the help of the x86 memory segmentation
+features and an instruction verifier.  Segments ensure that the program cannot
+read/write to parts of memory outside the untrusted code&rsquo;s bounds. The
+instruction verifier ensures that only safe (e.g., no memory jumps),
+properly-aligned instructions are allowed. Bit masks are used to ensure that
+jump instructions cannot jump to the middle of existing instructions.</p>
+
+<h4 id="what-are-some-of-the-complications-with-parsing-x86-code-what-steps-are-taken-to-mitigate-these-complications">What are some of the complications with parsing x86 code? What steps are taken to mitigate these complications?</h4>
+
+<p>x86 code has variable sized instructions. Even a particular instruction may
+have representations in multiple lengths. This may be lead to non-aligned
+overlapping instructions. Another challenge is self modifying code - which is
+used in applications such as JIT code generation etc.</p>
+
+<p>To reduce the complexity, all instructions are aligned at word boundaries (aka
+32 bit aligned), self modifying code is not allowed and all jump instructions
+are forced to jump to word boundaries.</p>
+
+<h4 id="what-are-examples-of-instructions-or-other-operations-not-allowed-by-nacl">What are examples of instructions or other operations not allowed by NaCl?</h4>
+
+<p>NaCl blocks any instructions that allow changing the segment state, system
+calls, interrupts and return aka long jump instructions (a modified long jump
+called NaCl jump which is an and instruction followed jump is allowed. The and
+instruction ensures that the jump instruction stays at word boundaries.)</p>
+
+<h4 id="what-happens-if-we-don-t-mask-jumps-i-e-what-happens-if-we-allow-regular-jump-or-return-instructions-instead-of-nacl-jump">What happens if we don&rsquo;t mask jumps, i.e. what happens if we allow regular jump or return instructions instead of NaCl jump?</h4>
+
+<p>If we don&rsquo;t mask jumps, a program vulnerability could allow the execution of
+instructions that are not allowed such as segment instructions, by creatively
+jumping in the middle of an existing instruction. If the location for the jump
+is picked carefully, the middle of a target instruction could be read by the
+processor as an instruction which we want to block.</p>
+
+<h4 id="what-happens-if-we-don-t-use-segmented-memory">What happens if we don&rsquo;t use segmented memory?</h4>
+
+<p>Without segmented memory, there is nothing stopping a jump instruction to jump
+to an arbitrary location outside the segment (e.g., to parts of the trusted
+reference monitor). Thus we would need some other mechanism to enforce the
+program memory isolation. One such technique is used in one of the papers
+referred to in the NaCl paper - PittsField. The PittsField paper enforces this
+isolation without segments by applying a bit mask on the most significant bits
+before every jump to ensure the jump is confined to a part of the memory.</p>
+
+<h4 id="what-are-the-various-components-included-in-a-nacl-applications-runtime">What are the various components included in a NaCl applications runtime?</h4>
+
+<p>Each sandboxed application is run in an environment with the following pieces
+- an inter module communications service: which allows communication between
+  components, components and the browser via messages, shared memory segments
+  and synchronization objects
+- service runtime: which allows memory management APIs, thread creation interfaces etc.</p>
+
+<h4 id="why-does-nacl-have-srpc-and-npapi">Why does NaCl have SRPC and NPAPI?</h4>
+
+<p>SRPC is a protocol that allows communication between NaCl modules as well as
+the JavaScript in the browser by declaring the procedural interface with basic
+data types. NPAPI (Netscape Plugin API) is a protocol which is used to interact
+with DOM, JS objects directly, etc. NPAPI is actually quite an old protocol
+that is no longer used by NaCl. They have replaced this with a new protocol
+called Pepper with the goal of better platform portability and security.</p>
+
+<h4 id="how-is-the-isolation-provided-by-nacl-thwart-a-simple-buffer-overflow-vulnerability-that-gives-arbitrary-code-execution">How is the isolation provided by NaCl thwart a simple buffer overflow vulnerability that gives arbitrary code execution?</h4>
+
+<p>NaCl does not prevent the buffer overflow, however, the buffer is stored in a
+separate data segment. So, a buffer overflow cannot be used to overwrite the
+return pointer on the stack. Also, this segment is separated from the rest of
+the call stack and the memory page containing the data segment is marked as
+no-execute and so cannot be executed.</p>
+
+<h4 id="what-is-the-validator-what-are-the-use-cases-and-constraints">What is the validator? What are the use cases and constraints?</h4>
+
+<p>The validator is a program that is used prior to loading a NaCl binary. This
+program validates that a given NaCl binary confirms to all the rules about
+using only allowed and word aligned instructions, masking jump locations, etc.
+The validator thus needs to be able to efficiently parse x86 instructions - the
+word alignment restriction as well as a small subset of allowed instructions
+makes this simpler. As the validator is used just before loading the binary, it
+is required that this operate with minimum overhead, so as to not introduce any
+latency.</p>
+
+<h4 id="the-paper-talks-about-exceptions-what-are-they-how-are-they-supported">The paper talks about exceptions. What are they? How are they supported?</h4>
+
+<p>There are 2 types of exceptions:</p>
+
+<ul>
+<li>Hardware exceptions: interrupts delivered by the OS such as floating point exceptions</li>
+<li>Software exceptions: the regular exceptions encountered by the language which
+are handled by the try catch syntax.</li>
+</ul>
+
+<p>Hardware exceptions are not supported and will cause the NaCl program to be
+terminated. This is because segmented memory modes were not very well supported
+by the OS - i.e. the OS doesn&rsquo;t have a mechanism to deliver exceptions to
+processed which have modified the stack segment register.  Software exceptions
+function as expected.</p>
+
+<h4 id="are-system-calls-allowed-in-nacl-describe-the-mechanism-used-to-enable-block-this">Are system calls allowed in NaCl? Describe the mechanism used to enable/block this?</h4>
+
+<p>System calls are not directly allowed. However NaCl provides a mediated
+approach to some functions, including system calls, with the help of trampolines
+and springboards. These mechanisms are implemented as part of the Service
+Runtime. Trampolines are trusted code that removes the segment restrictions,
+and calls into unsandboxed code. This code executes and returns via the
+springboard. The springboard resets these stack restrictions. Note that the
+springboard code is also used as to provide the threading interface for a NaCl
+binary - however this cannot be invoked directly by the sanboxed NaCl app.</p>
+
+<h4 id="the-paper-describes-a-particular-memory-layout-for-nacl-binaries-what-are-the-benefits">The paper describes a particular memory layout for NaCl binaries? What are the benefits?</h4>
+
+<p>The memory layout starts with one page (4kb) of unallocated space - this is
+used to detect null pointer exceptions as any reference to this memory will
+cause a page fault. The next 60 KB is used by the service runtime to load the
+trusted trampoline and springboard code. Trampolines can only contain function
+whose entries are at word boundaries as they need to be callable by the NaCl
+binary. The springboard should not be called directly by the NaCl binary as it
+manipulates segment information and so have entries that are not word aligned.</p>
+
+<h4 id="what-were-some-of-the-modifications-required-to-the-compilers-to-generate-nacl-binaries">What were some of the modifications required to the compilers to generate NaCl binaries?</h4>
+
+<p>GCC was modified to ensure</p>
+
+<ul>
+<li>function entries were only at word boundaries</li>
+<li>branch targets are 32 bit aligned</li>
+<li>to use nacljump for indirect transfers</li>
+</ul>
+
+<h4 id="what-is-the-overhead-of-a-nacl-binary">What is the overhead of a NaCl binary?</h4>
+
+<p>Several benchmarks were run to estimate overhead - the average overhead seems
+to be about 5%. Benchmarks included SPEC2000, graphics tests, video decoding,
+physics simulations, and games. The equally important metric was the latency
+overhead of the NaCl verifier, which was measured to be on the order of
+30MB/second (small compared to download time).</p>
+
+</div>
+
+
+  
+</article>
+      <footer id="main-footer" class="container main_footer">
+  
+
+  <div class="container nav foot no-print">
+  
+
+  <a class="toplink" href="#">back to top</a>
+
+</div>
+
+  <div class="container credits">
+  
+<div class="container footline">
+  
+
+</div>
+
+
+  
+
+</div>
+
+</footer>
+
+    </main>
+    
+
+
+<script src="https://cse291.programming.systems/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+    
+  </body>
+</html>
+
