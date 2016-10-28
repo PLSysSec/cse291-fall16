@@ -8,7 +8,7 @@ draft = false
 
 Author: Shravan Narayan
 
-#### What is the high level goal?
+#### What is the paper's high level goal?
 
 To be able to run native binaries securely, while incurring as little overhead
 as possible to ensure the safety of the system. 
