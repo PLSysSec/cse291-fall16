@@ -8,8 +8,25 @@
     <language>en-us</language>
     <managingEditor>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</managingEditor>
     <webMaster>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</webMaster>
-    <lastBuildDate>Wed, 28 Sep 2016 15:44:04 -0706</lastBuildDate>
+    <lastBuildDate>Wed, 28 Sep 2016 15:44:04 -0707</lastBuildDate>
     <atom:link href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Chrome extension system questions</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/chrome-extension-system/</link>
+      <pubDate>Wed, 28 Sep 2016 15:44:04 -0707</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/chrome-extension-system/</guid>
+      <description>&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&amp;ldquo;Content scripts run in the same process as their associated web pages.&amp;rdquo;
+Why? Why not run them in separate processes?&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Explain how a malicious extension that needs the privilege to read/write
+data on any origin can steal a user&amp;rsquo;s banking data even if they never visit
+evil.com.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>NaCl questions</title>
