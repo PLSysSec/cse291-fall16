@@ -8,8 +8,25 @@
     <language>en-us</language>
     <managingEditor>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</managingEditor>
     <webMaster>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</webMaster>
-    <lastBuildDate>Wed, 28 Sep 2016 15:44:04 -0706</lastBuildDate>
+    <lastBuildDate>Wed, 28 Sep 2016 15:44:04 -0707</lastBuildDate>
     <atom:link href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Chrome extension system questions</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/chrome-extension-system/</link>
+      <pubDate>Wed, 28 Sep 2016 15:44:04 -0707</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/chrome-extension-system/</guid>
+      <description>&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&amp;ldquo;Content scripts run in the same process as their associated web pages.&amp;rdquo;
+Why? Why not run them in separate processes?&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Explain how a malicious extension that needs the privilege to read/write
+data on any origin can steal a user&amp;rsquo;s banking data even if they never visit
+evil.com.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>NaCl questions</title>
@@ -1103,70 +1120,6 @@ when answering these questions.&lt;/p&gt;
 haven&amp;rsquo;t done so already and use the GitHub classroom link (see relevant post on
 Piazza) to sign up for a private repository to which you will post your writing
 assignment.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Course organization</title>
-      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/about/</link>
-      <pubDate>Mon, 05 Sep 2016 20:19:41 -0700</pubDate>
-      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
-      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/about/</guid>
-      <description>
-
-&lt;p&gt;The course consists of lectures, readings, pre-lecture questions, and a
-project.  Most of the work in this course consists of reading journal and
-conference papers. We will cover one paper for each class meeting.  Active
-discussion will give you a non-trivial understanding of the material. The final
-project will give you an opportunity to explore a topic more deeply.&lt;/p&gt;
-
-&lt;h4 id=&#34;grading&#34;&gt;Grading&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;30% Paper summaries and reading questions&lt;/li&gt;
-&lt;li&gt;25% Class participation&lt;/li&gt;
-&lt;li&gt;45% Final project (including presentation and write-up)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#34;paper-summaries-and-reading-questions&#34;&gt;Paper summaries and reading questions&lt;/h4&gt;
-
-&lt;p&gt;Prior to each lecture, please summarize each reading into 1-2 paragraphs.  With
-some exceptions, each paper will also be accompanied with (one to two)
-questions that you are required to respond to. The questions will be posted on
-the reading list in the syllabus at least one day prior to the lecture devoted
-to that paper.  Responses should be short and pithy. Our goal is to get you to
-think deeply about the paper, not to test you. You won’t be graded on the
-correctness of your answer but simply on whether you attempted to answer the
-question at all.&lt;/p&gt;
-
-&lt;h4 id=&#34;class-participation&#34;&gt;Class participation&lt;/h4&gt;
-
-&lt;p&gt;Each student is expected to lead the discussion for (at least) one paper.
-Beyond this, we evaluate class participation largely by observing how prepared
-students are to discuss the covered paper when they come to class.  This is not
-a trivial requirement because we expect papers to have been read thoroughly
-prior to lecture.  Your paper summary and response to reading questions are a
-good opportunity to show that you understood the paper well.&lt;/p&gt;
-
-&lt;h4 id=&#34;final-project&#34;&gt;Final project&lt;/h4&gt;
-
-&lt;p&gt;In groups of 2-3, students are expected to work on a final project.  The goal
-of the project is to do original research on a security problem, (hopefully)
-using techniques explored in this course.  At the end of the quarter, you are
-expected to give a short presentation and write a short conference-style paper
-on the project.&lt;/p&gt;
-
-&lt;p&gt;We will have a list of project ideas shortly after the course starts, but
-students are also encouraged to come up with their own ideas. If you are
-already working on a research project that fits the theme of this course,
-please feel free to use this as your final project (but indicate that you are
-doing so).&lt;/p&gt;
-
-&lt;h4 id=&#34;acknowledgements&#34;&gt;Acknowledgements&lt;/h4&gt;
-
-&lt;p&gt;The organization of this course was inspired by the Stanford &lt;a
-href=&#34;https://cs240.stanford.edu&#34;&gt;CS 240&lt;/a&gt; course. (Thanks to Dawson Engler,
-Sergio Benitez, and David Mazières!)&lt;/p&gt;
 </description>
     </item>
     
