@@ -19,7 +19,7 @@
       <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/chrome-extension-system/</guid>
       <description>&lt;ol&gt;
 &lt;li&gt;&lt;p&gt;&amp;ldquo;Content scripts run in the same process as their associated web pages.&amp;rdquo;
-Why? Why not run them in separate processes?&lt;/p&gt;&lt;/li&gt;
+What makes it difficult to run them in separate processes? Give 2 reasons.&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;Explain how a malicious extension that needs the privilege to read/write
 data on any origin can steal a user&amp;rsquo;s banking data even if they never visit
