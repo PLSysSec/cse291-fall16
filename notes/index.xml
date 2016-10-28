@@ -21,7 +21,7 @@
 
 &lt;p&gt;Author: Shravan Narayan&lt;/p&gt;
 
-&lt;h4 id=&#34;what-is-the-paper-s-high-level-goal&#34;&gt;What is the paper&amp;rsquo;s high level goal?&lt;/h4&gt;
+&lt;h4 id=&#34;what-is-the-high-level-goal&#34;&gt;What is the high level goal?&lt;/h4&gt;
 
 &lt;p&gt;To be able to run native binaries securely, while incurring as little overhead
 as possible to ensure the safety of the system.&lt;/p&gt;
