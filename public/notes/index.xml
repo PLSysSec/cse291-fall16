@@ -23,13 +23,16 @@
 
 &lt;h4 id=&#34;background&#34;&gt;Background&lt;/h4&gt;
 
-&lt;p&gt;Presented in 2010, at NDSS (network and distributed system security).&lt;/p&gt;
+&lt;p&gt;Presented in 2010, at NDSS (Network and Distributed System Security).&lt;/p&gt;
 
-&lt;p&gt;The following people were on the paper:
-- Adam Barth: (one of first people working on) Security at Chrome
-- Adrienne Porter Felt: Usable Security at Chrome
-- Prateek Saxena: Prof. at National University of Singapore
-- Aaron Boodman: Helped build Chrome, now at Startup&lt;/p&gt;
+&lt;p&gt;The following people were on the paper:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Adam Barth: (one of first people working on) Security at Chrome&lt;/li&gt;
+&lt;li&gt;Adrienne Porter Felt: Usable Security at Chrome&lt;/li&gt;
+&lt;li&gt;Prateek Saxena: Prof at National University of Singapore&lt;/li&gt;
+&lt;li&gt;Aaron Boodman: Helped build Chrome, now at Startup&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;They were all at some point invested in Google (or still are), and had a vested
 interest in making a system that worked and was effective.&lt;/p&gt;

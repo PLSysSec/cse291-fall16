@@ -10,12 +10,13 @@ Author: Ariana Mirian
 
 #### Background
 
-Presented in 2010, at NDSS (network and distributed system security).
+Presented in 2010, at NDSS (Network and Distributed System Security).
 
 The following people were on the paper:
+
 - Adam Barth: (one of first people working on) Security at Chrome
 - Adrienne Porter Felt: Usable Security at Chrome
-- Prateek Saxena: Prof. at National University of Singapore
+- Prateek Saxena: Prof at National University of Singapore
 - Aaron Boodman: Helped build Chrome, now at Startup
 
 They were all at some point invested in Google (or still are), and had a vested
