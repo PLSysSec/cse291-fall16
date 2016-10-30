@@ -3,8 +3,7 @@ author = "Ariana Mirian"
 date = "2016-09-23T01:37:21-07:08"
 title = "Chrome extension system"
 type = "notes"
-draft = true
-
+draft = false
 +++
 
 Author: Ariana Mirian
