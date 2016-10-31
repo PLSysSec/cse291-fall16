@@ -13,7 +13,7 @@ draft = false
    wouldn't work.)
 
 2. Why does COWL not allow arbitrary JavaScript objects to be labeled and sent
-   via `postMessage`?
+   via `postMessage`? (I.e., why must objects be _structurally clonable_?)
 
 3. One can think of COWL as an adaptation of LIO for the browser. But, unlike
    for LIO, we cannot prove termination-sensitive non-interference (TSNI) for

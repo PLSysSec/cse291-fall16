@@ -24,7 +24,7 @@ sensitive before sending it data? Come up with a scenario where this
 wouldn&amp;rsquo;t work.)&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;Why does COWL not allow arbitrary JavaScript objects to be labeled and sent
-via &lt;code&gt;postMessage&lt;/code&gt;?&lt;/p&gt;&lt;/li&gt;
+via &lt;code&gt;postMessage&lt;/code&gt;? (I.e., why must objects be &lt;em&gt;structurally clonable&lt;/em&gt;?)&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;One can think of COWL as an adaptation of LIO for the browser. But, unlike
 for LIO, we cannot prove termination-sensitive non-interference (TSNI) for
