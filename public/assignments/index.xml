@@ -8,8 +8,30 @@
     <language>en-us</language>
     <managingEditor>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</managingEditor>
     <webMaster>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</webMaster>
-    <lastBuildDate>Wed, 28 Sep 2016 15:44:04 -0707</lastBuildDate>
+    <lastBuildDate>Wed, 28 Sep 2016 15:44:04 -0708</lastBuildDate>
     <atom:link href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>COWL questions</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/cowl/</link>
+      <pubDate>Wed, 28 Sep 2016 15:44:04 -0708</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/cowl/</guid>
+      <description>&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Why are labeled blobs crucial for making COWL practical? (Can&amp;rsquo;t a context
+just raise its label to ensure that a receiving context is at least as
+sensitive before sending it data? Come up with a scenario where this
+wouldn&amp;rsquo;t work.)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Why does COWL not allow arbitrary JavaScript objects to be labeled and sent
+via &lt;code&gt;postMessage&lt;/code&gt;?&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;One can think of COWL as an adaptation of LIO for the browser. But, unlike
+for LIO, we cannot prove termination-sensitive non-interference (TSNI) for
+COWL. Recall what TSNI is and explain why we can&amp;rsquo;t prove this COWL.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>Chrome extension system questions</title>
