@@ -209,6 +209,246 @@ dynamic route?)&lt;/p&gt;&lt;/li&gt;
     </item>
     
     <item>
+      <title>COW</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/cowl/</link>
+      <pubDate>Fri, 23 Sep 2016 01:37:21 -0709</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/cowl/</guid>
+      <description>
+
+&lt;p&gt;Author: Rohit Jha&lt;/p&gt;
+
+&lt;h4 id=&#34;what-is-the-motivation-behind-cowl&#34;&gt;What is the motivation behind COWL?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Flexibility vs privacy&lt;/li&gt;
+&lt;li&gt;MAC-based confinement better than DAC&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;at-a-high-level-what-does-cowl-do&#34;&gt;At a high-level, what does COWL do?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;COWL is a robust JavaScript confinement system for modern web browsers.&lt;/li&gt;
+&lt;li&gt;COWL introduces label-based MAC to browsing contexts (pages, iframes, etc.)
+in a way that is fully backward-compatible with legacy web content&lt;/li&gt;
+&lt;li&gt;Prevents information leaks&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-are-the-design-requirements-for-cowl&#34;&gt;What are the design requirements for COWL?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;MAC with:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Symmetric confinement: two mutually distrusting scripts can each confine
+the other’s use of data they send one another&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Hierarchical confinement: allows any developer to confine untrusted code,
+and confinement can be nested to arbitrary depths&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Delegation: allows a developer explicitly to confer the privileges of one
+execution context on a separate execution context&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;
+
+&lt;h4 id=&#34;what-are-some-browser-security-policies-and-concepts-explained-in-the-paper&#34;&gt;What are some browser security policies and concepts explained in the paper?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Browsing contexts&lt;/li&gt;
+&lt;li&gt;Same-Origin Policy (SOP): how does SOP not prevent data from being disclosed
+to foreign origins?&lt;/li&gt;
+&lt;li&gt;Content Security Policy (CSP): what are the limitations of CSP?&lt;/li&gt;
+&lt;li&gt;postMessage and Cross-Origin Resource Sharing (CORS): what is the difference
+between these two?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-are-the-motivating-web-applications-explained-in-the-paper&#34;&gt;What are the motivating web applications explained in the paper?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Password strength checker:
+
+&lt;ul&gt;
+&lt;li&gt;What are the possible security risks here?&lt;/li&gt;
+&lt;li&gt;How does COWL add security to a third-party password checker?&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Encrypted document editor&lt;/li&gt;
+&lt;li&gt;Third-party mashup&lt;/li&gt;
+&lt;li&gt;Untrusted third-party library: How does COWL mitigate reuse risks?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;cowl-confinement-system&#34;&gt;COWL Confinement System&lt;/h2&gt;
+
+&lt;h4 id=&#34;cowl-augments-browsers-with-three-primitives-what-are-these&#34;&gt;COWL augments browsers with three primitives. What are these?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Labeled browsing contexts&lt;/li&gt;
+&lt;li&gt;Labeled communication&lt;/li&gt;
+&lt;li&gt;Privileges&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;structure-of-a-label&#34;&gt;Structure of a label&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;(secrecy formula, integrity formula)
+
+&lt;ul&gt;
+&lt;li&gt;Secrecy: which origins can read a context’s data&lt;/li&gt;
+&lt;li&gt;Integrity: which origins can write it&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;how-does-cowl-enforce-label-policies&#34;&gt;How does COWL enforce label policies?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Allowing a context to only communicate with other contexts or servers whose
+labels are at least as restricting&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;can-a-script-leak-information-through-a-newly-created-context-how&#34;&gt;Can a script leak information through a newly created context? How?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Newly created context implicitly inherits current label of parent&lt;/li&gt;
+&lt;li&gt;The parent may specify a more restrictive label for its child&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-are-the-two-types-of-contexts-cowl-applications-can-create&#34;&gt;What are the two types of contexts COWL applications can create?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Standard contexts: pages, iframes, workers, etc.&lt;/li&gt;
+&lt;li&gt;Labeled contexts in the form of lightweight labeled workers (LWorkers)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-are-lworkers-and-why-are-they-helpful-why-not-use-normal-workers&#34;&gt;What are LWorkers and why are they helpful? Why not use normal workers?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Lightweight labeled workers which execute in the same thread as their parent&lt;/li&gt;
+&lt;li&gt;Share the event loop with their parent&lt;/li&gt;
+&lt;li&gt;Have access to COWL API, XHR constructor and can communicate with parent&lt;/li&gt;
+&lt;li&gt;Parent can give read/write DOM access to child since they are in the same
+thread&lt;/li&gt;
+&lt;li&gt;LWorkers simplify the isolation and confinement of scripts&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;how-does-cowl-support-labeled-communication&#34;&gt;How does COWL support labeled communication?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Labeled Blob messages (intra-browser)&lt;/li&gt;
+&lt;li&gt;Labeled XHR messages (browser-server)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-are-labeled-blobs&#34;&gt;What are labeled Blobs?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Encapsulation of an inter-context message (payload - serializable and
+immutable Blob object) with the label&lt;/li&gt;
+&lt;li&gt;This label is at least as restrictive as the sending context’s current label&lt;/li&gt;
+&lt;li&gt;Receiving context can access label - and can access the message only after
+it’s label is raised as needed&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;why-are-labeled-blobs-useful&#34;&gt;Why are labeled Blobs useful?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Sender can impose confinement on the receiver by labeling a message&lt;/li&gt;
+&lt;li&gt;Receiver can delay reading the message content until they are done
+communicating with origins not allowed to read the data&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-are-labeled-xhr-messages&#34;&gt;What are labeled XHR messages?&lt;/h4&gt;
+
+&lt;p&gt;Similar to labeled Blobs but for browser-server communication&lt;/p&gt;
+
+&lt;h4 id=&#34;when-may-a-context-need-to-declassify-data&#34;&gt;When may a context need to declassify data?&lt;/h4&gt;
+
+&lt;p&gt;It may need to send encrypted data from one origin to a third-party origin&lt;/p&gt;
+
+&lt;h4 id=&#34;how-does-cowl-s-privilege-primitive-support-declassification&#34;&gt;How does COWL’s Privilege primitive support declassification?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A context may hold one or more privileges, each with respect to some origin.&lt;/li&gt;
+&lt;li&gt;Possession of a privilege for an origin by a context denotes trust that the
+scripts that execute within that context will not compromise the secrecy of
+data from that origin&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;applications&#34;&gt;Applications&lt;/h2&gt;
+
+&lt;h4 id=&#34;password-checker-similar-to-encrypted-document-editor-application&#34;&gt;Password checker similar to encrypted document editor application&lt;/h4&gt;
+
+&lt;h4 id=&#34;how-does-the-encrypted-document-editor-open-and-save-an-encrypted-doc&#34;&gt;How does the encrypted document editor open and save an encrypted doc?&lt;/h4&gt;
+
+&lt;ol&gt;
+&lt;li&gt;gdoc.com downloads encrypted doc from Google’s servers&lt;/li&gt;
+&lt;li&gt;gdoc.com opens an iframe to eff.org with label public and downloaded private
+key&lt;/li&gt;
+&lt;li&gt;gdoc.com sends the encrypted doc as labeled Blob with label (gdoc.com)&lt;/li&gt;
+&lt;li&gt;The iframe unlabels the Blob and raises its label to decrypt the doc&lt;/li&gt;
+&lt;li&gt;Pass the decrypted doc to the iframe implementing the editor&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Reverse for saving a doc&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;how-does-cowl-support-third-party-mashups&#34;&gt;How does COWL support third-party mashups?&lt;/h4&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Mashup sends labeled XHRs to both Amazon and Chase to get purchase history
+and bank statement as labeled Blobs&lt;/li&gt;
+&lt;li&gt;Once all the info is received, mashup unlabels the responses and raises it’s
+label COWL cannot prevent a malicious mashup from leaking data via covert
+channels&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&#34;how-does-cowl-confine-an-untrusted-jquery-library&#34;&gt;How does COWL confine an untrusted jQuery library?&lt;/h4&gt;
+
+&lt;ol&gt;
+&lt;li&gt;page generates a fresh origin unq0 and spawns a DOM worker&lt;/li&gt;
+&lt;li&gt;main context drops its privileges and raises its label to (unq0)&lt;/li&gt;
+&lt;li&gt;the trusted worker downloads jQuery&lt;/li&gt;
+&lt;li&gt;The trusted worker injects the script content into the main context’s DOM&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The main context becomes untrusted, but is fully confined. The spawned DOM worker can modify the DOM of the main context and communicate on the web - acting as a firewall.&lt;/p&gt;
+
+&lt;h2 id=&#34;implementation&#34;&gt;Implementation&lt;/h2&gt;
+
+&lt;h3 id=&#34;what-are-the-challenges-to-implementing-cowl-for-chromium&#34;&gt;What are the challenges to implementing COWL for Chromium?&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Chromium architecture does not have cross-compartment wrappers so the DOM
+binding code was modified to insert label checks&lt;/li&gt;
+&lt;li&gt;Without wrappers, shared references cannot be efficiently revoked&lt;/li&gt;
+&lt;li&gt;The current Chromium API allows senders to disallow labeling Blobs if any
+children were created before starting confinement mode&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;evaluation&#34;&gt;Evaluation&lt;/h2&gt;
+
+&lt;h4 id=&#34;what-is-the-evaluation-strategy-used&#34;&gt;What is the evaluation strategy used?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Measuring cost of new primitives and impact on legacy websites that don’t use COWL&lt;/li&gt;
+&lt;li&gt;Benchmarks:
+
+&lt;ul&gt;
+&lt;li&gt;Microbenchmarks of API functions&lt;/li&gt;
+&lt;li&gt;End-to-end benchmarks of example applications&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Applications accessed from a Node server over loopback&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-do-you-think-about-cowl-s-performance-for-microbenchmarks-and-end-to-end-benchmarks&#34;&gt;What do you think about COWL’s performance for microbenchmarks and end-to-end benchmarks?&lt;/h4&gt;
+
+&lt;h2 id=&#34;discussion&#34;&gt;Discussion&lt;/h2&gt;
+
+&lt;h4 id=&#34;what-are-the-benefits-and-risks-of-having-users-override-cors&#34;&gt;What are the benefits and risks of having users override CORS?&lt;/h4&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Chrome extension system</title>
       <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/chrome-extension-system/</link>
       <pubDate>Fri, 23 Sep 2016 01:37:21 -0708</pubDate>
@@ -844,101 +1084,6 @@ noninterference (leaks via termination channel possible).&lt;/li&gt;
 &lt;li&gt;Security: Lines of code (how easy is it for developers), preventing vulnerability (100%?), whether it works properly on edge cases&lt;/li&gt;
 &lt;li&gt;Performance: Overhead is 33%, overall. Higher when policy is present and a lot higher for those involving SQL operations (parsing the query is required)&lt;/li&gt;
 &lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>JIF</title>
-      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/jif/</link>
-      <pubDate>Fri, 23 Sep 2016 01:37:21 -0702</pubDate>
-      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
-      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/jif/</guid>
-      <description>
-
-&lt;p&gt;Author: Sunjay Cauligi&lt;/p&gt;
-
-&lt;h4 id=&#34;what-specific-guarantees-does-jif-give-what-don-t-they-give&#34;&gt;What specific guarantees does JIF give? What don&amp;rsquo;t they give?&lt;/h4&gt;
-
-&lt;p&gt;No data leaks from within their framework, but no guarantees about certain
-timing channels or other covert channels.&lt;/p&gt;
-
-&lt;h4 id=&#34;how-does-jif-compare-to-conventional-ifc&#34;&gt;How does JIF compare to conventional IFC?&lt;/h4&gt;
-
-&lt;p&gt;The main difference is the concept of multiple owners, each specifying their
-own reader sets.&lt;/p&gt;
-
-&lt;h4 id=&#34;slots-and-channels&#34;&gt;Slots and channels&lt;/h4&gt;
-
-&lt;p&gt;Slots (variables) and channels cannot be relabeled; any data coming out of a
-slot/channel takes on the label of that slot/channel.&lt;/p&gt;
-
-&lt;p&gt;This means that data written to a variable is relabeled with that variable&amp;rsquo;s
-label. (Why do it this way?)&lt;/p&gt;
-
-&lt;h4 id=&#34;labels&#34;&gt;Labels&lt;/h4&gt;
-
-&lt;p&gt;The effective reader set of any labeled data is the intersection of all reader
-sets in that label.&lt;/p&gt;
-
-&lt;p&gt;Declassification can only occur on a per-owner basis.&lt;/p&gt;
-
-&lt;p&gt;Access-control checks are done on writes, and so aren&amp;rsquo;t necessary on reads.&lt;/p&gt;
-
-&lt;h4 id=&#34;database-of-principal-hierarchies&#34;&gt;Database of principal hierarchies&lt;/h4&gt;
-
-&lt;p&gt;If there is a centralized database, is this system truly decentralized?&lt;/p&gt;
-
-&lt;p&gt;What challenges arise out of having this database?&lt;/p&gt;
-
-&lt;p&gt;What happens if the database is modified while code is executing?&lt;/p&gt;
-
-&lt;h4 id=&#34;why-does-jif-still-have-some-lightweight-dynamic-label-checking&#34;&gt;Why does JIF still have some lightweight dynamic label checking?&lt;/h4&gt;
-
-&lt;p&gt;It needs dynamic label checking for more complex external sources of data, such
-as filesystem or database access, to ensure its non-leakage property.&lt;/p&gt;
-
-&lt;h4 id=&#34;how-does-jif-prevent-implicit-information-leakage&#34;&gt;How does JIF prevent implicit information leakage?&lt;/h4&gt;
-
-&lt;p&gt;Blocks within if/while constructs are labeled according to their respective
-branch conditions. Thus anything that happens inside one of these blocks is at
-least as restricted as the knowledge of the branch condition.&lt;/p&gt;
-
-&lt;h4 id=&#34;how-could-jif-be-improved-to-handle-timing-information-leaks&#34;&gt;How could JIF be improved to handle timing information leaks?&lt;/h4&gt;
-
-&lt;p&gt;Open question.&lt;/p&gt;
-
-&lt;h4 id=&#34;why-is-if-acts-for-necessary&#34;&gt;Why is &lt;code&gt;if_acts_for&lt;/code&gt; necessary?&lt;/h4&gt;
-
-&lt;p&gt;JIF needs to check at run time whether the function has the correct authority
-to act on the specified principal&amp;rsquo;s behalf.&lt;/p&gt;
-
-&lt;h4 id=&#34;what-might-be-a-use-case-of-having-a-record-r-with-a-more-restrictive-label-than-a-field-r-f-in-r&#34;&gt;What might be a use case of having a record &lt;code&gt;r&lt;/code&gt; with a more restrictive label than a field &lt;code&gt;r.f&lt;/code&gt; in &lt;code&gt;r&lt;/code&gt;?&lt;/h4&gt;
-
-&lt;p&gt;Incidentally, what is the label of &lt;code&gt;r.f&lt;/code&gt;? Is it &lt;u&gt;&lt;code&gt;f&lt;/code&gt;&lt;/u&gt;? &lt;u&gt;&lt;code&gt;r&lt;/code&gt;&lt;/u&gt; ⊔ &lt;u&gt;&lt;code&gt;f&lt;/code&gt;&lt;/u&gt;?&lt;/p&gt;
-
-&lt;h4 id=&#34;what-is-the-use-case-for-the-labelcase-construct&#34;&gt;What is the use case for the &lt;code&gt;labelcase&lt;/code&gt; construct?&lt;/h4&gt;
-
-&lt;p&gt;When might one want to branch on a label&amp;rsquo;s runtime value?&lt;/p&gt;
-
-&lt;h4 id=&#34;why-does-protected-t-exist-what-is-it-used-for&#34;&gt;Why does &lt;code&gt;protected[T]&lt;/code&gt; exist? What is it used for?&lt;/h4&gt;
-
-&lt;p&gt;It&amp;rsquo;s used to implement the lightweight dynamic label checking mentioned above.&lt;/p&gt;
-
-&lt;h4 id=&#34;what-is-the-use-case-for-the-get-label-function&#34;&gt;What is the use case for the &lt;code&gt;get_label&lt;/code&gt; function?&lt;/h4&gt;
-
-&lt;p&gt;When might one want to examine the contained label inside a &lt;code&gt;protected[T]&lt;/code&gt;?&lt;/p&gt;
-
-&lt;h4 id=&#34;why-does-get-expect-a-label-to-be-passed-in-what-prevents-one-from-simply-passing-in-the-label-returned-by-get-label&#34;&gt;Why does &lt;code&gt;get&lt;/code&gt; expect a label to be passed in? What prevents one from simply passing in the label returned by &lt;code&gt;get_label&lt;/code&gt;?&lt;/h4&gt;
-
-&lt;p&gt;The label returned by &lt;code&gt;get_label&lt;/code&gt; is itself guarded with the label &lt;u&gt;&lt;code&gt;p&lt;/code&gt;&lt;/u&gt;,
-which is the original guard on the original contained label. Since both the
-&lt;code&gt;success&lt;/code&gt; and &lt;code&gt;v&lt;/code&gt; return values from &lt;code&gt;get&lt;/code&gt; are guarded by &lt;u&gt;&lt;code&gt;expect&lt;/code&gt;&lt;/u&gt;, only
-someone with permissions for the original protected data can examine whether or
-not they were able to successfully retrieve the value using &lt;code&gt;get&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h4 id=&#34;in-what-ways-is-a-protected-t-similar-to-a-capability-model&#34;&gt;In what ways is a &lt;code&gt;protected[T]&lt;/code&gt; similar to a capability model?&lt;/h4&gt;
-
-&lt;p&gt;One can think of the &lt;code&gt;expect&lt;/code&gt; parameter as a capability for retrieving a value from a &lt;code&gt;protected[T]&lt;/code&gt;.&lt;/p&gt;
 </description>
     </item>
     

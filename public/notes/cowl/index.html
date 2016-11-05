@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>COW  &middot; CSE 291</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="" />
+
+<meta name="keywords" content="">
+
+
+<meta property="og:title" content="COW  &middot; CSE 291 ">
+<meta property="og:site_name" content="CSE 291"/>
+<meta property="og:url" content="https://cse291.programming.systems/notes/cowl/" />
+<meta property="og:locale" content="en-us">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content=""/>
+<meta property="og:article:published_time" content="2016-09-23T01:37:21-07:09" />
+<meta property="og:article:modified_time" content="2016-09-23T01:37:21-07:09" />
+
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@deiandelmars" />
+<meta name="twitter:creator" content="@deiandelmars" />
+<meta name="twitter:title" content="COW" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:url" content="https://cse291.programming.systems/notes/cowl/" />
+<meta name="twitter:domain" content="https://cse291.programming.systems">
+  
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "COW",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/+?rel=author"
+    },
+    "datePublished": "2016-09-23",
+    "description": "",
+    "wordCount":  921 
+  }
+</script>
+
+
+
+<link rel="canonical" href="https://cse291.programming.systems/notes/cowl/" />
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://cse291.programming.systems/touch-icon-144-precomposed.png">
+<link href="https://cse291.programming.systems/favicon.png" rel="icon">
+<meta name="theme-color" content="#2053AB">
+<meta name="generator" content="Hugo 0.16" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://cse291.programming.systems/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cse291.programming.systems/css/style.css">
+<link rel="stylesheet" href="https://cse291.programming.systems/css/highlight/default.css">
+
+  
+</head>
+<body>
+  <main id="main-wrapper" class="container main_wrapper has-sidebar">
+    <header id="main-header" class="container main_header">
+  <div class="container brand">
+  <div class="container title h1-like">
+  <a class="baselink" href="https://cse291.programming.systems">
+  CSE 291
+
+</a>
+
+</div>
+
+  
+<div class="container topline">
+  
+  Building Secure Systems using Programming Languages and Analysis
+
+
+</div>
+
+
+</div>
+
+  <nav class="container nav primary no-print">
+  
+
+
+  
+<a href="https://cse291.programming.systems/about">Organization</a>
+
+<a href="https://cse291.programming.systems/syllabus" title="Course syllabus">Syllabus</a>
+
+<a href="https://cse291.programming.systems/contact">Contact</a>
+
+<a href="https://cse291.programming.systems/notes">Notes</a>
+
+<a href="https://cse291.programming.systems/assignments">Assignments</a>
+
+<a href="https://cse291.programming.systems/ideas">Project ideas</a>
+
+
+</nav>
+
+<div class="container nav secondary no-print">
+  
+<a id="contact-link-email" class="contact_link" href="mailto:deian&#43;cse291@cs.ucsd.edu">
+  <span class="fa fa-envelope-square"></span><span>email</span></a>
+
+
+
+<a id="contact-link-github" class="contact_link" href="https://github.com/plsyssec/cse291-fall16">
+  <span class="fa fa-github-square"></span><span>github</span></a>
+
+
+
+
+
+
+
+
+
+
+
+<a id="contact-link-twitter" class="contact_link" href="https://twitter.com/deiandelmars">
+  <span class="fa fa-twitter-square"></span><span>twitter</span></a>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+  
+
+</header>
+
+
+<article id="main-content" class="container main_content single">
+  <header class="container hat">
+  <h1>COW
+</h1>
+
+</header>
+
+  <div class="container content">
+  
+
+<p>Author: Rohit Jha</p>
+
+<h4 id="what-is-the-motivation-behind-cowl">What is the motivation behind COWL?</h4>
+
+<ul>
+<li>Flexibility vs privacy</li>
+<li>MAC-based confinement better than DAC</li>
+</ul>
+
+<h4 id="at-a-high-level-what-does-cowl-do">At a high-level, what does COWL do?</h4>
+
+<ul>
+<li>COWL is a robust JavaScript confinement system for modern web browsers.</li>
+<li>COWL introduces label-based MAC to browsing contexts (pages, iframes, etc.)
+in a way that is fully backward-compatible with legacy web content</li>
+<li>Prevents information leaks</li>
+</ul>
+
+<h4 id="what-are-the-design-requirements-for-cowl">What are the design requirements for COWL?</h4>
+
+<ul>
+<li><p>MAC with:</p>
+
+<ul>
+<li><p>Symmetric confinement: two mutually distrusting scripts can each confine
+the other’s use of data they send one another</p></li>
+
+<li><p>Hierarchical confinement: allows any developer to confine untrusted code,
+and confinement can be nested to arbitrary depths</p></li>
+
+<li><p>Delegation: allows a developer explicitly to confer the privileges of one
+execution context on a separate execution context</p></li>
+</ul></li>
+</ul>
+
+<h2 id="background">Background</h2>
+
+<h4 id="what-are-some-browser-security-policies-and-concepts-explained-in-the-paper">What are some browser security policies and concepts explained in the paper?</h4>
+
+<ul>
+<li>Browsing contexts</li>
+<li>Same-Origin Policy (SOP): how does SOP not prevent data from being disclosed
+to foreign origins?</li>
+<li>Content Security Policy (CSP): what are the limitations of CSP?</li>
+<li>postMessage and Cross-Origin Resource Sharing (CORS): what is the difference
+between these two?</li>
+</ul>
+
+<h4 id="what-are-the-motivating-web-applications-explained-in-the-paper">What are the motivating web applications explained in the paper?</h4>
+
+<ul>
+<li>Password strength checker:
+
+<ul>
+<li>What are the possible security risks here?</li>
+<li>How does COWL add security to a third-party password checker?</li>
+</ul></li>
+<li>Encrypted document editor</li>
+<li>Third-party mashup</li>
+<li>Untrusted third-party library: How does COWL mitigate reuse risks?</li>
+</ul>
+
+<h2 id="cowl-confinement-system">COWL Confinement System</h2>
+
+<h4 id="cowl-augments-browsers-with-three-primitives-what-are-these">COWL augments browsers with three primitives. What are these?</h4>
+
+<ul>
+<li>Labeled browsing contexts</li>
+<li>Labeled communication</li>
+<li>Privileges</li>
+</ul>
+
+<h4 id="structure-of-a-label">Structure of a label</h4>
+
+<ul>
+<li>(secrecy formula, integrity formula)
+
+<ul>
+<li>Secrecy: which origins can read a context’s data</li>
+<li>Integrity: which origins can write it</li>
+</ul></li>
+</ul>
+
+<h4 id="how-does-cowl-enforce-label-policies">How does COWL enforce label policies?</h4>
+
+<ul>
+<li>Allowing a context to only communicate with other contexts or servers whose
+labels are at least as restricting</li>
+</ul>
+
+<h4 id="can-a-script-leak-information-through-a-newly-created-context-how">Can a script leak information through a newly created context? How?</h4>
+
+<ul>
+<li>Newly created context implicitly inherits current label of parent</li>
+<li>The parent may specify a more restrictive label for its child</li>
+</ul>
+
+<h4 id="what-are-the-two-types-of-contexts-cowl-applications-can-create">What are the two types of contexts COWL applications can create?</h4>
+
+<ul>
+<li>Standard contexts: pages, iframes, workers, etc.</li>
+<li>Labeled contexts in the form of lightweight labeled workers (LWorkers)</li>
+</ul>
+
+<h4 id="what-are-lworkers-and-why-are-they-helpful-why-not-use-normal-workers">What are LWorkers and why are they helpful? Why not use normal workers?</h4>
+
+<ul>
+<li>Lightweight labeled workers which execute in the same thread as their parent</li>
+<li>Share the event loop with their parent</li>
+<li>Have access to COWL API, XHR constructor and can communicate with parent</li>
+<li>Parent can give read/write DOM access to child since they are in the same
+thread</li>
+<li>LWorkers simplify the isolation and confinement of scripts</li>
+</ul>
+
+<h4 id="how-does-cowl-support-labeled-communication">How does COWL support labeled communication?</h4>
+
+<ul>
+<li>Labeled Blob messages (intra-browser)</li>
+<li>Labeled XHR messages (browser-server)</li>
+</ul>
+
+<h4 id="what-are-labeled-blobs">What are labeled Blobs?</h4>
+
+<ul>
+<li>Encapsulation of an inter-context message (payload - serializable and
+immutable Blob object) with the label</li>
+<li>This label is at least as restrictive as the sending context’s current label</li>
+<li>Receiving context can access label - and can access the message only after
+it’s label is raised as needed</li>
+</ul>
+
+<h4 id="why-are-labeled-blobs-useful">Why are labeled Blobs useful?</h4>
+
+<ul>
+<li>Sender can impose confinement on the receiver by labeling a message</li>
+<li>Receiver can delay reading the message content until they are done
+communicating with origins not allowed to read the data</li>
+</ul>
+
+<h4 id="what-are-labeled-xhr-messages">What are labeled XHR messages?</h4>
+
+<p>Similar to labeled Blobs but for browser-server communication</p>
+
+<h4 id="when-may-a-context-need-to-declassify-data">When may a context need to declassify data?</h4>
+
+<p>It may need to send encrypted data from one origin to a third-party origin</p>
+
+<h4 id="how-does-cowl-s-privilege-primitive-support-declassification">How does COWL’s Privilege primitive support declassification?</h4>
+
+<ul>
+<li>A context may hold one or more privileges, each with respect to some origin.</li>
+<li>Possession of a privilege for an origin by a context denotes trust that the
+scripts that execute within that context will not compromise the secrecy of
+data from that origin</li>
+</ul>
+
+<h2 id="applications">Applications</h2>
+
+<h4 id="password-checker-similar-to-encrypted-document-editor-application">Password checker similar to encrypted document editor application</h4>
+
+<h4 id="how-does-the-encrypted-document-editor-open-and-save-an-encrypted-doc">How does the encrypted document editor open and save an encrypted doc?</h4>
+
+<ol>
+<li>gdoc.com downloads encrypted doc from Google’s servers</li>
+<li>gdoc.com opens an iframe to eff.org with label public and downloaded private
+key</li>
+<li>gdoc.com sends the encrypted doc as labeled Blob with label (gdoc.com)</li>
+<li>The iframe unlabels the Blob and raises its label to decrypt the doc</li>
+<li>Pass the decrypted doc to the iframe implementing the editor</li>
+</ol>
+
+<ul>
+<li>Reverse for saving a doc</li>
+</ul>
+
+<h4 id="how-does-cowl-support-third-party-mashups">How does COWL support third-party mashups?</h4>
+
+<ol>
+<li>Mashup sends labeled XHRs to both Amazon and Chase to get purchase history
+and bank statement as labeled Blobs</li>
+<li>Once all the info is received, mashup unlabels the responses and raises it’s
+label COWL cannot prevent a malicious mashup from leaking data via covert
+channels</li>
+</ol>
+
+<h4 id="how-does-cowl-confine-an-untrusted-jquery-library">How does COWL confine an untrusted jQuery library?</h4>
+
+<ol>
+<li>page generates a fresh origin unq0 and spawns a DOM worker</li>
+<li>main context drops its privileges and raises its label to (unq0)</li>
+<li>the trusted worker downloads jQuery</li>
+<li>The trusted worker injects the script content into the main context’s DOM</li>
+</ol>
+
+<p>The main context becomes untrusted, but is fully confined. The spawned DOM worker can modify the DOM of the main context and communicate on the web - acting as a firewall.</p>
+
+<h2 id="implementation">Implementation</h2>
+
+<h3 id="what-are-the-challenges-to-implementing-cowl-for-chromium">What are the challenges to implementing COWL for Chromium?</h3>
+
+<ul>
+<li>Chromium architecture does not have cross-compartment wrappers so the DOM
+binding code was modified to insert label checks</li>
+<li>Without wrappers, shared references cannot be efficiently revoked</li>
+<li>The current Chromium API allows senders to disallow labeling Blobs if any
+children were created before starting confinement mode</li>
+</ul>
+
+<h2 id="evaluation">Evaluation</h2>
+
+<h4 id="what-is-the-evaluation-strategy-used">What is the evaluation strategy used?</h4>
+
+<ul>
+<li>Measuring cost of new primitives and impact on legacy websites that don’t use COWL</li>
+<li>Benchmarks:
+
+<ul>
+<li>Microbenchmarks of API functions</li>
+<li>End-to-end benchmarks of example applications</li>
+</ul></li>
+<li>Applications accessed from a Node server over loopback</li>
+</ul>
+
+<h4 id="what-do-you-think-about-cowl-s-performance-for-microbenchmarks-and-end-to-end-benchmarks">What do you think about COWL’s performance for microbenchmarks and end-to-end benchmarks?</h4>
+
+<h2 id="discussion">Discussion</h2>
+
+<h4 id="what-are-the-benefits-and-risks-of-having-users-override-cors">What are the benefits and risks of having users override CORS?</h4>
+
+</div>
+
+
+  
+</article>
+      <footer id="main-footer" class="container main_footer">
+  
+
+  <div class="container nav foot no-print">
+  
+
+  <a class="toplink" href="#">back to top</a>
+
+</div>
+
+  <div class="container credits">
+  
+<div class="container footline">
+  
+
+</div>
+
+
+  
+
+</div>
+
+</footer>
+
+    </main>
+    
+
+
+<script src="https://cse291.programming.systems/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+    
+  </body>
+</html>
+
