@@ -2,7 +2,7 @@
 +++
 author = "Deian Stefan"
 date = "2016-09-28T15:44:04-07:09"
-title = "&#181;chex questions"
+title = "Microchex questions"
 type = "assignments"
 draft = false
 
