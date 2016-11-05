@@ -1,5 +1,5 @@
 +++
-author = "Ariana Mirian"
+author = "Rohit Jha"
 date = "2016-09-23T01:37:21-07:09"
 title = "COW"
 type = "notes"
@@ -175,7 +175,9 @@ It may need to send encrypted data from one origin to a third-party origin
 3. the trusted worker downloads jQuery
 4. The trusted worker injects the script content into the main context’s DOM
 
-The main context becomes untrusted, but is fully confined. The spawned DOM worker can modify the DOM of the main context and communicate on the web - acting as a firewall.
+The main context becomes untrusted, but is fully confined. The spawned DOM
+worker can modify the DOM of the main context and communicate on the web -
+acting as a firewall.
 
 
 
@@ -193,7 +195,8 @@ The main context becomes untrusted, but is fully confined. The spawned DOM worke
 ## Evaluation
 
 #### What is the evaluation strategy used?
-* Measuring cost of new primitives and impact on legacy websites that don’t use COWL
+* Measuring cost of new primitives and impact on legacy websites that don’t use
+  COWL
 * Benchmarks:
   * Microbenchmarks of API functions
   * End-to-end benchmarks of example applications
