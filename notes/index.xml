@@ -214,7 +214,9 @@ channels&lt;/li&gt;
 &lt;li&gt;The trusted worker injects the script content into the main context’s DOM&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;The main context becomes untrusted, but is fully confined. The spawned DOM worker can modify the DOM of the main context and communicate on the web - acting as a firewall.&lt;/p&gt;
+&lt;p&gt;The main context becomes untrusted, but is fully confined. The spawned DOM
+worker can modify the DOM of the main context and communicate on the web -
+acting as a firewall.&lt;/p&gt;
 
 &lt;h2 id=&#34;implementation&#34;&gt;Implementation&lt;/h2&gt;
 
@@ -233,7 +235,8 @@ children were created before starting confinement mode&lt;/li&gt;
 &lt;h4 id=&#34;what-is-the-evaluation-strategy-used&#34;&gt;What is the evaluation strategy used?&lt;/h4&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Measuring cost of new primitives and impact on legacy websites that don’t use COWL&lt;/li&gt;
+&lt;li&gt;Measuring cost of new primitives and impact on legacy websites that don’t use
+COWL&lt;/li&gt;
 &lt;li&gt;Benchmarks:
 
 &lt;ul&gt;
