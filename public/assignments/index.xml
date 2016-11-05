@@ -18,7 +18,8 @@
       <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
       <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/uchex/</guid>
       <description>&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;Do false negatives matter? How can you figure out a system&amp;rsquo;s false negatives?&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;What are false negatives? Do they matter? How can you figure out a system&amp;rsquo;s
+false negatives?&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;&amp;#181;chex shows that by ignoring parts of a language we can write effective
 checkers considerably more easily. Give another example or two of a domain
