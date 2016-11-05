@@ -1,4 +1,3 @@
-
 +++
 author = "Deian Stefan"
 date = "2016-09-28T15:44:04-07:09"
