@@ -36,11 +36,11 @@ Why are these two properties important?
 
 #### How does the uchex parser differ from a traditional parser?
 
-1. Sliding window: This allows the parser to continue when it does not recognize
-a token.
+1. Sliding window: This allows the parser to continue when it does not
+   recognize a token.
 2. Wildcard: Allows the parser to match anything.
 3. Commit points: Allows the parser to stop sliding forward once an important
-token is reached for badly written micro-grammars.
+   token is reached for badly written micro-grammars.
 4. Compositional parsers: Allows parsers to be chained together. (Though
    parsec-based parsers often have this property.)
 

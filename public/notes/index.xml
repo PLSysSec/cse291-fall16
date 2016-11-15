@@ -52,8 +52,8 @@ a small fraction of grammars. This allows code to be reused easily.&lt;/p&gt;
 &lt;h4 id=&#34;how-does-the-uchex-parser-differ-from-a-traditional-parser&#34;&gt;How does the uchex parser differ from a traditional parser?&lt;/h4&gt;
 
 &lt;ol&gt;
-&lt;li&gt;Sliding window: This allows the parser to continue when it does not recognize
-a token.&lt;/li&gt;
+&lt;li&gt;Sliding window: This allows the parser to continue when it does not
+recognize a token.&lt;/li&gt;
 &lt;li&gt;Wildcard: Allows the parser to match anything.&lt;/li&gt;
 &lt;li&gt;Commit points: Allows the parser to stop sliding forward once an important
 token is reached for badly written micro-grammars.&lt;/li&gt;
