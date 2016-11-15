@@ -8,8 +8,121 @@
     <language>en-us</language>
     <managingEditor>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</managingEditor>
     <webMaster>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</webMaster>
-    <lastBuildDate>Wed, 28 Sep 2016 15:44:04 -0709</lastBuildDate>
+    <lastBuildDate>Mon, 07 Nov 2016 01:37:21 -0702</lastBuildDate>
     <atom:link href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Microchex</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/microchex/</link>
+      <pubDate>Mon, 07 Nov 2016 01:37:21 -0702</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/microchex/</guid>
+      <description>
+
+&lt;p&gt;Author: Gary Soeller&lt;/p&gt;
+
+&lt;h4 id=&#34;what-problem-does-uchex-address&#34;&gt;What problem does uchex address?&lt;/h4&gt;
+
+&lt;p&gt;Static bug checkers require a full compiler front end (lexer and parser) to build
+a complete grammar. This often requires an enormous engineering effort and is
+not easy for developers to write their own static checker.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-is-uchex&#34;&gt;What is uchex?&lt;/h4&gt;
+
+&lt;p&gt;uchex is a framework for easily writing language agnostic static bug checkers.&lt;/p&gt;
+
+&lt;h4 id=&#34;how-does-uchex-solve-the-problem-addressed&#34;&gt;How does uchex solve the problem addressed?&lt;/h4&gt;
+
+&lt;p&gt;uchex solves the problem by using a &lt;em&gt;micro-grammar&lt;/em&gt;: a grammar which contains a
+subset of the grammar being parsed. uchex allows developers to write a checker
+for a subset of the grammar allowing them the ability to easily write a
+checker.  A major benefit of uchex checkers is that they are language agnostic.
+Furthermore, micro-grammars can also be language agnostic since they only parse
+a small fraction of grammars. This allows code to be reused easily.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-are-the-properties-of-a-micro-grammar&#34;&gt;What are the properties of a micro-grammar?&lt;/h4&gt;
+
+&lt;ol&gt;
+&lt;li&gt;The original grammar is a subset of the micro-grammar.&lt;/li&gt;
+&lt;li&gt;The original grammar and micro-grammar have the same structure.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Why are these two properties important?&lt;/p&gt;
+
+&lt;h4 id=&#34;how-does-the-uchex-parser-differ-from-a-traditional-parser&#34;&gt;How does the uchex parser differ from a traditional parser?&lt;/h4&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Sliding window: This allows the parser to continue when it does not recognize
+a token.&lt;/li&gt;
+&lt;li&gt;Wildcard: Allows the parser to match anything.&lt;/li&gt;
+&lt;li&gt;Commit points: Allows the parser to stop sliding forward once an important
+token is reached for badly written micro-grammars.&lt;/li&gt;
+&lt;li&gt;Compositional parsers: Allows parsers to be chained together. (Though
+parsec-based parsers often have this property.)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&#34;what-is-a-belief-style-checker&#34;&gt;What is a belief-style checker?&lt;/h4&gt;
+
+&lt;p&gt;A type of checker that makes assumptions about the code. While traversing the
+code, if the checker can contradict an assumption, then there is an error.&lt;/p&gt;
+
+&lt;p&gt;All of the example checkers they present use belief-style, but they are not
+necessarily limited to this.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-is-the-algorithm-for-the-null-pointer-checker&#34;&gt;What is the algorithm for the null pointer checker?&lt;/h4&gt;
+
+&lt;ol&gt;
+&lt;li&gt;When a pointer is dereferenced, it is added to a &amp;ldquo;not null&amp;rdquo; set. The &amp;ldquo;not
+null&amp;rdquo; set is the set of &amp;ldquo;beliefs&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;Whenever a not null check is made, the pointer is looked up in the &amp;ldquo;not
+null&amp;rdquo; set.&lt;/li&gt;
+&lt;li&gt;If pointer is set, a belief is contradicted indicating that there is an
+error.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The null pointer checker uses forward data flow analysis. This allows the
+checker to know information about the past. Other checkers use backward data
+flow analysis which gives the checker information about the future.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-type-of-bugs-can-uchex-catch&#34;&gt;What type of bugs can uchex catch?&lt;/h4&gt;
+
+&lt;p&gt;Intra-procedural. This is the most simple type of bug because it requires no
+context outside of the function.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-types-of-bugs-does-uchex-not-catch&#34;&gt;What types of bugs does uchex not catch?&lt;/h4&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Those that require inter-procedural analysis.  What are inter procedural
+checkers and what can these catch that uchex can&amp;rsquo;t?&lt;/li&gt;
+&lt;li&gt;Those that require alias tracking. What is alias tracking and why is this
+hard to support?&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&#34;what-type-of-grammar-is-uchex-able-to-parse-and-why-is-this-important&#34;&gt;What type of grammar is uchex able to parse and why is this important?&lt;/h4&gt;
+
+&lt;p&gt;uchex can parse LL(k) grammars. There are limitations with parsers so it is
+important to know which type of parser is being used. One limitation of LL(k) is
+that left-recursion can not be parsed. Therefore, the developer must eliminate
+it from the grammar.&lt;/p&gt;
+
+&lt;h4 id=&#34;how-is-uchex-evaluated&#34;&gt;How is uchex evaluated?&lt;/h4&gt;
+
+&lt;p&gt;uchex is evaluated against an undisclosed industrial static checker (called
+&lt;em&gt;SystemX&lt;/em&gt; in the paper). Both checkers are run on the same codebases and the
+results are compared by counting the number and overlap of bugs found. It is
+important to note that uchex and SystemX can use each others results as ground
+truth. This way they can be used in conjunction to improve each other.&lt;/p&gt;
+
+&lt;p&gt;uchex is also evaluated to demonstrate simplicity and ease of developing new
+checkers. The only metric used is lines of code. This does not say much so it
+should be taken with a grain of salt.&lt;/p&gt;
+
+&lt;p&gt;Deian, on last point: if you&amp;rsquo;ve written checkers you&amp;rsquo;ll find that LOC is pretty
+reasonable. Managing giant ASTs and state in existing frameworks is super hard.
+Moreover, I think for this we can partially appeal to authority: Dawson has
+done work on checkers for decades.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Microchex questions</title>
@@ -1033,59 +1146,6 @@ enforcement at the OS level.&lt;/li&gt;
 Specifically, LIO supports termination sensitive noninterference (no leaks
 via termination channel). Jeeves supports termination insensitive
 noninterference (leaks via termination channel possible).&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Resin</title>
-      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/resin/</link>
-      <pubDate>Fri, 23 Sep 2016 01:37:21 -0703</pubDate>
-      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
-      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/resin/</guid>
-      <description>
-
-&lt;p&gt;Author: Caroline Kim&lt;/p&gt;
-
-&lt;h4 id=&#34;what-challenges-does-resin-aim-to-address&#34;&gt;What challenges does Resin aim to address?&lt;/h4&gt;
-
-&lt;p&gt;Resin is a language runtime that equips programmers with the ability to encode and enforce data flow assertions. Resin provides data flow tracking while requiring few changes to the existing code.&lt;/p&gt;
-
-&lt;h4 id=&#34;which-security-vulnerabilities-would-resin-catch-and-which-would-it-not&#34;&gt;Which security vulnerabilities would Resin catch and which would it not?&lt;/h4&gt;
-
-&lt;p&gt;Main use case is protecting against web application vulnerabilities such as SQLi/XSS. It is assumed that both the entire language runtime and the application code itself is trustworthy &amp;ndash; Resin does not protect against bugs in this code.&lt;/p&gt;
-
-&lt;p&gt;Resin does not catch implicit data flows such as those resulting from conditional branch and ordering of data.  Hence, the attacker model assumes that the application code itself is also trustworthy.&lt;/p&gt;
-
-&lt;h4 id=&#34;how-does-resin-enforce-assertions&#34;&gt;How does Resin enforce assertions?&lt;/h4&gt;
-
-&lt;p&gt;Through filter objects and policy objects. Policy objects are defined for data and filter objects are defined for channels. Assertions for data can be specified in policy objects through &lt;code&gt;export_check&lt;/code&gt; which will be called by filter objects.&lt;/p&gt;
-
-&lt;p&gt;By having this separation, developers can revise policy objects without having to worry about all the filter objects.&lt;/p&gt;
-
-&lt;h4 id=&#34;what-are-default-filter-objects&#34;&gt;What are default filter objects?&lt;/h4&gt;
-
-&lt;p&gt;By default, Resin creates filter objects at the &amp;ldquo;edge of the runtime.&amp;rdquo; This encompasses all the runtime I/O, including sockets, HTTP layer, SQL layer, and other code imports. Less work for developers!&lt;/p&gt;
-
-&lt;h4 id=&#34;how-does-resin-handle-data-tracking&#34;&gt;How does Resin handle data tracking?&lt;/h4&gt;
-
-&lt;p&gt;Data objects are tagged with policy objects at the primitive-level (integer, character in a string, and files).&lt;/p&gt;
-
-&lt;h4 id=&#34;how-do-several-assertions-co-exist-for-a-file&#34;&gt;How do several assertions co-exist for a file?&lt;/h4&gt;
-
-&lt;p&gt;Multiple policy objects can be attached to a file as part of a policy set.  Policy objects are attached to data in a fine-grained manner via a merge. When a merge is needed Resin, by default, takes the union of policy objects. But this merge policy can be overridden.&lt;/p&gt;
-
-&lt;h4 id=&#34;why-does-resin-serialize-policy-objects&#34;&gt;Why does Resin serialize policy objects?&lt;/h4&gt;
-
-&lt;p&gt;For persistently stored data, Resin serializes policy objects so they don&amp;rsquo;t have to be saved manually.&lt;/p&gt;
-
-&lt;p&gt;Importantly, only class names and field values are serialized; this allows policy object code to change without having to rewrite serialized policies.&lt;/p&gt;
-
-&lt;h4 id=&#34;how-do-the-authors-evaluate-resin&#34;&gt;How do the authors evaluate Resin?&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Security: Lines of code (how easy is it for developers), preventing vulnerability (100%?), whether it works properly on edge cases&lt;/li&gt;
-&lt;li&gt;Performance: Overhead is 33%, overall. Higher when policy is present and a lot higher for those involving SQL operations (parsing the query is required)&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
