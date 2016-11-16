@@ -9,6 +9,7 @@ draft = false
 Author: Deian Stefan
 
 #### What is the motivation behind Singularity and, more broadly, a message passing OS?
+
 - Bugs/vulnerabilities in existing systems due to interaction between different
   components. In the OS world, device drivers are plagued by vulnerabilities.
 - Isolation between different components: bugs in one wont affect other
