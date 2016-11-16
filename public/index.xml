@@ -129,6 +129,20 @@ issues like UAFs:&lt;/p&gt;
     </item>
     
     <item>
+      <title>Singularity questions</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/singularity/</link>
+      <pubDate>Tue, 15 Nov 2016 01:37:21 -0703</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/singularity/</guid>
+      <description>&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Why does Singularity have channel contracts? What are contracts? And, explain 2 issues contracts address and how they address them.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;What is the role of the &lt;code&gt;TCell&amp;lt;T&amp;gt;&lt;/code&gt; constructor? (That is what problem was it designed to address?)&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Microchex</title>
       <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/uchex/</link>
       <pubDate>Mon, 07 Nov 2016 01:37:21 -0702</pubDate>
@@ -982,129 +996,6 @@ to be about 5%. Benchmarks included SPEC2000, graphics tests, video decoding,
 physics simulations, and games. The equally important metric was the latency
 overhead of the NaCl verifier, which was measured to be on the order of
 30MB/second (small compared to download time).&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Verena</title>
-      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/verena/</link>
-      <pubDate>Fri, 23 Sep 2016 01:37:21 -0705</pubDate>
-      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
-      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/verena/</guid>
-      <description>
-
-&lt;p&gt;Author: Zhaomo Yang&lt;/p&gt;
-
-&lt;h4 id=&#34;the-foundation-that-verena-relies-on&#34;&gt;The foundation that Verena relies on.&lt;/h4&gt;
-
-&lt;p&gt;Verena is based on some ideas from Mylar, which is briefly mentioned in III-A.
-Specifically, the authors assume:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;A web page that the app client receives consists of two separate parts: a
-static web page (code) and data;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;The static page is signed by the developer. The signature is verified by the
-Verena browser extension, which has the developer&amp;rsquo;s public key.  From now on,
-let&amp;rsquo;s assume that the web page has verified.&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#34;the-architecture-of-verena&#34;&gt;The architecture of Verena.&lt;/h4&gt;
-
-&lt;p&gt;Verena consists of the following parts:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;The browser that runs the client-side program (including the app client and
-the Verena client)&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;The server that runs the server-side program (including the app server and
-the Verena server)&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The app client and the app server are just normal web app clients and servers.
-The Verena client and the Verena server speak the Verena protocol. There are places where the Verena mechanisms operate.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;The identity provider (IDP) provides the public key for a given user (The
-paper doesn&amp;rsquo;t really talk about it too much).&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;The hash server (HS) provides signed hashes, which can help the client verify
-the proofs received from the server.&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#34;thread-model-and-goal&#34;&gt;Thread model and goal&lt;/h4&gt;
-
-&lt;p&gt;The server and HS, or the server and IDP cannot be both compromised.  Under
-this assumption, Verena ensures that the client can notice if the data received
-is not correct, fresh or complete (what they define as integrity).&lt;/p&gt;
-
-&lt;h4 id=&#34;trust-contexts&#34;&gt;Trust Contexts&lt;/h4&gt;
-
-&lt;p&gt;A trust context consists of a set of principals. Also, when it is associated
-with a set of queries, it means that the results of the queries can only be
-affected by the principals in the trust context.&lt;/p&gt;
-
-&lt;h4 id=&#34;integrity-query-prototypes&#34;&gt;Integrity Query Prototypes&lt;/h4&gt;
-
-&lt;p&gt;A Integrity Query Prototype (IQP), defined on a collection &lt;code&gt;C&lt;/code&gt;, consists of&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;A trust context &lt;code&gt;TC&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;A read query pattern that decides a query set &lt;code&gt;Q_set&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Given a query, Verena can determine which principals can affect its result by using IQPs.&lt;/p&gt;
-
-&lt;h4 id=&#34;verena-protocols&#34;&gt;Verena protocols&lt;/h4&gt;
-
-&lt;h5 id=&#34;reads&#34;&gt;Reads&lt;/h5&gt;
-
-&lt;ul&gt;
-&lt;li&gt;The app client asks the Verena client to execute a query through a IQP&lt;/li&gt;
-&lt;li&gt;The Verena client checks if it is the correct IQP. If it is, send the query
-with a nonce (prevent replay attacks) to the server. Also, based on the IQP,
-the Verena client knows the trust context of the query.&lt;/li&gt;
-&lt;li&gt;The Verena server runs the query and also creates the proof for the result.
-In addition, it figures out what hashes the Verena client needs to verify the
-proof, then send hash requests, along with nonce from the client, to HS.&lt;/li&gt;
-&lt;li&gt;The HS gets the requested hashes, and signs the hash requests, hashes, and
-nonce into. It the sends this to the server.&lt;/li&gt;
-&lt;li&gt;The Verena server then sends the result, the proof, and the signature from HS
-to the Verena client.&lt;/li&gt;
-&lt;li&gt;The Verena client verifies the proof to check the integrity of the result.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h5 id=&#34;writes&#34;&gt;Writes&lt;/h5&gt;
-
-&lt;p&gt;The write protocol is similar to the read protocol, except it has one
-additional step: The Verena client needs to help update the affected hashes of
-the query. The Verena client, or more specifically the underlying principal
-must be involved otherwise a compromised server can send HS fake hash updates.
-The extra step happens after the second step in the read protocol&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;The Verena server passes the related information to the Verena client,
-including the entries (each entry consists of a hash, a version number and
-the public key of the writer) on HS that are to be updated.
-(Note the Verena server has all the information the HS has.)&lt;/li&gt;
-&lt;li&gt;The Verena client calculates the new entries for HS, signs both new and old
-entries, and passes the signature to the Verena server.&lt;/li&gt;
-&lt;li&gt;The Verena server verifies the signature. If everything is OK, it updates its
-copies of hashes (as mentioned before, the Verena server has all the
-hashes HS has), and sends the signature to the HS to let HS update its hashes.&lt;/li&gt;
-&lt;li&gt;The HS verifies the signature from the client and updates the entries.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Note that the Verena server sending its own copy of the old entries to the
-client is only an optimization technique. Alternatively, the Verena server
-could have just requested that from the HS, and the HS could have sent the
-signed old entries. Obviously, this would be slow. Note, that because of this
-optimization, a compromised server can send fake old entries to the client.
-This is why the Verena client needs to additionally sign the old entries. On
-the HS side: when the HS receives the signature from the client, it checks if
-the signed old entries are the same as the ones it already has. If not, it will
-reject the update since that would indicate that the server is has been
-compromised.&lt;/p&gt;
 </description>
     </item>
     
