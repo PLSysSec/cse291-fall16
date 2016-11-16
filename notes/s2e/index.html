@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>S2E  &middot; CSE 291</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="" />
+
+<meta name="keywords" content="">
+
+
+<meta property="og:title" content="S2E  &middot; CSE 291 ">
+<meta property="og:site_name" content="CSE 291"/>
+<meta property="og:url" content="https://cse291.programming.systems/notes/s2e/" />
+<meta property="og:locale" content="en-us">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content=""/>
+<meta property="og:article:published_time" content="2016-11-14T01:37:21-07:02" />
+<meta property="og:article:modified_time" content="2016-11-14T01:37:21-07:02" />
+
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@deiandelmars" />
+<meta name="twitter:creator" content="@deiandelmars" />
+<meta name="twitter:title" content="S2E" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:url" content="https://cse291.programming.systems/notes/s2e/" />
+<meta name="twitter:domain" content="https://cse291.programming.systems">
+  
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "S2E",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/+?rel=author"
+    },
+    "datePublished": "2016-11-14",
+    "description": "",
+    "wordCount":  1499 
+  }
+</script>
+
+
+
+<link rel="canonical" href="https://cse291.programming.systems/notes/s2e/" />
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://cse291.programming.systems/touch-icon-144-precomposed.png">
+<link href="https://cse291.programming.systems/favicon.png" rel="icon">
+<meta name="theme-color" content="#2053AB">
+<meta name="generator" content="Hugo 0.16" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://cse291.programming.systems/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cse291.programming.systems/css/style.css">
+<link rel="stylesheet" href="https://cse291.programming.systems/css/highlight/default.css">
+
+  
+</head>
+<body>
+  <main id="main-wrapper" class="container main_wrapper has-sidebar">
+    <header id="main-header" class="container main_header">
+  <div class="container brand">
+  <div class="container title h1-like">
+  <a class="baselink" href="https://cse291.programming.systems">
+  CSE 291
+
+</a>
+
+</div>
+
+  
+<div class="container topline">
+  
+  Building Secure Systems using Programming Languages and Analysis
+
+
+</div>
+
+
+</div>
+
+  <nav class="container nav primary no-print">
+  
+
+
+  
+<a href="https://cse291.programming.systems/about">Organization</a>
+
+<a href="https://cse291.programming.systems/syllabus" title="Course syllabus">Syllabus</a>
+
+<a href="https://cse291.programming.systems/contact">Contact</a>
+
+<a href="https://cse291.programming.systems/notes">Notes</a>
+
+<a href="https://cse291.programming.systems/assignments">Assignments</a>
+
+<a href="https://cse291.programming.systems/ideas">Project ideas</a>
+
+
+</nav>
+
+<div class="container nav secondary no-print">
+  
+<a id="contact-link-email" class="contact_link" href="mailto:deian&#43;cse291@cs.ucsd.edu">
+  <span class="fa fa-envelope-square"></span><span>email</span></a>
+
+
+
+<a id="contact-link-github" class="contact_link" href="https://github.com/plsyssec/cse291-fall16">
+  <span class="fa fa-github-square"></span><span>github</span></a>
+
+
+
+
+
+
+
+
+
+
+
+<a id="contact-link-twitter" class="contact_link" href="https://twitter.com/deiandelmars">
+  <span class="fa fa-twitter-square"></span><span>twitter</span></a>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+  
+
+</header>
+
+
+<article id="main-content" class="container main_content single">
+  <header class="container hat">
+  <h1>S2E
+</h1>
+
+</header>
+
+  <div class="container content">
+  
+
+<p>Author: Brian Johannesmeyer</p>
+
+<h4 id="what-conference-was-this-paper-in">What conference was this paper in?</h4>
+
+<ul>
+<li>ASPLOS 2011, where it won best paper</li>
+</ul>
+
+<h4 id="what-types-of-analyses-can-a-developer-do-on-their-code">What types of analyses can a developer do on their code?</h4>
+
+<ol>
+<li>Understand observed behavior</li>
+<li>Characterize future behavior
+
+<ul>
+<li>Should be able to do &ldquo;what-if&rdquo; analyses</li>
+<li>However this is difficult because systems are large and complex</li>
+</ul></li>
+</ol>
+
+<h4 id="what-three-properties-does-their-platform-offer">What three properties does their platform offer?</h4>
+
+<ol>
+<li>Efficiently analyze <em>entire families of execution paths</em>
+
+<ul>
+<li>i.e. More than one path of execution, and show that properties hold for all
+paths in a system</li>
+</ul></li>
+<li>Maximize <em>realism</em> by running the analyses in a real software stack
+
+<ul>
+<li>Take into account the whole environment surrounding a program</li>
+<li>Most approaches abstract away the environment behind a model, but that may
+lose accuracy, and is also labor-intensive</li>
+</ul></li>
+<li>Ability to <em>directly analyze binaries</em>
+
+<ul>
+<li>Access to source code is rarely feasible</li>
+<li>However, is this really a feature? Or are they <em>constrained</em> to binaries?
+This may not work on, e.g. direct JavaScript analysis.</li>
+</ul></li>
+</ol>
+
+<h4 id="what-is-symbolic-execution">What is symbolic execution?</h4>
+
+<ul>
+<li>Program analysis to determine what inputs cause each part of a program to execute</li>
+<li>Treat program as superposition of possible execution paths
+
+<ul>
+<li>e.g. <code>if(x&gt;0) ... then ... else</code> treated as superposition of two possible
+paths: one for x&gt;0 and one for x&lt;=0.</li>
+</ul></li>
+<li>For some constraint (e.g. x&gt;0), instead of allowing a variable to take on a
+concrete value (e.g. x=5), it takes on a whole set of values (e.g. x:(0,+∞))</li>
+</ul>
+
+<h4 id="what-insight-makes-s2e-different-from-normal-symbolic-execution">What insight makes S2E different from normal symbolic execution?</h4>
+
+<ul>
+<li>Often only some families of paths are of interest to developers (e.g. might
+not care about analyzing kernel code)</li>
+<li>S2E can selectively choose what to symbolically execute by going back and
+forth between multi-path mode (i.e. with symbolic values) and single-path
+mode (i.e. with concrete values)</li>
+<li>Also, things can be thrown away in the analysis if we don&rsquo;t care about it</li>
+</ul>
+
+<h4 id="how-are-symbolic-values-converted-to-concrete-values">How are symbolic values converted to concrete values?</h4>
+
+<ul>
+<li>By simply choosing a value from the symbolic set</li>
+</ul>
+
+<h4 id="how-are-concrete-values-converted-to-symbolic-values">How are concrete values converted to symbolic values?</h4>
+
+<p>The symbolic value is constrained to whatever the concrete value was (e.g. x=5,
+when originally x&gt;0) to take into account any side effects x=4 may have had.
+What can go wrong here?
+- You lose a lot of information about the value later on when you convert back
+  to a symbolic value, i.e. may overconstrain a value
+- It affects completeness</p>
+
+<h4 id="what-is-overconstraining">What is overconstraining?</h4>
+
+<ul>
+<li>Constraining a value (whether by soft or hard constraints) so much that it
+cannot go down future paths</li>
+<li>What is a soft constraint?
+
+<ul>
+<li>Constraint imposed by symbolic/concrete boundary (e.g. x:(0,+∞) -&gt; x=5)</li>
+</ul></li>
+<li>What is a hard constraint?
+
+<ul>
+<li>Constraint imposed by code (e.g. x&gt;0 in <code>if(x&gt;0)...then...else</code>)
+<br /></li>
+</ul></li>
+</ul>
+
+<h4 id="how-is-the-process-of-converting-from-symbolic-to-concrete-values-and-back-processed">How is the process of converting from symbolic to concrete values and back processed?</h4>
+
+<ul>
+<li>According to an execution consistency model</li>
+</ul>
+
+<h4 id="let-s-define-the-parts-of-an-execution-consistency-model">Let’s define the parts of an execution consistency model…</h4>
+
+<ul>
+<li>Analysis spaces
+
+<ul>
+<li><strong>System</strong>: complete software system under analysis, including programs,
+libraries, OS, etc.</li>
+<li><strong>Unit</strong>: the part of the system to be analyzed</li>
+<li><strong>Environment</strong>: the part of the system that’s not analyzed</li>
+</ul></li>
+<li>Path types (look at figure on top right of page 4)
+
+<ul>
+<li><strong>Statically feasible</strong>: there exists a possible path in the system</li>
+<li><strong>Locally feasible</strong>: there exists a possible path in the system that’s
+consistent with data-related constraints in the unit</li>
+<li><strong>Globally feasible</strong>: there exists a possible path in the system that’s
+consistent with all data-related constraints (i.e. in both the unit and the
+environment)</li>
+</ul></li>
+<li>Metrics
+
+<ul>
+<li><strong>Complete</strong>: every path through the unit that’s globally feasible will
+eventually be discovered by exploration done on that unit</li>
+<li>i.e. all execution paths can be discovered</li>
+<li><strong>Consistent</strong>: every path through the unit has a corresponding globally
+feasible path through the system</li>
+<li>i.e. the unit can correctly run on the system</li>
+</ul></li>
+<li>Why do we care about completeness and consistency?
+
+<ul>
+<li>We can do different things with their tradeoffs (see table 1)</li>
+</ul></li>
+</ul>
+
+<h4 id="strict-consistency">Strict consistency</h4>
+
+<ul>
+<li>Based on globally feasibility
+
+<ul>
+<li>Admits only globally feasible paths, i.e. only allows paths that are
+consistent with ALL data-related constraints</li>
+</ul></li>
+<li>What is <em>Strictly Consistent Concrete Execution (SC-CE)</em>?
+
+<ul>
+<li>System is a black box</li>
+<li>Only a single execution path; executed non-symbolically</li>
+<li>Used for:</li>
+<li>Units tests, fuzzing</li>
+<li>Valgrind</li>
+<li>Anything that executes along a single path, generated by user-specified
+concrete inputs</li>
+<li>Implementation</li>
+<li>Doesn&rsquo;t symbolically track anything</li>
+</ul></li>
+<li>What is <em>Strictly Consistent Unit-level Execution (SC-UE)</em>?
+
+<ul>
+<li>Environment treated as a black box</li>
+<li>Exploration engine allowed to gather and use information internal to the unit</li>
+<li>Used by: symbolic and concolic execution tools</li>
+<li>Implementation</li>
+<li>Symbolic value turned into concrete value when units calls environment</li>
+<li>When environment returns back to unit, the soft constraint it created
+becomes a hard constraint</li>
+<li>This hinders completeness</li>
+</ul></li>
+<li>What is <em>Strictly Consistent System-level Execution (SC-SE)</em>?
+
+<ul>
+<li>Nothing is a black box</li>
+<li>Exploration engine allowed to gather and use information about the entire
+system</li>
+<li>Limited by: path explosion problem</li>
+<li>Implementation</li>
+<li>Symbolic values everywhere</li>
+<li>Path explosion
+
+<ul>
+<li>Can use heuristics to prioritize path exploration,</li>
+<li>Or employ incremental symbolic execution
+<br /></li>
+</ul></li>
+</ul></li>
+</ul>
+
+<h4 id="local-consistency-lc">Local Consistency (LC)</h4>
+
+<ul>
+<li>Avoids exploring all paths in the environment</li>
+<li>Replaces results of calls to the environment with the symbolic values that
+represent possible valid results
+
+<ul>
+<li>e.g. <code>write(fd, buf,count)</code> can return any integer between -1 and count</li>
+</ul></li>
+<li>Allows for inconsistencies in the environment while keeping the state of the
+unit internally consistent</li>
+<li>No false positives because the internal state is consistent</li>
+<li>Implementation
+
+<ul>
+<li>At environment-&gt;boundary, concrete output value is turned into a symbolic
+value based on the function’s specification</li>
+<li>However, if symbolic data is written to the environment, it may become
+inconsistent</li>
+<li>If a branch in the environment depends on symbolic data, the execution
+path must be aborted
+<br /></li>
+</ul></li>
+</ul>
+
+<h4 id="relaxed-consistency">Relaxed consistency</h4>
+
+<ul>
+<li>Disadvantages
+
+<ul>
+<li>Inconsistent in the general case</li>
+<li>Internal state of the unit may be inconsistent, producing false positives</li>
+</ul></li>
+<li>Advantage: Performance</li>
+<li>What is <em>Overapproximate Consistency (RC-OC)</em>?
+
+<ul>
+<li>Path exploration can follow paths through the unit while completely
+ignoring the constraints</li>
+<li>E.g. call to write() would not bound the return value</li>
+<li>Thus, violates the specification of the write system call</li>
+<li>Used for: reverse engineering</li>
+<li>Why is it used for reverse engineering?</li>
+<li>See 6.1.2 - They fake the hardware in order to understand what the
+drivers are doing</li>
+<li>Implementation</li>
+<li>At unit/environment boundaries, converts concrete values into
+unconstrained symbolic values</li>
+<li>E.g. All possible values that write() could return, rather values it
+should return</li>
+<li>Gives completeness at the expense of consistency</li>
+</ul></li>
+<li>What is <em>CFG Consistency (RC-CC)</em>?
+
+<ul>
+<li>Exploration engine allowed to change any part of the system state as long
+as the explored paths correspond to paths in the unit’s inter-procedural
+CFG</li>
+<li>Used for: disassembling obfuscated and/or encrypted code</li>
+<li>Implementation</li>
+<li>Pursues all outcomes of every branch, regardless of path constraints</li>
+<li>Thus, follows all edges in the unit&rsquo;s inter-procedural CFG</li>
+</ul></li>
+</ul>
+
+<h4 id="s2e-api">S2E API</h4>
+
+<ul>
+<li>Tables 2 and 3 give the best overview of what core events can be used to
+develop analysis tools, and an idea of the interface to the <em>ExecState</em> object.
+<br /></li>
+</ul>
+
+<h4 id="implementation">Implementation</h4>
+
+<ul>
+<li>How are bugs that may result from slower system execution in symbolic mode
+mitigated?
+
+<ul>
+<li>The virtual clock is slowed down when symbolically executing a state</li>
+</ul></li>
+<li>Definitions
+
+<ul>
+<li><strong>Virtualization</strong>: creating a software-based (or virtual) representation
+of something rather than a physical one</li>
+<li><strong>Dynamic binary translation</strong>:</li>
+<li>Emulation of one instruction set by another through translation of binary
+code (e.g. ARM -&gt; x86)</li>
+<li>S2E turns blocks of guest code into corresponding host code</li>
+<li>Dynamic means it happens as it executes
+
+<ul>
+<li>Translates code as it is explored</li>
+<li>Typically one basic block is translated at a time then cached</li>
+</ul></li>
+<li><strong>Copy-on-write</strong>: improves performance by only copying an object when the
+copy or the original is written to</li>
+</ul></li>
+</ul>
+
+<h4 id="evaluation">Evaluation</h4>
+
+<ul>
+<li>What 3 questions did they try to answer and how did they go about evaluating them?
+
+<ol>
+<li>Is S2E a <em>general</em> platform for building tools?</li>
+<li>Showed that S2E can be used to build 3 very different tools (section 6.1).</li>
+<li>Does S2E have reasonable <em>performance</em>?</li>
+<li>Discussed its overhead in both concrete mode (~6x) and symbolic mode
+(~78x) and ways to reduce it (section 6.2).</li>
+<li>What are the <em>tradeoffs</em> between choosing different execution consistency
+models?</li>
+<li>Gave figures showing code coverage, memory usage, and constraint solving
+time based on which consistency model was used (section 6.3).</li>
+</ol></li>
+<li>What is Table 4 trying to convey? Do it do so successfully?
+
+<ul>
+<li>It is trying to convey the usability of S2E: that it is straightforward to
+instrument and create custom analysis tools. However there are a few things
+that are wrong with their approach:</li>
+<li>First, they built DDT and RevNIC previously, so they already understand
+the ins and outs of developing these types of analysis tools. Thus, their
+development time should naturally be dramatically shorter because they&rsquo;ve
+already implemented a similar system. This confounds their development
+time results.</li>
+<li>In addition, not many details are given for their calculation of
+&ldquo;person-hours&rdquo;.</li>
+<li>Also, it mentions in Table 4&rsquo;s caption that &ldquo;10 KLOC of offline analysis
+code is reused in [REV+]&ldquo;. However, that element of the table does not
+have those 10 KLOC added to it. If those 10 KLOC count against the
+previous implementation (i.e. 57,000 LOC), it should count against the
+new implementation too (i.e. 10,580 LOC instead of 580 LOC).</li>
+</ul></li>
+<li>Even after going through the tradeoffs of different consistency models in
+section 6.2, I don&rsquo;t think it would be immediately clear to developers which
+model they should use.</li>
+</ul>
+
+</div>
+
+
+  
+</article>
+      <footer id="main-footer" class="container main_footer">
+  
+
+  <div class="container nav foot no-print">
+  
+
+  <a class="toplink" href="#">back to top</a>
+
+</div>
+
+  <div class="container credits">
+  
+<div class="container footline">
+  
+
+</div>
+
+
+  
+
+</div>
+
+</footer>
+
+    </main>
+    
+
+
+<script src="https://cse291.programming.systems/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+    
+  </body>
+</html>
+

@@ -129,6 +129,360 @@ issues like UAFs:&lt;/p&gt;
     </item>
     
     <item>
+      <title>S2E</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/s2e/</link>
+      <pubDate>Mon, 14 Nov 2016 01:37:21 -0702</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/s2e/</guid>
+      <description>
+
+&lt;p&gt;Author: Brian Johannesmeyer&lt;/p&gt;
+
+&lt;h4 id=&#34;what-conference-was-this-paper-in&#34;&gt;What conference was this paper in?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ASPLOS 2011, where it won best paper&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-types-of-analyses-can-a-developer-do-on-their-code&#34;&gt;What types of analyses can a developer do on their code?&lt;/h4&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Understand observed behavior&lt;/li&gt;
+&lt;li&gt;Characterize future behavior
+
+&lt;ul&gt;
+&lt;li&gt;Should be able to do &amp;ldquo;what-if&amp;rdquo; analyses&lt;/li&gt;
+&lt;li&gt;However this is difficult because systems are large and complex&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&#34;what-three-properties-does-their-platform-offer&#34;&gt;What three properties does their platform offer?&lt;/h4&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Efficiently analyze &lt;em&gt;entire families of execution paths&lt;/em&gt;
+
+&lt;ul&gt;
+&lt;li&gt;i.e. More than one path of execution, and show that properties hold for all
+paths in a system&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Maximize &lt;em&gt;realism&lt;/em&gt; by running the analyses in a real software stack
+
+&lt;ul&gt;
+&lt;li&gt;Take into account the whole environment surrounding a program&lt;/li&gt;
+&lt;li&gt;Most approaches abstract away the environment behind a model, but that may
+lose accuracy, and is also labor-intensive&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Ability to &lt;em&gt;directly analyze binaries&lt;/em&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Access to source code is rarely feasible&lt;/li&gt;
+&lt;li&gt;However, is this really a feature? Or are they &lt;em&gt;constrained&lt;/em&gt; to binaries?
+This may not work on, e.g. direct JavaScript analysis.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&#34;what-is-symbolic-execution&#34;&gt;What is symbolic execution?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Program analysis to determine what inputs cause each part of a program to execute&lt;/li&gt;
+&lt;li&gt;Treat program as superposition of possible execution paths
+
+&lt;ul&gt;
+&lt;li&gt;e.g. &lt;code&gt;if(x&amp;gt;0) ... then ... else&lt;/code&gt; treated as superposition of two possible
+paths: one for x&amp;gt;0 and one for x&amp;lt;=0.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;For some constraint (e.g. x&amp;gt;0), instead of allowing a variable to take on a
+concrete value (e.g. x=5), it takes on a whole set of values (e.g. x:(0,+∞))&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-insight-makes-s2e-different-from-normal-symbolic-execution&#34;&gt;What insight makes S2E different from normal symbolic execution?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Often only some families of paths are of interest to developers (e.g. might
+not care about analyzing kernel code)&lt;/li&gt;
+&lt;li&gt;S2E can selectively choose what to symbolically execute by going back and
+forth between multi-path mode (i.e. with symbolic values) and single-path
+mode (i.e. with concrete values)&lt;/li&gt;
+&lt;li&gt;Also, things can be thrown away in the analysis if we don&amp;rsquo;t care about it&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;how-are-symbolic-values-converted-to-concrete-values&#34;&gt;How are symbolic values converted to concrete values?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;By simply choosing a value from the symbolic set&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;how-are-concrete-values-converted-to-symbolic-values&#34;&gt;How are concrete values converted to symbolic values?&lt;/h4&gt;
+
+&lt;p&gt;The symbolic value is constrained to whatever the concrete value was (e.g. x=5,
+when originally x&amp;gt;0) to take into account any side effects x=4 may have had.
+What can go wrong here?
+- You lose a lot of information about the value later on when you convert back
+  to a symbolic value, i.e. may overconstrain a value
+- It affects completeness&lt;/p&gt;
+
+&lt;h4 id=&#34;what-is-overconstraining&#34;&gt;What is overconstraining?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Constraining a value (whether by soft or hard constraints) so much that it
+cannot go down future paths&lt;/li&gt;
+&lt;li&gt;What is a soft constraint?
+
+&lt;ul&gt;
+&lt;li&gt;Constraint imposed by symbolic/concrete boundary (e.g. x:(0,+∞) -&amp;gt; x=5)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;What is a hard constraint?
+
+&lt;ul&gt;
+&lt;li&gt;Constraint imposed by code (e.g. x&amp;gt;0 in &lt;code&gt;if(x&amp;gt;0)...then...else&lt;/code&gt;)
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;how-is-the-process-of-converting-from-symbolic-to-concrete-values-and-back-processed&#34;&gt;How is the process of converting from symbolic to concrete values and back processed?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;According to an execution consistency model&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;let-s-define-the-parts-of-an-execution-consistency-model&#34;&gt;Let’s define the parts of an execution consistency model…&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Analysis spaces
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;System&lt;/strong&gt;: complete software system under analysis, including programs,
+libraries, OS, etc.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Unit&lt;/strong&gt;: the part of the system to be analyzed&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Environment&lt;/strong&gt;: the part of the system that’s not analyzed&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Path types (look at figure on top right of page 4)
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Statically feasible&lt;/strong&gt;: there exists a possible path in the system&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Locally feasible&lt;/strong&gt;: there exists a possible path in the system that’s
+consistent with data-related constraints in the unit&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Globally feasible&lt;/strong&gt;: there exists a possible path in the system that’s
+consistent with all data-related constraints (i.e. in both the unit and the
+environment)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Metrics
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Complete&lt;/strong&gt;: every path through the unit that’s globally feasible will
+eventually be discovered by exploration done on that unit&lt;/li&gt;
+&lt;li&gt;i.e. all execution paths can be discovered&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Consistent&lt;/strong&gt;: every path through the unit has a corresponding globally
+feasible path through the system&lt;/li&gt;
+&lt;li&gt;i.e. the unit can correctly run on the system&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Why do we care about completeness and consistency?
+
+&lt;ul&gt;
+&lt;li&gt;We can do different things with their tradeoffs (see table 1)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;strict-consistency&#34;&gt;Strict consistency&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Based on globally feasibility
+
+&lt;ul&gt;
+&lt;li&gt;Admits only globally feasible paths, i.e. only allows paths that are
+consistent with ALL data-related constraints&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;What is &lt;em&gt;Strictly Consistent Concrete Execution (SC-CE)&lt;/em&gt;?
+
+&lt;ul&gt;
+&lt;li&gt;System is a black box&lt;/li&gt;
+&lt;li&gt;Only a single execution path; executed non-symbolically&lt;/li&gt;
+&lt;li&gt;Used for:&lt;/li&gt;
+&lt;li&gt;Units tests, fuzzing&lt;/li&gt;
+&lt;li&gt;Valgrind&lt;/li&gt;
+&lt;li&gt;Anything that executes along a single path, generated by user-specified
+concrete inputs&lt;/li&gt;
+&lt;li&gt;Implementation&lt;/li&gt;
+&lt;li&gt;Doesn&amp;rsquo;t symbolically track anything&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;What is &lt;em&gt;Strictly Consistent Unit-level Execution (SC-UE)&lt;/em&gt;?
+
+&lt;ul&gt;
+&lt;li&gt;Environment treated as a black box&lt;/li&gt;
+&lt;li&gt;Exploration engine allowed to gather and use information internal to the unit&lt;/li&gt;
+&lt;li&gt;Used by: symbolic and concolic execution tools&lt;/li&gt;
+&lt;li&gt;Implementation&lt;/li&gt;
+&lt;li&gt;Symbolic value turned into concrete value when units calls environment&lt;/li&gt;
+&lt;li&gt;When environment returns back to unit, the soft constraint it created
+becomes a hard constraint&lt;/li&gt;
+&lt;li&gt;This hinders completeness&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;What is &lt;em&gt;Strictly Consistent System-level Execution (SC-SE)&lt;/em&gt;?
+
+&lt;ul&gt;
+&lt;li&gt;Nothing is a black box&lt;/li&gt;
+&lt;li&gt;Exploration engine allowed to gather and use information about the entire
+system&lt;/li&gt;
+&lt;li&gt;Limited by: path explosion problem&lt;/li&gt;
+&lt;li&gt;Implementation&lt;/li&gt;
+&lt;li&gt;Symbolic values everywhere&lt;/li&gt;
+&lt;li&gt;Path explosion
+
+&lt;ul&gt;
+&lt;li&gt;Can use heuristics to prioritize path exploration,&lt;/li&gt;
+&lt;li&gt;Or employ incremental symbolic execution
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;local-consistency-lc&#34;&gt;Local Consistency (LC)&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Avoids exploring all paths in the environment&lt;/li&gt;
+&lt;li&gt;Replaces results of calls to the environment with the symbolic values that
+represent possible valid results
+
+&lt;ul&gt;
+&lt;li&gt;e.g. &lt;code&gt;write(fd, buf,count)&lt;/code&gt; can return any integer between -1 and count&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Allows for inconsistencies in the environment while keeping the state of the
+unit internally consistent&lt;/li&gt;
+&lt;li&gt;No false positives because the internal state is consistent&lt;/li&gt;
+&lt;li&gt;Implementation
+
+&lt;ul&gt;
+&lt;li&gt;At environment-&amp;gt;boundary, concrete output value is turned into a symbolic
+value based on the function’s specification&lt;/li&gt;
+&lt;li&gt;However, if symbolic data is written to the environment, it may become
+inconsistent&lt;/li&gt;
+&lt;li&gt;If a branch in the environment depends on symbolic data, the execution
+path must be aborted
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;relaxed-consistency&#34;&gt;Relaxed consistency&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Disadvantages
+
+&lt;ul&gt;
+&lt;li&gt;Inconsistent in the general case&lt;/li&gt;
+&lt;li&gt;Internal state of the unit may be inconsistent, producing false positives&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Advantage: Performance&lt;/li&gt;
+&lt;li&gt;What is &lt;em&gt;Overapproximate Consistency (RC-OC)&lt;/em&gt;?
+
+&lt;ul&gt;
+&lt;li&gt;Path exploration can follow paths through the unit while completely
+ignoring the constraints&lt;/li&gt;
+&lt;li&gt;E.g. call to write() would not bound the return value&lt;/li&gt;
+&lt;li&gt;Thus, violates the specification of the write system call&lt;/li&gt;
+&lt;li&gt;Used for: reverse engineering&lt;/li&gt;
+&lt;li&gt;Why is it used for reverse engineering?&lt;/li&gt;
+&lt;li&gt;See 6.1.2 - They fake the hardware in order to understand what the
+drivers are doing&lt;/li&gt;
+&lt;li&gt;Implementation&lt;/li&gt;
+&lt;li&gt;At unit/environment boundaries, converts concrete values into
+unconstrained symbolic values&lt;/li&gt;
+&lt;li&gt;E.g. All possible values that write() could return, rather values it
+should return&lt;/li&gt;
+&lt;li&gt;Gives completeness at the expense of consistency&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;What is &lt;em&gt;CFG Consistency (RC-CC)&lt;/em&gt;?
+
+&lt;ul&gt;
+&lt;li&gt;Exploration engine allowed to change any part of the system state as long
+as the explored paths correspond to paths in the unit’s inter-procedural
+CFG&lt;/li&gt;
+&lt;li&gt;Used for: disassembling obfuscated and/or encrypted code&lt;/li&gt;
+&lt;li&gt;Implementation&lt;/li&gt;
+&lt;li&gt;Pursues all outcomes of every branch, regardless of path constraints&lt;/li&gt;
+&lt;li&gt;Thus, follows all edges in the unit&amp;rsquo;s inter-procedural CFG&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;s2e-api&#34;&gt;S2E API&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Tables 2 and 3 give the best overview of what core events can be used to
+develop analysis tools, and an idea of the interface to the &lt;em&gt;ExecState&lt;/em&gt; object.
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;implementation&#34;&gt;Implementation&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;How are bugs that may result from slower system execution in symbolic mode
+mitigated?
+
+&lt;ul&gt;
+&lt;li&gt;The virtual clock is slowed down when symbolically executing a state&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Definitions
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Virtualization&lt;/strong&gt;: creating a software-based (or virtual) representation
+of something rather than a physical one&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dynamic binary translation&lt;/strong&gt;:&lt;/li&gt;
+&lt;li&gt;Emulation of one instruction set by another through translation of binary
+code (e.g. ARM -&amp;gt; x86)&lt;/li&gt;
+&lt;li&gt;S2E turns blocks of guest code into corresponding host code&lt;/li&gt;
+&lt;li&gt;Dynamic means it happens as it executes
+
+&lt;ul&gt;
+&lt;li&gt;Translates code as it is explored&lt;/li&gt;
+&lt;li&gt;Typically one basic block is translated at a time then cached&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Copy-on-write&lt;/strong&gt;: improves performance by only copying an object when the
+copy or the original is written to&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;evaluation&#34;&gt;Evaluation&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;What 3 questions did they try to answer and how did they go about evaluating them?
+
+&lt;ol&gt;
+&lt;li&gt;Is S2E a &lt;em&gt;general&lt;/em&gt; platform for building tools?&lt;/li&gt;
+&lt;li&gt;Showed that S2E can be used to build 3 very different tools (section 6.1).&lt;/li&gt;
+&lt;li&gt;Does S2E have reasonable &lt;em&gt;performance&lt;/em&gt;?&lt;/li&gt;
+&lt;li&gt;Discussed its overhead in both concrete mode (~6x) and symbolic mode
+(~78x) and ways to reduce it (section 6.2).&lt;/li&gt;
+&lt;li&gt;What are the &lt;em&gt;tradeoffs&lt;/em&gt; between choosing different execution consistency
+models?&lt;/li&gt;
+&lt;li&gt;Gave figures showing code coverage, memory usage, and constraint solving
+time based on which consistency model was used (section 6.3).&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;What is Table 4 trying to convey? Do it do so successfully?
+
+&lt;ul&gt;
+&lt;li&gt;It is trying to convey the usability of S2E: that it is straightforward to
+instrument and create custom analysis tools. However there are a few things
+that are wrong with their approach:&lt;/li&gt;
+&lt;li&gt;First, they built DDT and RevNIC previously, so they already understand
+the ins and outs of developing these types of analysis tools. Thus, their
+development time should naturally be dramatically shorter because they&amp;rsquo;ve
+already implemented a similar system. This confounds their development
+time results.&lt;/li&gt;
+&lt;li&gt;In addition, not many details are given for their calculation of
+&amp;ldquo;person-hours&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;Also, it mentions in Table 4&amp;rsquo;s caption that &amp;ldquo;10 KLOC of offline analysis
+code is reused in [REV+]&amp;ldquo;. However, that element of the table does not
+have those 10 KLOC added to it. If those 10 KLOC count against the
+previous implementation (i.e. 57,000 LOC), it should count against the
+new implementation too (i.e. 10,580 LOC instead of 580 LOC).&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Even after going through the tradeoffs of different consistency models in
+section 6.2, I don&amp;rsquo;t think it would be immediately clear to developers which
+model they should use.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Microchex</title>
       <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/uchex/</link>
       <pubDate>Mon, 07 Nov 2016 01:37:21 -0702</pubDate>
