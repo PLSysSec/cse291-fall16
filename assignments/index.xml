@@ -20,7 +20,7 @@
       <description>&lt;ol&gt;
 &lt;li&gt;&lt;p&gt;Why does Singularity have channel contracts? What are contracts? And, explain 2 issues contracts address and how they address them.&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;What is the role of the &lt;code&gt;TCell&amp;lt;T&amp;gt;&lt;/code&gt; constructor? (That is what problem was it designed to address?)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;What is the role of the &lt;code&gt;TCell&amp;lt;T&amp;gt;&lt;/code&gt; constructor? (That is, what problem was it designed to address?)&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </description>
     </item>
