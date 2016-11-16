@@ -146,7 +146,7 @@ What can go wrong here?
   unit internally consistent
 - No false positives because the internal state is consistent
 - Implementation
-  - At environment->boundary, concrete output value is turned into a symbolic
+  - At environment-boundary, concrete output value is turned into a symbolic
     value based on the function’s specification
   - However, if symbolic data is written to the environment, it may become
     inconsistent
