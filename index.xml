@@ -8,8 +8,125 @@
     <language>en-us</language>
     <managingEditor>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</managingEditor>
     <webMaster>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</webMaster>
-    <lastBuildDate>Mon, 07 Nov 2016 01:37:21 -0702</lastBuildDate>
+    <lastBuildDate>Tue, 15 Nov 2016 01:37:21 -0702</lastBuildDate>
     <atom:link href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Singularity</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/singularity/</link>
+      <pubDate>Tue, 15 Nov 2016 01:37:21 -0702</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/singularity/</guid>
+      <description>
+
+&lt;p&gt;Author: Deian Stefan&lt;/p&gt;
+
+&lt;h4 id=&#34;what-is-the-motivation-behind-singularity-and-more-broadly-a-message-passing-os&#34;&gt;What is the motivation behind Singularity and, more broadly, a message passing OS?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Bugs/vulnerabilities in existing systems due to interaction between different
+components. In the OS world, device drivers are plagued by vulnerabilities.&lt;/li&gt;
+&lt;li&gt;Isolation between different components: bugs in one wont affect other&lt;/li&gt;
+&lt;li&gt;In the real world, we want message passing for device drivers, browser
+extensions, plugins, ets&lt;/li&gt;
+&lt;li&gt;Low-level languages are prone to UAFs and memory leaks.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;They believe that these problems can be addressed by high-level languages and message passing.&lt;/p&gt;
+
+&lt;p&gt;Shared messaging only &lt;em&gt;seems&lt;/em&gt; simple; in practice it gets complicated once you
+need to worry about races. Locks and barriers are not easy to use.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-are-the-limitations-downsides-of-existing-message-passing-systems&#34;&gt;What are the limitations/downsides of existing message passing systems?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Complicated programming models&lt;/li&gt;
+&lt;li&gt;Performance due to copying data&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-is-the-big-downside-of-high-level-languages&#34;&gt;What is the big downside of high-level languages?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;GC, and directly: performance&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;at-a-high-level-how-does-singularity-address-this&#34;&gt;At a high-level, how does Singularity address this?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;SIPs (software isolated processes) run in isolation from each other.
+
+&lt;ul&gt;
+&lt;li&gt;In general most things process handles are GCd.&lt;/li&gt;
+&lt;li&gt;Can allocate data in the exchange heap to share with other processes. This
+data is manually managed.&lt;/li&gt;
+&lt;li&gt;No dynamically loaded code (can&amp;rsquo;t reason about ownership etc.)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Only communication between processes: channels.&lt;/li&gt;
+&lt;li&gt;Can send scalars, channel end points and pointers on the exchange heap to
+other SIPs.
+
+&lt;ul&gt;
+&lt;li&gt;Ownership model ensures memory safety.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;why-is-singularity-so-fast&#34;&gt;Why is Singularity so fast?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Context switching is cheap: no user-priv mode, no MMU to get in the way, all
+isolation is done in software. Only marginally more expensive than a function
+call.&lt;/li&gt;
+&lt;li&gt;Message passing is cheap: no allocation, the 0-copy sends means only pointer
+is sent and no data is copied. (Trade-off? programming model + flexibility)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-do-they-mean-when-they-say-memory-safety&#34;&gt;What do they mean when they say memory safety?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;No UAFs&lt;/li&gt;
+&lt;li&gt;No memory leaks&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;how-do-they-address-this&#34;&gt;How do they address this?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Only one SIP can &lt;em&gt;own&lt;/em&gt; a block in the exchange heap.&lt;/li&gt;
+&lt;li&gt;When you send pointer as message to another heap, they are now the owner of
+this block. You can no longer use the pointer.&lt;/li&gt;
+&lt;li&gt;They ensure this statically by tracking ownership at the language level:
+
+&lt;ul&gt;
+&lt;li&gt;You get ownership by allocating, as function parameter, or return value.&lt;/li&gt;
+&lt;li&gt;You lose ownership when you call function or call delete.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Invariants: only 1 owner (UAF), owner must free (leak).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-s-the-point-of-expose-and-what-can-go-wrong-without-it&#34;&gt;What&amp;rsquo;s the point of &lt;code&gt;expose&lt;/code&gt; and what can go wrong without it?&lt;/h4&gt;
+
+&lt;p&gt;Transfer ownership of field from struct to function. Otherwise, we can have
+issues like UAFs:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;void func(NetworkPacket* in ExHeap pk) {
+  byte []  in ExHeap d = pkt-&amp;gt;data;
+  f(pkt); // if f deletes pkt or if pkt-&amp;gt;data is deleted, etc. we crash below:
+  d[32] = 44;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;why-does-singularity-have-channel-contracts-what-are-contracts-and-explain-2-issues-contracts-address-and-how-they-address-them&#34;&gt;Why does Singularity have channel contracts? What are contracts? And, explain 2 issues contracts address and how they address them.&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Homework question&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-is-the-role-of-the-tcell-t-constructor&#34;&gt;What is the role of the &lt;code&gt;TCell&amp;lt;T&amp;gt;&lt;/code&gt; constructor?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Homework question&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Microchex</title>
@@ -988,165 +1105,6 @@ the HS side: when the HS receives the signature from the client, it checks if
 the signed old entries are the same as the ones it already has. If not, it will
 reject the update since that would indicate that the server is has been
 compromised.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Hails</title>
-      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/hails/</link>
-      <pubDate>Fri, 23 Sep 2016 01:37:21 -0704</pubDate>
-      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
-      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/hails/</guid>
-      <description>
-
-&lt;p&gt;Author: Matthew Chan&lt;/p&gt;
-
-&lt;h3 id=&#34;what-is-the-main-contribution-of-the-paper&#34;&gt;What is the main contribution of the paper?&lt;/h3&gt;
-
-&lt;p&gt;Aside from the artefact, the Model-&lt;em&gt;Policy&lt;/em&gt;-View-Controller architecture, which
-provides a framework for building IFC enabled web applications.&lt;/p&gt;
-
-&lt;h3 id=&#34;what-problem-does-mpvc-solve&#34;&gt;What problem does MPVC solve?&lt;/h3&gt;
-
-&lt;p&gt;Traditional web application structure (i.e. MVC) has security checks littered
-across the code base, mostly in the controllers &amp;ndash; the situation does not
-improve across different kinds of frameworks, both client and server side View
-frameworks suffer from the same problem (e.g. user metadata sanitization in the
-view).  Specifying policy this way has two major disadvantages (a) policies have
-to be specified multiple times for the same piece of data, leading to (b)
-forgotten checks, inconsistent policies, and difficulties with revising the policies.&lt;/p&gt;
-
-&lt;p&gt;MPVC allows for the centralised specification of security policies where they
-logically belong (with the data) thus simplifying the view and controller by
-making redundant checks in those components. This needs to be supported by a
-runtime =&amp;gt; Hails.&lt;/p&gt;
-
-&lt;h3 id=&#34;what-are-principals-what-are-the-three-types-of-principals-in-hails&#34;&gt;What are principals? What are the three types of principals in Hails?&lt;/h3&gt;
-
-&lt;p&gt;A principal is a participant in the system who is allowed to read and write
-data. Policies are specified in terms of principals. Unforgeable tokens called
-&lt;em&gt;privileges&lt;/em&gt; represent the authority of principals at runtime.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Users&lt;/li&gt;
-&lt;li&gt;VCs and remote resources they communicate with&lt;/li&gt;
-&lt;li&gt;MPs&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;the-hails-dsl-allows-policies-to-be-specified-via-arbitrary-actions-does-this-affect-the-design-of-dclabels&#34;&gt;The Hails DSL allows policies to be specified via arbitrary actions. Does this affect the design of DCLabels?&lt;/h3&gt;
-
-&lt;p&gt;It should not, since the labels evaluate to the same thing cf. policies
-specified as pure functions, you still get a label in the DCLabels format. The
-DSL affects only expressivity, and is safe with IFC controlled effects.&lt;/p&gt;
-
-&lt;h3 id=&#34;how-is-the-hails-labelled-db-api-different-from-the-mp-dsl-does-one-get-the-same-guarantees-if-she-does-not-use-the-dsl&#34;&gt;How is the Hails labelled DB API different from the MP DSL? Does one get the same guarantees if she does not use the DSL?&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;MPs may contain arbitrary code and can expose an arbitrary API&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Hails DB API: wraps the underlying DB API with labels, part of the Hails TCB.&lt;/li&gt;
-&lt;li&gt;MP DSL: for describing MPs, which translate to calls to the DB API.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The DB API can be used to express things that maybe the DSL cannot. This is
-purely a matter of convenience; things are safe as long as the Hails libraries
-are used (policy is mandated by the Hails runtime anyways).&lt;/p&gt;
-
-&lt;h3 id=&#34;how-are-things-labelled-in-hails&#34;&gt;How are things labelled in Hails?&lt;/h3&gt;
-
-&lt;p&gt;See Fig. 2 on pg. 7&lt;/p&gt;
-
-&lt;p&gt;The Hails MP persistence model is based on a document-oriented model (similar to Mongo), where&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;DB = { collection } (≈ tables)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Every database has a label&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;collection = { document } (≈ rows)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Every collection in a database has a collection label&lt;/p&gt;
-
-&lt;p&gt;MPs can specify coarse-grained DB and coll labels.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;document = { field } (≈ K-V mappings).&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Fields can be indexed &lt;em&gt;keys&lt;/em&gt; identifying the document or non-indexed
-  &lt;em&gt;elements&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Documents and Fields can be labelled via a function of type &lt;code&gt;Doc -&amp;gt; Label&lt;/code&gt;,
-  i.e. label depends on document contents.&lt;/p&gt;
-
-&lt;h3 id=&#34;why-does-hails-need-os-level-confinement-and-how-is-this-different-from-threads-are-there-alternative-designs-for-this-mechanism&#34;&gt;Why does Hails need OS level confinement and how is this different from threads? Are there alternative designs for this mechanism?&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;For running external programs, i.e. &lt;code&gt;splint&lt;/code&gt; linter in the &lt;code&gt;gitstar&lt;/code&gt; example&lt;/li&gt;
-&lt;li&gt;Threads =/= Processes; a process can have many threads. Spawning threads in
-Hails/LIO is completely fine, the child thread acquires the label of its
-parent.&lt;/li&gt;
-&lt;li&gt;This confinement does not extend to spawned processes, so we need a kernel
-level confinement solution. Hails uses standard Linux isolation mechanisms,
-but other sandbox/container solutions might also work, i.e. Docker.&lt;/li&gt;
-&lt;li&gt;As discussed in class, a possible design might be to &amp;ldquo;flip&amp;rdquo; the process model and
-have all processes communicate via the safe Hails/LIO process. This way all IO
-is labelled and spawned processes can have access to the network and other
-resources. Sadly this doesn&amp;rsquo;t work because of label creep. (explain the
-problem in detail?)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;how-is-hails-evaluated&#34;&gt;How is Hails evaluated?&lt;/h3&gt;
-
-&lt;p&gt;Same as Shill:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Expressiveness/usability:&lt;/strong&gt; built a few applications with Hails, including one
-by a team of undergraduate research interns who were novices in Haskell and
-Hails. Found that MP was hard to get right but extension with VC is easy.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Performance:&lt;/strong&gt; Evaluation against existing mainstream web frameworks, mostly
-demonstrating that interpreted languages (like Ruby) are terrible.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Performance is competitive cf. Java but&amp;hellip;&lt;/li&gt;
-&lt;li&gt;DB performance is bad (mostly due to the Haskell Mongo library implementation,
-according to Deian)&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Security:&lt;/strong&gt; this is the focal point. Tiny TCB in application code across all
-examples. How big is the TCB for the Hails library + runtime +
-LIO/DCLabels/COWL ecosystem?&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;The other parts are formalized in Coq :+1:&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;another-policy-enforcing-framework-is-jeeves-jacqueline-how-is-hails-different&#34;&gt;Another policy enforcing framework is Jeeves/Jacqueline. How is Hails different?&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Jeeves is a language, whereas Hails is a library/EDSL. This makes Hails more
-flexible and easier to change from a language design point of view. (+ usual
-host-language features for free argument for EDSLs)&lt;/li&gt;
-&lt;li&gt;LIO&amp;rsquo;s programming model is more flexible (e.g., LIO has exceptions and threads).&lt;/li&gt;
-&lt;li&gt;Jeeves is completely policy agnostic; Hails is &lt;em&gt;mostly&lt;/em&gt; policy agnostic. The
-authors make a case for requiring policies be inspectable, i.e. to recover
-from failures (see concurrent LIO).&lt;/li&gt;
-&lt;li&gt;Jeeves can specify policies on concrete data stored in DB directly, Hails
-requires a layer of indirection at the MP level. Unclear which is better.&lt;/li&gt;
-&lt;li&gt;Hails has a story for confinement in the browser, via COWL, and for
-enforcement at the OS level.&lt;/li&gt;
-&lt;li&gt;LIO addresses covert channels and generally has a stronger attacker model.
-Specifically, LIO supports termination sensitive noninterference (no leaks
-via termination channel). Jeeves supports termination insensitive
-noninterference (leaks via termination channel possible).&lt;/li&gt;
-&lt;/ul&gt;
 </description>
     </item>
     

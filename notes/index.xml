@@ -8,8 +8,125 @@
     <language>en-us</language>
     <managingEditor>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</managingEditor>
     <webMaster>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</webMaster>
-    <lastBuildDate>Mon, 07 Nov 2016 01:37:21 -0702</lastBuildDate>
+    <lastBuildDate>Tue, 15 Nov 2016 01:37:21 -0702</lastBuildDate>
     <atom:link href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Singularity</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/singularity/</link>
+      <pubDate>Tue, 15 Nov 2016 01:37:21 -0702</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/singularity/</guid>
+      <description>
+
+&lt;p&gt;Author: Deian Stefan&lt;/p&gt;
+
+&lt;h4 id=&#34;what-is-the-motivation-behind-singularity-and-more-broadly-a-message-passing-os&#34;&gt;What is the motivation behind Singularity and, more broadly, a message passing OS?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Bugs/vulnerabilities in existing systems due to interaction between different
+components. In the OS world, device drivers are plagued by vulnerabilities.&lt;/li&gt;
+&lt;li&gt;Isolation between different components: bugs in one wont affect other&lt;/li&gt;
+&lt;li&gt;In the real world, we want message passing for device drivers, browser
+extensions, plugins, ets&lt;/li&gt;
+&lt;li&gt;Low-level languages are prone to UAFs and memory leaks.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;They believe that these problems can be addressed by high-level languages and message passing.&lt;/p&gt;
+
+&lt;p&gt;Shared messaging only &lt;em&gt;seems&lt;/em&gt; simple; in practice it gets complicated once you
+need to worry about races. Locks and barriers are not easy to use.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-are-the-limitations-downsides-of-existing-message-passing-systems&#34;&gt;What are the limitations/downsides of existing message passing systems?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Complicated programming models&lt;/li&gt;
+&lt;li&gt;Performance due to copying data&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-is-the-big-downside-of-high-level-languages&#34;&gt;What is the big downside of high-level languages?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;GC, and directly: performance&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;at-a-high-level-how-does-singularity-address-this&#34;&gt;At a high-level, how does Singularity address this?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;SIPs (software isolated processes) run in isolation from each other.
+
+&lt;ul&gt;
+&lt;li&gt;In general most things process handles are GCd.&lt;/li&gt;
+&lt;li&gt;Can allocate data in the exchange heap to share with other processes. This
+data is manually managed.&lt;/li&gt;
+&lt;li&gt;No dynamically loaded code (can&amp;rsquo;t reason about ownership etc.)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Only communication between processes: channels.&lt;/li&gt;
+&lt;li&gt;Can send scalars, channel end points and pointers on the exchange heap to
+other SIPs.
+
+&lt;ul&gt;
+&lt;li&gt;Ownership model ensures memory safety.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;why-is-singularity-so-fast&#34;&gt;Why is Singularity so fast?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Context switching is cheap: no user-priv mode, no MMU to get in the way, all
+isolation is done in software. Only marginally more expensive than a function
+call.&lt;/li&gt;
+&lt;li&gt;Message passing is cheap: no allocation, the 0-copy sends means only pointer
+is sent and no data is copied. (Trade-off? programming model + flexibility)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-do-they-mean-when-they-say-memory-safety&#34;&gt;What do they mean when they say memory safety?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;No UAFs&lt;/li&gt;
+&lt;li&gt;No memory leaks&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;how-do-they-address-this&#34;&gt;How do they address this?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Only one SIP can &lt;em&gt;own&lt;/em&gt; a block in the exchange heap.&lt;/li&gt;
+&lt;li&gt;When you send pointer as message to another heap, they are now the owner of
+this block. You can no longer use the pointer.&lt;/li&gt;
+&lt;li&gt;They ensure this statically by tracking ownership at the language level:
+
+&lt;ul&gt;
+&lt;li&gt;You get ownership by allocating, as function parameter, or return value.&lt;/li&gt;
+&lt;li&gt;You lose ownership when you call function or call delete.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Invariants: only 1 owner (UAF), owner must free (leak).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-s-the-point-of-expose-and-what-can-go-wrong-without-it&#34;&gt;What&amp;rsquo;s the point of &lt;code&gt;expose&lt;/code&gt; and what can go wrong without it?&lt;/h4&gt;
+
+&lt;p&gt;Transfer ownership of field from struct to function. Otherwise, we can have
+issues like UAFs:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;void func(NetworkPacket* in ExHeap pk) {
+  byte []  in ExHeap d = pkt-&amp;gt;data;
+  f(pkt); // if f deletes pkt or if pkt-&amp;gt;data is deleted, etc. we crash below:
+  d[32] = 44;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;why-does-singularity-have-channel-contracts-what-are-contracts-and-explain-2-issues-contracts-address-and-how-they-address-them&#34;&gt;Why does Singularity have channel contracts? What are contracts? And, explain 2 issues contracts address and how they address them.&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Homework question&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-is-the-role-of-the-tcell-t-constructor&#34;&gt;What is the role of the &lt;code&gt;TCell&amp;lt;T&amp;gt;&lt;/code&gt; constructor?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Homework question&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Microchex</title>
