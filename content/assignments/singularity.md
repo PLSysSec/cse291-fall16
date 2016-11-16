@@ -9,4 +9,4 @@ draft = false
 
 1. Why does Singularity have channel contracts? What are contracts? And, explain 2 issues contracts address and how they address them.
 
-2. What is the role of the `TCell<T>` constructor? (That is what problem was it designed to address?)
+2. What is the role of the `TCell<T>` constructor? (That is, what problem was it designed to address?)
