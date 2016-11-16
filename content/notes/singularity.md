@@ -1,6 +1,6 @@
 +++
 author = "Deian Stefan"
-date = "2016-15-07T01:37:21-07:02"
+date = "2016-11-15T01:37:21-07:02"
 title = "Singularity"
 type = "notes"
 draft = false

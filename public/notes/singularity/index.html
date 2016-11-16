@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Singularity  &middot; CSE 291</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="" />
+
+<meta name="keywords" content="">
+
+
+<meta property="og:title" content="Singularity  &middot; CSE 291 ">
+<meta property="og:site_name" content="CSE 291"/>
+<meta property="og:url" content="https://cse291.programming.systems/notes/singularity/" />
+<meta property="og:locale" content="en-us">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content=""/>
+<meta property="og:article:published_time" content="2016-11-15T01:37:21-07:02" />
+<meta property="og:article:modified_time" content="2016-11-15T01:37:21-07:02" />
+
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@deiandelmars" />
+<meta name="twitter:creator" content="@deiandelmars" />
+<meta name="twitter:title" content="Singularity" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:url" content="https://cse291.programming.systems/notes/singularity/" />
+<meta name="twitter:domain" content="https://cse291.programming.systems">
+  
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Singularity",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/+?rel=author"
+    },
+    "datePublished": "2016-11-15",
+    "description": "",
+    "wordCount":  458 
+  }
+</script>
+
+
+
+<link rel="canonical" href="https://cse291.programming.systems/notes/singularity/" />
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://cse291.programming.systems/touch-icon-144-precomposed.png">
+<link href="https://cse291.programming.systems/favicon.png" rel="icon">
+<meta name="theme-color" content="#2053AB">
+<meta name="generator" content="Hugo 0.16" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://cse291.programming.systems/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cse291.programming.systems/css/style.css">
+<link rel="stylesheet" href="https://cse291.programming.systems/css/highlight/default.css">
+
+  
+</head>
+<body>
+  <main id="main-wrapper" class="container main_wrapper has-sidebar">
+    <header id="main-header" class="container main_header">
+  <div class="container brand">
+  <div class="container title h1-like">
+  <a class="baselink" href="https://cse291.programming.systems">
+  CSE 291
+
+</a>
+
+</div>
+
+  
+<div class="container topline">
+  
+  Building Secure Systems using Programming Languages and Analysis
+
+
+</div>
+
+
+</div>
+
+  <nav class="container nav primary no-print">
+  
+
+
+  
+<a href="https://cse291.programming.systems/about">Organization</a>
+
+<a href="https://cse291.programming.systems/syllabus" title="Course syllabus">Syllabus</a>
+
+<a href="https://cse291.programming.systems/contact">Contact</a>
+
+<a href="https://cse291.programming.systems/notes">Notes</a>
+
+<a href="https://cse291.programming.systems/assignments">Assignments</a>
+
+<a href="https://cse291.programming.systems/ideas">Project ideas</a>
+
+
+</nav>
+
+<div class="container nav secondary no-print">
+  
+<a id="contact-link-email" class="contact_link" href="mailto:deian&#43;cse291@cs.ucsd.edu">
+  <span class="fa fa-envelope-square"></span><span>email</span></a>
+
+
+
+<a id="contact-link-github" class="contact_link" href="https://github.com/plsyssec/cse291-fall16">
+  <span class="fa fa-github-square"></span><span>github</span></a>
+
+
+
+
+
+
+
+
+
+
+
+<a id="contact-link-twitter" class="contact_link" href="https://twitter.com/deiandelmars">
+  <span class="fa fa-twitter-square"></span><span>twitter</span></a>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+  
+
+</header>
+
+
+<article id="main-content" class="container main_content single">
+  <header class="container hat">
+  <h1>Singularity
+</h1>
+
+</header>
+
+  <div class="container content">
+  
+
+<p>Author: Deian Stefan</p>
+
+<h4 id="what-is-the-motivation-behind-singularity-and-more-broadly-a-message-passing-os">What is the motivation behind Singularity and, more broadly, a message passing OS?</h4>
+
+<ul>
+<li>Bugs/vulnerabilities in existing systems due to interaction between different
+components. In the OS world, device drivers are plagued by vulnerabilities.</li>
+<li>Isolation between different components: bugs in one wont affect other</li>
+<li>In the real world, we want message passing for device drivers, browser
+extensions, plugins, ets</li>
+<li>Low-level languages are prone to UAFs and memory leaks.</li>
+</ul>
+
+<p>They believe that these problems can be addressed by high-level languages and message passing.</p>
+
+<p>Shared messaging only <em>seems</em> simple; in practice it gets complicated once you
+need to worry about races. Locks and barriers are not easy to use.</p>
+
+<h4 id="what-are-the-limitations-downsides-of-existing-message-passing-systems">What are the limitations/downsides of existing message passing systems?</h4>
+
+<ul>
+<li>Complicated programming models</li>
+<li>Performance due to copying data</li>
+</ul>
+
+<h4 id="what-is-the-big-downside-of-high-level-languages">What is the big downside of high-level languages?</h4>
+
+<ul>
+<li>GC, and directly: performance</li>
+</ul>
+
+<h4 id="at-a-high-level-how-does-singularity-address-this">At a high-level, how does Singularity address this?</h4>
+
+<ul>
+<li>SIPs (software isolated processes) run in isolation from each other.
+
+<ul>
+<li>In general most things process handles are GCd.</li>
+<li>Can allocate data in the exchange heap to share with other processes. This
+data is manually managed.</li>
+<li>No dynamically loaded code (can&rsquo;t reason about ownership etc.)</li>
+</ul></li>
+<li>Only communication between processes: channels.</li>
+<li>Can send scalars, channel end points and pointers on the exchange heap to
+other SIPs.
+
+<ul>
+<li>Ownership model ensures memory safety.</li>
+</ul></li>
+</ul>
+
+<h4 id="why-is-singularity-so-fast">Why is Singularity so fast?</h4>
+
+<ul>
+<li>Context switching is cheap: no user-priv mode, no MMU to get in the way, all
+isolation is done in software. Only marginally more expensive than a function
+call.</li>
+<li>Message passing is cheap: no allocation, the 0-copy sends means only pointer
+is sent and no data is copied. (Trade-off? programming model + flexibility)</li>
+</ul>
+
+<h4 id="what-do-they-mean-when-they-say-memory-safety">What do they mean when they say memory safety?</h4>
+
+<ul>
+<li>No UAFs</li>
+<li>No memory leaks</li>
+</ul>
+
+<h4 id="how-do-they-address-this">How do they address this?</h4>
+
+<ul>
+<li>Only one SIP can <em>own</em> a block in the exchange heap.</li>
+<li>When you send pointer as message to another heap, they are now the owner of
+this block. You can no longer use the pointer.</li>
+<li>They ensure this statically by tracking ownership at the language level:
+
+<ul>
+<li>You get ownership by allocating, as function parameter, or return value.</li>
+<li>You lose ownership when you call function or call delete.</li>
+</ul></li>
+<li>Invariants: only 1 owner (UAF), owner must free (leak).</li>
+</ul>
+
+<h4 id="what-s-the-point-of-expose-and-what-can-go-wrong-without-it">What&rsquo;s the point of <code>expose</code> and what can go wrong without it?</h4>
+
+<p>Transfer ownership of field from struct to function. Otherwise, we can have
+issues like UAFs:</p>
+
+<pre><code>void func(NetworkPacket* in ExHeap pk) {
+  byte []  in ExHeap d = pkt-&gt;data;
+  f(pkt); // if f deletes pkt or if pkt-&gt;data is deleted, etc. we crash below:
+  d[32] = 44;
+}
+</code></pre>
+
+<h4 id="why-does-singularity-have-channel-contracts-what-are-contracts-and-explain-2-issues-contracts-address-and-how-they-address-them">Why does Singularity have channel contracts? What are contracts? And, explain 2 issues contracts address and how they address them.</h4>
+
+<ul>
+<li>Homework question</li>
+</ul>
+
+<h4 id="what-is-the-role-of-the-tcell-t-constructor">What is the role of the <code>TCell&lt;T&gt;</code> constructor?</h4>
+
+<ul>
+<li>Homework question</li>
+</ul>
+
+</div>
+
+
+  
+</article>
+      <footer id="main-footer" class="container main_footer">
+  
+
+  <div class="container nav foot no-print">
+  
+
+  <a class="toplink" href="#">back to top</a>
+
+</div>
+
+  <div class="container credits">
+  
+<div class="container footline">
+  
+
+</div>
+
+
+  
+
+</div>
+
+</footer>
+
+    </main>
+    
+
+
+<script src="https://cse291.programming.systems/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+    
+  </body>
+</html>
+
