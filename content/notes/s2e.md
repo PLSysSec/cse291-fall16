@@ -3,7 +3,7 @@ author = "Brian Johannesmeyer"
 date = "2016-11-14T01:37:21-07:02"
 title = "S2E"
 type = "notes"
-draft = true
+draft = false
 
 +++
 
