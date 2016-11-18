@@ -8,8 +8,152 @@
     <language>en-us</language>
     <managingEditor>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</managingEditor>
     <webMaster>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</webMaster>
-    <lastBuildDate>Tue, 15 Nov 2016 01:37:21 -0703</lastBuildDate>
+    <lastBuildDate>Thu, 17 Nov 2016 01:37:21 -0702</lastBuildDate>
     <atom:link href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Ironclad Apps</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/ironclad-apps/</link>
+      <pubDate>Thu, 17 Nov 2016 01:37:21 -0702</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/ironclad-apps/</guid>
+      <description>
+
+&lt;p&gt;Author: Fucheng Gao&lt;/p&gt;
+
+&lt;h4 id=&#34;what-conference-did-this-paper-present-in&#34;&gt;What conference did this paper present in?&lt;/h4&gt;
+
+&lt;p&gt;USENIX Symposium on Operating Systems Design and Implementation (OSDI)&lt;/p&gt;
+
+&lt;h4 id=&#34;what-kind-of-need-is-satisfied-by-ironclad&#34;&gt;What kind of need is satisfied by Ironclad?&lt;/h4&gt;
+
+&lt;p&gt;People want to assure their data secure when running apps in the could, without
+trusting the cloud provider.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-s-the-shortcoming-of-previous-work-on-verification&#34;&gt;What&amp;rsquo;s the shortcoming of previous work on verification?&lt;/h4&gt;
+
+&lt;p&gt;Currently software verification can provide strong guarantees, but the cost is
+often high &amp;ndash; e.g., seL4 took over 20-person years.&lt;/p&gt;
+
+&lt;h4 id=&#34;system-features&#34;&gt;System features&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;It can completely verify the software stack, which means it assume every part
+of software is untrusted, e.g. OS, BIOS, etc.&lt;/li&gt;
+&lt;li&gt;The verification is on low-level assembly, meaning some of the toolsets
+(e.g., DafnyCC) need not not trusted.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;goals&#34;&gt;Goals&lt;/h4&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Remote equivalence: A remote user should receive the same sequence
+of messages as a user communicating with the app abstract state machine.&lt;/li&gt;
+&lt;li&gt;Secure channel: Remote user can establish a secure channel to the app, in
+the presence of an untrusted OS.&lt;/li&gt;
+&lt;li&gt;Completeness: Every software component must be verified.&lt;/li&gt;
+&lt;li&gt;Low level verification: verify the actual instruction to that are executed.&lt;/li&gt;
+&lt;li&gt;Rapid development by systems programmers: Non-expert developers should be
+able to rapidly develop a verified Ironclad app.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&#34;non-goals&#34;&gt;Non-goals&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Compatibility&lt;/li&gt;
+&lt;li&gt;Performance&lt;/li&gt;
+&lt;li&gt;Covert-channels&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;main-techniques-used-by-ironclad&#34;&gt;Main techniques used by Ironclad&lt;/h4&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Late launch: Run application in a protected environment&lt;/li&gt;
+&lt;li&gt;Trusted computing: Tight software to a encryption key&lt;/li&gt;
+&lt;li&gt;Software verification: Prove software action follows specification&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&#34;threat-model&#34;&gt;Threat model&lt;/h4&gt;
+
+&lt;p&gt;Provide security against software-based attackers, who may run arbitrary
+software on machine before executing or after app executes. The adversary may
+attack the BIOS, OS, etc.&lt;/p&gt;
+
+&lt;p&gt;Ironclad only provides privacy and integrity; no liveness/DOS or consideration
+for covert-channel attacks.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-is-the-tpm-trusted-platform-module-and-how-is-it-used-by-ironclad&#34;&gt;What is the TPM (Trusted Platform Module) and how is it used by Ironclad?&lt;/h4&gt;
+
+&lt;p&gt;The TPM offers facilities for the secure generation of cryptographic keys,
+random number generation, signing with the platform key, etc.&lt;/p&gt;
+
+&lt;p&gt;The TPM is used by Ironclad to prove to the remote user that the app they think
+is running is indeed that; i.e., the TPM is use for attestation. See
+(TXT)[&lt;a href=&#34;https://en.wikipedia.org/wiki/Trusted_Execution_Technology&#34;&gt;https://en.wikipedia.org/wiki/Trusted_Execution_Technology&lt;/a&gt;] for modern usages.&lt;/p&gt;
+
+&lt;h4 id=&#34;developer-workflow&#34;&gt;Developer workflow&lt;/h4&gt;
+
+&lt;p&gt;Firsts, the developer write the high-level specification (trusted) and then
+implements the app in Dafny (untrusted), using Hoare logic pre and post
+conditions to make aid the verification. Using a specification translator, the
+high-level spec will be translate to a BoogieX86 specification. The DafnyCC
+complier will also compile the implementation into BoogieX86.  The verifier
+will then verify if assembly code &amp;ldquo;matches&amp;rdquo; the spec. Finally, the trusted
+assembler and linker produces the final binary.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-kind-of-specification-types-does-ironclad-rely-on&#34;&gt;What kind of specification types does Ironclad rely on?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Hardware specifications&lt;/li&gt;
+&lt;li&gt;App Specifications&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;how-does-ironclad-simplify-hardware-specifications&#34;&gt;How does Ironclad simplify hardware specifications?&lt;/h4&gt;
+
+&lt;p&gt;It only defines spec for the introductions it can reason about and uses in the
+compilation stages; this is only slightly less than 60 instructions.&lt;/p&gt;
+
+&lt;h4 id=&#34;how-does-ironclad-reduce-app-verification-cost&#34;&gt;How does Ironclad reduce app verification cost?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Preliminary verification: It performs a basic verification on Dafny code via
+Z3. This lets developers quickly detect bugs when programming.&lt;/li&gt;
+&lt;li&gt;Modular verification&lt;/li&gt;
+&lt;li&gt;Shared verification&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;besides-functional-correctness-what-else-does-ironclad-prove&#34;&gt;Besides functional correctness what else does Ironclad prove?&lt;/h4&gt;
+
+&lt;p&gt;They ensure privacy by proving noninterference. This is proved via Boogie&amp;rsquo;s
+SymDiff.&lt;/p&gt;
+
+&lt;h4 id=&#34;why-is-noninterference-not-usually-practical-for-real-apps&#34;&gt;Why is noninterference not usually practical for real apps?&lt;/h4&gt;
+
+&lt;p&gt;Apps need to leak data. To this end, Ironclad introduced declassification via a
+state machine.&lt;/p&gt;
+
+&lt;h4 id=&#34;how-was-remote-equivalence-proved&#34;&gt;How was remote equivalence proved?&lt;/h4&gt;
+
+&lt;p&gt;In short: they prove functional correctness for the declsssifier and noninterference for
+the program up to the declassify statement and after it.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-feature-does-dafnycc-provide&#34;&gt;What feature does DafnyCC provide?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Type safety&lt;/li&gt;
+&lt;li&gt;Array bound safety&lt;/li&gt;
+&lt;li&gt;Transitive stack safety&lt;/li&gt;
+&lt;li&gt;High-level property preservation&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-is-late-launch&#34;&gt;What is late-launch?&lt;/h4&gt;
+
+&lt;p&gt;It resets the CPU to a known state, stores a measurement (hash) of the
+in-memory code pointed to by the instruction’s argument, and jumps to that
+code. After a late-launch, the hardware provides the program control of the CPU
+and 64 KiB of protected memory.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Singularity</title>
@@ -1046,127 +1190,6 @@ COWL&lt;/li&gt;
 &lt;h2 id=&#34;discussion&#34;&gt;Discussion&lt;/h2&gt;
 
 &lt;h4 id=&#34;what-are-the-benefits-and-risks-of-having-users-override-cors&#34;&gt;What are the benefits and risks of having users override CORS?&lt;/h4&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Chrome extension system</title>
-      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/chrome-extension-system/</link>
-      <pubDate>Fri, 23 Sep 2016 01:37:21 -0708</pubDate>
-      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
-      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/chrome-extension-system/</guid>
-      <description>
-
-&lt;p&gt;Author: Ariana Mirian&lt;/p&gt;
-
-&lt;h4 id=&#34;background&#34;&gt;Background&lt;/h4&gt;
-
-&lt;p&gt;Presented in 2010, at NDSS (Network and Distributed System Security).&lt;/p&gt;
-
-&lt;p&gt;The following people were on the paper:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Adam Barth: (one of first people working on) Security at Chrome&lt;/li&gt;
-&lt;li&gt;Adrienne Porter Felt: Usable Security at Chrome&lt;/li&gt;
-&lt;li&gt;Prateek Saxena: Prof at National University of Singapore&lt;/li&gt;
-&lt;li&gt;Aaron Boodman: Helped build Chrome, now at Startup&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;They were all at some point invested in Google (or still are), and had a vested
-interest in making a system that worked and was effective.&lt;/p&gt;
-
-&lt;p&gt;To review, a browser extension is a third party software that extends the
-functionality of a web browser.&lt;/p&gt;
-
-&lt;h4 id=&#34;problem&#34;&gt;Problem&lt;/h4&gt;
-
-&lt;p&gt;The question that the authors were trying to answer is if browser extensions
-require such a high level of privilege.&lt;/p&gt;
-
-&lt;p&gt;In order to answer this, the authors analyzed Firefox Browser system and
-implement an alternate extension system with the Chrome Extension System.&lt;/p&gt;
-
-&lt;p&gt;One could say that the Firefox model at the time was silly and had lacked any
-regard for security. However, it is important to remember that extensions were
-meant to supplement a user&amp;rsquo;s experience and, before this point, the use case
-for extensions wasn&amp;rsquo;t clear. Firefox had no idea what to expect, while the
-authors of this paper benefited from hindsight.&lt;/p&gt;
-
-&lt;p&gt;The threat model is &lt;em&gt;benign but buggy&lt;/em&gt; extensions: a malicious attacker could
-corrupt the extension and usurp its privileges.&lt;/p&gt;
-
-&lt;h4 id=&#34;evolution-of-firefox&#34;&gt;Evolution of Firefox&lt;/h4&gt;
-
-&lt;p&gt;The paper argues that the underlying issue of the four potential (out of many)
-attacks is that Firefox extensions interact directly with untrusted content
-while possessing a high level of privilege &amp;mdash; by rethinking the architecture
-they aren&amp;rsquo;t just fixing one problem, they are addressing most of them.&lt;/p&gt;
-
-&lt;p&gt;While they argue that there was no way to automate the extension analysis, there
-might have been a way to perform a program analysis to look at how the APIs are
-used. On this note, while their paper did well with only 25 extensions from the
-Firefox Extension system, it could have benefited from a larger analysis to
-provide a better picture of how the average extension dealt with privileges.&lt;/p&gt;
-
-&lt;p&gt;Out of the 25 extensions that they analyzed, 19 had &amp;lsquo;critical&amp;rsquo; privileges,
-meaning that they could run arbitrary code on the user&amp;rsquo;s system, while only 3
-required critical privileges. This is an example of a privilege gap.&lt;/p&gt;
-
-&lt;p&gt;The paper then goes into discussing a security lattice that they used to
-analyze the Firefox extension API. They show that there is a considerable
-number of escalation points that need to be addressed, and that the separation
-of privileges is not necessarily as easy as it seems. APIs need to be designed
-from the start with privileges in mind.&lt;/p&gt;
-
-&lt;p&gt;From this analysis, they propose building a new system following the principle
-of least privilege, privilege separation, and strong isolation.&lt;/p&gt;
-
-&lt;h4 id=&#34;google-chrome-extension-system&#34;&gt;Google Chrome Extension System&lt;/h4&gt;
-
-&lt;p&gt;The Google chrome extension system implements privilege separation and isolation
-mechanisms.&lt;/p&gt;
-
-&lt;h5 id=&#34;why-did-they-need-both&#34;&gt;Why did they need both?&lt;/h5&gt;
-
-&lt;p&gt;The privilege separation was broken into three differed hierarchies: &lt;em&gt;content
-scripts&lt;/em&gt;, &lt;em&gt;extension core&lt;/em&gt;, and &lt;em&gt;native binary&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Content scripts are JavaScript scripts that allow extensions to directly
-interact with the untrusted web content (DOM) &amp;mdash; since they have the largest
-attack surface, they do not have any direct access to privileged APIs. They can
-only communicate with the extension core via message passing.&lt;/p&gt;
-
-&lt;p&gt;Extension cores have access to privileged APIs (which, for example, allow them
-to create new tabs) as declared in the extension&amp;rsquo;s manifest and approved by the
-user at install time.  The core does not interact with untrusted web content
-directly; it can only communicate with untrusted context via the content script
-or using an XMLHTTPRequest.&lt;/p&gt;
-
-&lt;p&gt;Finally, the native binary can run arbitrary code or access arbitrary files.&lt;/p&gt;
-
-&lt;p&gt;The isolation mechanisms are similarly split up into separate parts.
-- Origins are used to ensure isolation between different extension cores. This,
-  for example, ensures that one extension cannot mess with another&amp;rsquo;s
-  &lt;code&gt;localStorage&lt;/code&gt;.
-- Extension cores and native binaries are run in different OS processes. This
-  ensures isolation between themselves and content.
-- Content scripts run in &lt;em&gt;isolated worlds&lt;/em&gt;. They have a separate JavaScript
-  heap and separate access to the DOM of the untrusted web page they run in.
-  This ensures that content scripts are isolated from the untrusted content and
-  other extensions (under the buggy but benign model).&lt;/p&gt;
-
-&lt;h4 id=&#34;discussion&#34;&gt;Discussion&lt;/h4&gt;
-
-&lt;p&gt;In order to evaluate their system, they measured page latency and DOM access
-time &amp;mdash; both had increases, respectively 0.8ms and 33.3%. What was missing was
-a lack of a user study to understand the implications of their system. In the
-end, the hindsight from the Firefox extension system helped them a lot, because
-they were able to see a (small) sample of how users use extensions and what
-could go wrong.&lt;/p&gt;
-
-&lt;p&gt;Today, the paper could be improved in various ways. You could look at more
-extensions or determine more concretely what the APIs should look like, and,
-given yet more hindsight, consider a more realistic attacker model.&lt;/p&gt;
 </description>
     </item>
     

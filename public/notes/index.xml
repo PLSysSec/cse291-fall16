@@ -8,8 +8,152 @@
     <language>en-us</language>
     <managingEditor>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</managingEditor>
     <webMaster>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</webMaster>
-    <lastBuildDate>Tue, 15 Nov 2016 01:37:21 -0703</lastBuildDate>
+    <lastBuildDate>Thu, 17 Nov 2016 01:37:21 -0702</lastBuildDate>
     <atom:link href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Ironclad Apps</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/ironclad-apps/</link>
+      <pubDate>Thu, 17 Nov 2016 01:37:21 -0702</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/ironclad-apps/</guid>
+      <description>
+
+&lt;p&gt;Author: Fucheng Gao&lt;/p&gt;
+
+&lt;h4 id=&#34;what-conference-did-this-paper-present-in&#34;&gt;What conference did this paper present in?&lt;/h4&gt;
+
+&lt;p&gt;USENIX Symposium on Operating Systems Design and Implementation (OSDI)&lt;/p&gt;
+
+&lt;h4 id=&#34;what-kind-of-need-is-satisfied-by-ironclad&#34;&gt;What kind of need is satisfied by Ironclad?&lt;/h4&gt;
+
+&lt;p&gt;People want to assure their data secure when running apps in the could, without
+trusting the cloud provider.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-s-the-shortcoming-of-previous-work-on-verification&#34;&gt;What&amp;rsquo;s the shortcoming of previous work on verification?&lt;/h4&gt;
+
+&lt;p&gt;Currently software verification can provide strong guarantees, but the cost is
+often high &amp;ndash; e.g., seL4 took over 20-person years.&lt;/p&gt;
+
+&lt;h4 id=&#34;system-features&#34;&gt;System features&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;It can completely verify the software stack, which means it assume every part
+of software is untrusted, e.g. OS, BIOS, etc.&lt;/li&gt;
+&lt;li&gt;The verification is on low-level assembly, meaning some of the toolsets
+(e.g., DafnyCC) need not not trusted.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;goals&#34;&gt;Goals&lt;/h4&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Remote equivalence: A remote user should receive the same sequence
+of messages as a user communicating with the app abstract state machine.&lt;/li&gt;
+&lt;li&gt;Secure channel: Remote user can establish a secure channel to the app, in
+the presence of an untrusted OS.&lt;/li&gt;
+&lt;li&gt;Completeness: Every software component must be verified.&lt;/li&gt;
+&lt;li&gt;Low level verification: verify the actual instruction to that are executed.&lt;/li&gt;
+&lt;li&gt;Rapid development by systems programmers: Non-expert developers should be
+able to rapidly develop a verified Ironclad app.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&#34;non-goals&#34;&gt;Non-goals&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Compatibility&lt;/li&gt;
+&lt;li&gt;Performance&lt;/li&gt;
+&lt;li&gt;Covert-channels&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;main-techniques-used-by-ironclad&#34;&gt;Main techniques used by Ironclad&lt;/h4&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Late launch: Run application in a protected environment&lt;/li&gt;
+&lt;li&gt;Trusted computing: Tight software to a encryption key&lt;/li&gt;
+&lt;li&gt;Software verification: Prove software action follows specification&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&#34;threat-model&#34;&gt;Threat model&lt;/h4&gt;
+
+&lt;p&gt;Provide security against software-based attackers, who may run arbitrary
+software on machine before executing or after app executes. The adversary may
+attack the BIOS, OS, etc.&lt;/p&gt;
+
+&lt;p&gt;Ironclad only provides privacy and integrity; no liveness/DOS or consideration
+for covert-channel attacks.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-is-the-tpm-trusted-platform-module-and-how-is-it-used-by-ironclad&#34;&gt;What is the TPM (Trusted Platform Module) and how is it used by Ironclad?&lt;/h4&gt;
+
+&lt;p&gt;The TPM offers facilities for the secure generation of cryptographic keys,
+random number generation, signing with the platform key, etc.&lt;/p&gt;
+
+&lt;p&gt;The TPM is used by Ironclad to prove to the remote user that the app they think
+is running is indeed that; i.e., the TPM is use for attestation. See
+(TXT)[&lt;a href=&#34;https://en.wikipedia.org/wiki/Trusted_Execution_Technology&#34;&gt;https://en.wikipedia.org/wiki/Trusted_Execution_Technology&lt;/a&gt;] for modern usages.&lt;/p&gt;
+
+&lt;h4 id=&#34;developer-workflow&#34;&gt;Developer workflow&lt;/h4&gt;
+
+&lt;p&gt;Firsts, the developer write the high-level specification (trusted) and then
+implements the app in Dafny (untrusted), using Hoare logic pre and post
+conditions to make aid the verification. Using a specification translator, the
+high-level spec will be translate to a BoogieX86 specification. The DafnyCC
+complier will also compile the implementation into BoogieX86.  The verifier
+will then verify if assembly code &amp;ldquo;matches&amp;rdquo; the spec. Finally, the trusted
+assembler and linker produces the final binary.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-kind-of-specification-types-does-ironclad-rely-on&#34;&gt;What kind of specification types does Ironclad rely on?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Hardware specifications&lt;/li&gt;
+&lt;li&gt;App Specifications&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;how-does-ironclad-simplify-hardware-specifications&#34;&gt;How does Ironclad simplify hardware specifications?&lt;/h4&gt;
+
+&lt;p&gt;It only defines spec for the introductions it can reason about and uses in the
+compilation stages; this is only slightly less than 60 instructions.&lt;/p&gt;
+
+&lt;h4 id=&#34;how-does-ironclad-reduce-app-verification-cost&#34;&gt;How does Ironclad reduce app verification cost?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Preliminary verification: It performs a basic verification on Dafny code via
+Z3. This lets developers quickly detect bugs when programming.&lt;/li&gt;
+&lt;li&gt;Modular verification&lt;/li&gt;
+&lt;li&gt;Shared verification&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;besides-functional-correctness-what-else-does-ironclad-prove&#34;&gt;Besides functional correctness what else does Ironclad prove?&lt;/h4&gt;
+
+&lt;p&gt;They ensure privacy by proving noninterference. This is proved via Boogie&amp;rsquo;s
+SymDiff.&lt;/p&gt;
+
+&lt;h4 id=&#34;why-is-noninterference-not-usually-practical-for-real-apps&#34;&gt;Why is noninterference not usually practical for real apps?&lt;/h4&gt;
+
+&lt;p&gt;Apps need to leak data. To this end, Ironclad introduced declassification via a
+state machine.&lt;/p&gt;
+
+&lt;h4 id=&#34;how-was-remote-equivalence-proved&#34;&gt;How was remote equivalence proved?&lt;/h4&gt;
+
+&lt;p&gt;In short: they prove functional correctness for the declsssifier and noninterference for
+the program up to the declassify statement and after it.&lt;/p&gt;
+
+&lt;h4 id=&#34;what-feature-does-dafnycc-provide&#34;&gt;What feature does DafnyCC provide?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Type safety&lt;/li&gt;
+&lt;li&gt;Array bound safety&lt;/li&gt;
+&lt;li&gt;Transitive stack safety&lt;/li&gt;
+&lt;li&gt;High-level property preservation&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-is-late-launch&#34;&gt;What is late-launch?&lt;/h4&gt;
+
+&lt;p&gt;It resets the CPU to a known state, stores a measurement (hash) of the
+in-memory code pointed to by the instruction’s argument, and jumps to that
+code. After a late-launch, the hardware provides the program control of the CPU
+and 64 KiB of protected memory.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Singularity</title>
