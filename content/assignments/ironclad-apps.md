@@ -12,7 +12,7 @@ draft = false
 2. Why do you think they used UDP and not TCP in their apps?
 
 3. The authors state that extending their verification to reason about
-   non-termianting programs is possible, with some work. (Currently you can
+   non-terminating programs is possible, with some work. (Currently you can
    leak data via the termination channel, as we discussed in the LIO lecture.)
    Do you agree? If so, describe what this extension might look like. If not,
    explain why not.
