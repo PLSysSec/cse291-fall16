@@ -11,7 +11,7 @@ Author: Fucheng Gao
 
 #### Where was this published?
 
-USENIX Symposium on Operating Systems Design and Implementation (OSDI)
+OSDI, top systems venue
 
 #### What kind of need is satisfied by Ironclad?
 
