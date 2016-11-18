@@ -11,7 +11,7 @@ Author: Fucheng Gao
 
 #### Where was this published?
 
-OSDI, top systems venue
+OSDI, systems venue
 
 #### What kind of need is satisfied by Ironclad?
 
