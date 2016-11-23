@@ -8,8 +8,24 @@
     <language>en-us</language>
     <managingEditor>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</managingEditor>
     <webMaster>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</webMaster>
-    <lastBuildDate>Thu, 17 Nov 2016 15:44:04 -0709</lastBuildDate>
+    <lastBuildDate>Tue, 22 Nov 2016 15:44:04 -0709</lastBuildDate>
     <atom:link href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>SecVerilog questions</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/secverilog/</link>
+      <pubDate>Tue, 22 Nov 2016 15:44:04 -0709</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/secverilog/</guid>
+      <description>&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;What is observational determinism? What is low-equivalence? Why do we care
+about these?&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Suppose you wanted to enforce IFC at run-time instead of statically. What
+are 2 challenges with this (e.g. in trying to implement a MIPS processor)?&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>Ironclad Apps questions</title>
@@ -951,22 +967,6 @@ eliminate the channel? And what is the trade-off to your approach?&lt;/p&gt;&lt;
 &lt;p&gt;For some of these you may want to look at the journal version of the
 &lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/pubs/stefan:2012:flexible.pdf&#34;&gt;sequential LIO
 system&lt;/a&gt;.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>JIF questions</title>
-      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/jif/</link>
-      <pubDate>Wed, 28 Sep 2016 15:44:04 -0700</pubDate>
-      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
-      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/jif/</guid>
-      <description>&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;What is the key difference between IFC and discretionary access
-control or capabilities?&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;What are the benefits of enforcing IFC statically? (Why doesn&amp;rsquo;t JIF take the
-dynamic route?)&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
 </description>
     </item>
     
