@@ -8,8 +8,24 @@
     <language>en-us</language>
     <managingEditor>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</managingEditor>
     <webMaster>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</webMaster>
-    <lastBuildDate>Thu, 17 Nov 2016 15:44:04 -0709</lastBuildDate>
+    <lastBuildDate>Tue, 22 Nov 2016 15:44:04 -0709</lastBuildDate>
     <atom:link href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>SecVerilog questions</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/secverilog/</link>
+      <pubDate>Tue, 22 Nov 2016 15:44:04 -0709</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/secverilog/</guid>
+      <description>&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;What is observational determinism? What is low-equivalence? Why do we care
+about these?&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Suppose you wanted to enforce IFC at run-time instead of statically. What
+are 2 challenges with this (e.g. in trying to implement a MIPS processor)?&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>Ironclad Apps questions</title>
