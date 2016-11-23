@@ -11,4 +11,5 @@ draft = false
    about these?
 
 2. Suppose you wanted to enforce IFC at run-time instead of statically. What
-   are 2 challenges with this (e.g. in trying to implement a MIPS processor)?
+   are 2 challenges with such an approach (e.g., in trying to implement a MIPS
+   processor)?
