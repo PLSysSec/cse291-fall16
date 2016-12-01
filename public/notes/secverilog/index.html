@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>SecVerilog  &middot; CSE 291</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="" />
+
+<meta name="keywords" content="">
+
+
+<meta property="og:title" content="SecVerilog  &middot; CSE 291 ">
+<meta property="og:site_name" content="CSE 291"/>
+<meta property="og:url" content="https://cse291.programming.systems/notes/secverilog/" />
+<meta property="og:locale" content="en-us">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content=""/>
+<meta property="og:article:published_time" content="2016-11-22T01:37:21-07:02" />
+<meta property="og:article:modified_time" content="2016-11-22T01:37:21-07:02" />
+
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@deiandelmars" />
+<meta name="twitter:creator" content="@deiandelmars" />
+<meta name="twitter:title" content="SecVerilog" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:url" content="https://cse291.programming.systems/notes/secverilog/" />
+<meta name="twitter:domain" content="https://cse291.programming.systems">
+  
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "SecVerilog",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/+?rel=author"
+    },
+    "datePublished": "2016-11-22",
+    "description": "",
+    "wordCount":  903 
+  }
+</script>
+
+
+
+<link rel="canonical" href="https://cse291.programming.systems/notes/secverilog/" />
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://cse291.programming.systems/touch-icon-144-precomposed.png">
+<link href="https://cse291.programming.systems/favicon.png" rel="icon">
+<meta name="theme-color" content="#2053AB">
+<meta name="generator" content="Hugo 0.16" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://cse291.programming.systems/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cse291.programming.systems/css/style.css">
+<link rel="stylesheet" href="https://cse291.programming.systems/css/highlight/default.css">
+
+  
+</head>
+<body>
+  <main id="main-wrapper" class="container main_wrapper has-sidebar">
+    <header id="main-header" class="container main_header">
+  <div class="container brand">
+  <div class="container title h1-like">
+  <a class="baselink" href="https://cse291.programming.systems">
+  CSE 291
+
+</a>
+
+</div>
+
+  
+<div class="container topline">
+  
+  Building Secure Systems using Programming Languages and Analysis
+
+
+</div>
+
+
+</div>
+
+  <nav class="container nav primary no-print">
+  
+
+
+  
+<a href="https://cse291.programming.systems/about">Organization</a>
+
+<a href="https://cse291.programming.systems/syllabus" title="Course syllabus">Syllabus</a>
+
+<a href="https://cse291.programming.systems/contact">Contact</a>
+
+<a href="https://cse291.programming.systems/notes">Notes</a>
+
+<a href="https://cse291.programming.systems/assignments">Assignments</a>
+
+<a href="https://cse291.programming.systems/ideas">Project ideas</a>
+
+
+</nav>
+
+<div class="container nav secondary no-print">
+  
+<a id="contact-link-email" class="contact_link" href="mailto:deian&#43;cse291@cs.ucsd.edu">
+  <span class="fa fa-envelope-square"></span><span>email</span></a>
+
+
+
+<a id="contact-link-github" class="contact_link" href="https://github.com/plsyssec/cse291-fall16">
+  <span class="fa fa-github-square"></span><span>github</span></a>
+
+
+
+
+
+
+
+
+
+
+
+<a id="contact-link-twitter" class="contact_link" href="https://twitter.com/deiandelmars">
+  <span class="fa fa-twitter-square"></span><span>twitter</span></a>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+  
+
+</header>
+
+
+<article id="main-content" class="container main_content single">
+  <header class="container hat">
+  <h1>SecVerilog
+</h1>
+
+</header>
+
+  <div class="container content">
+  
+
+<p>Author: Abdulrahman Alkhelaifi</p>
+
+<h4 id="why-do-the-authors-want-to-implement-ifc-at-the-hardware-level">Why do the authors want to implement IFC at the hardware level?</h4>
+
+<ul>
+<li><p>Hardware can be leveraged to create additional information flows that violate
+a security policy such as timing channels if one only enforces this policy in
+software.</p></li>
+
+<li><p>IFC allows sharing resources as opposed to separating the hardware resources
+into completely different levels/partitions which adds overhead and complexity.</p></li>
+</ul>
+
+<h4 id="what-is-the-goal-of-secverilog">What is the goal of SecVerilog?</h4>
+
+<ul>
+<li>Enforce fine-grained information flow control for hardware designs in a
+statically verifiable fashion.</li>
+</ul>
+
+<h4 id="how-does-secverilog-achieve-that-goal">How does SecVerilog achieve that goal?</h4>
+
+<ul>
+<li>Variables (registers and wires) are labeled (e.g. low and high) such that the
+labels specify a security lattice. The type system statically verifies that the
+information flow does not violate the security policy defined by the labels.</li>
+</ul>
+
+<h4 id="what-is-their-attacker-model-what-attacks-they-do-not-consider">What is their attacker model? What attacks they do not consider?</h4>
+
+<ul>
+<li><p>The authors consider a software level adversary who can observe all public
+information labeled low (storage channel) as well as measure the timing of
+hardware operations (timing channel).</p></li>
+
+<li><p>The authors do not consider physical attacks such as differential power analysis.</p></li>
+</ul>
+
+<h4 id="is-this-a-valid-attacker-model">Is this a valid attacker model?</h4>
+
+<ul>
+<li>The authors mention power consumption analysis as physical attack, however,
+it is possible to learn information about power consumption through software
+on many real systems (e.g., battery information).</li>
+</ul>
+
+<h4 id="what-is-a-cache-probing-attack">What is a cache probing attack?</h4>
+
+<ul>
+<li>The cache is shared between processes and hence one process can affect the
+timing of another process&rsquo; memory access operations in an observable way that
+can be measured and potentially leak secret information.</li>
+</ul>
+
+<h4 id="why-are-timing-channels-difficult-to-control">Why are timing channels difficult to control?</h4>
+
+<ul>
+<li>Timing channels are difficult because secret information can affect timing in
+many ways. For example, in software, a loop or an if statement with a secret
+condition; in hardware, a shared cache as explained in the previous question.</li>
+</ul>
+
+<h4 id="how-do-the-author-solve-timing-channels">How do the author solve timing channels?</h4>
+
+<ul>
+<li><p>They separate shared hardware resources (such as cache) into multiple
+partitions corresponding to multiple security levels (such as high and low)</p></li>
+
+<li><p>The hardware design follows a set of restrictions that prevent information in
+the high partition (secret) from affecting the outcome or timing of information
+in the low partition (public).</p></li>
+
+<li><p>They introduce labels for the Verilog HDL that define information flow policies
+and enforce them at statically.</p></li>
+</ul>
+
+<h4 id="why-is-if-h1-labeled-l-not-considered-a-timing-channel-even-though-h1-is-in-the-h-partition">Why is <code>if (h1)</code> (labeled L) not considered a timing channel even though h1 is in the H partition?</h4>
+
+<ul>
+<li>Because the timing of the if statement is determined by the existence of h1
+and not the value of h1 hence no secret information can be learned by
+measuring the execution time.</li>
+</ul>
+
+<h4 id="what-are-dynamic-labels-and-why-are-they-needed">What are dynamic labels and why are they needed?</h4>
+
+<ul>
+<li><p>Dynamic labels are labels that can change at run time and are expressed as
+functions of some input.</p></li>
+
+<li><p>They allow for sharing hardware resources between multiple security levels.
+For example, a register can have a dynamic label if during run time it can
+store both a low and a high value.</p></li>
+
+<li><p>Importantly, there are no static checks to ensure IFC safety even if
+registers can take on different labels at run time. The static system ensure
+that IFC cannot be violated.</p></li>
+</ul>
+
+<h4 id="what-are-dependent-types">What are dependent types?</h4>
+
+<ul>
+<li>They are types whose definition depend on some value. The authors define labels
+with type that can be H or L depending on some value.</li>
+</ul>
+
+<h4 id="what-is-implicit-declassification-how-do-they-solve-it">What is implicit declassification? How do they solve it?</h4>
+
+<ul>
+<li><p>Implicit declassification happens when a secret value is copied into a
+variable with a dynamic label that can change label from high to low at
+run time and potentially leak the secret value.</p></li>
+
+<li><p>They insert code that dynamically deletes the content of the register if
+implicit declassification is detected during the static analysis.</p></li>
+</ul>
+
+<h4 id="what-are-label-channels">What are label channels?</h4>
+
+<ul>
+<li>Label channels exist when the labels change dynamically and can consequently
+encode and leak information.</li>
+</ul>
+
+<h4 id="describe-two-approaches-to-mitigate-label-channels-and-their-shortcomings">Describe two approaches to mitigate label channels and their shortcomings?</h4>
+
+<ul>
+<li><p>No-sensitive upgrade: forbids raising a label in a high context. Rejects safe
+code where a variable can safely raise its label in a high context if the
+variable starts with a low label before the context.</p></li>
+
+<li><p>Flow-sensitive: raises the label of a variable to the context label. Rejects
+code where a label raise can cause a flow violation in a later code that
+was caused by the raised label.</p></li>
+</ul>
+
+<h4 id="how-do-the-authors-solve-label-channels">How do the authors solve label channels?</h4>
+
+<ul>
+<li>They modify the above two to check the label of a variable at the merge
+point of a branch and verify that the new label is at least as high as the
+context label.</li>
+</ul>
+
+<h4 id="how-do-the-authors-evaluate-secverilog">How do the authors evaluate SecVerilog?</h4>
+
+<ul>
+<li><p>They implement and verify a MIPS processor using SecVerilog and compare its
+overhead against an unverified MIPS implemented with Verilog. They find that
+the overhead in terms of delay, area, and power to be very small.</p></li>
+
+<li><p>They compare the performance of their secure MIPS against a regular MIPS
+which shows significant overhead.</p></li>
+</ul>
+
+<h4 id="why-is-their-mips-processor-slower-than-a-regular-mips-process">Why is their MIPS processor slower than a regular MIPS process?</h4>
+
+<ul>
+<li><p>Their implementation includes timing channel protections added to the cache
+and the pipeline.</p></li>
+
+<li><p>They partition the cache into high and low. When the timing label is high,
+both high and low partitions can be accessed. However, when the timing
+label is low, a cache access to the high always returns a miss. This clearly
+adds overhead to the cache.</p></li>
+
+<li><p>For the pipeline, they flush it whenever there is a change in the timing label
+in order to disallow a high instruction from stalling a low instruction
+which can leak information. This is also a clear performance overhead.</p></li>
+</ul>
+
+</div>
+
+
+  
+</article>
+      <footer id="main-footer" class="container main_footer">
+  
+
+  <div class="container nav foot no-print">
+  
+
+  <a class="toplink" href="#">back to top</a>
+
+</div>
+
+  <div class="container credits">
+  
+<div class="container footline">
+  
+
+</div>
+
+
+  
+
+</div>
+
+</footer>
+
+    </main>
+    
+
+
+<script src="https://cse291.programming.systems/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+    
+  </body>
+</html>
+

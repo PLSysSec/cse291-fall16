@@ -8,8 +8,104 @@
     <language>en-us</language>
     <managingEditor>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</managingEditor>
     <webMaster>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</webMaster>
-    <lastBuildDate>Tue, 22 Nov 2016 15:44:04 -0709</lastBuildDate>
+    <lastBuildDate>Tue, 29 Nov 2016 01:37:21 -0702</lastBuildDate>
     <atom:link href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Micro-policies</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/micro-policies/</link>
+      <pubDate>Tue, 29 Nov 2016 01:37:21 -0702</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/micro-policies/</guid>
+      <description>
+
+&lt;p&gt;Author: Hannah Chou&lt;/p&gt;
+
+&lt;h1 id=&#34;what-are-the-high-level-contributions-of-this-paper&#34;&gt;What are the high-level contributions of this paper?&lt;/h1&gt;
+
+&lt;p&gt;A methodology to formally verify security of various security reference
+monitors atop tagged hardware.&lt;/p&gt;
+
+&lt;h1 id=&#34;what-is-a-reference-monitor&#34;&gt;What is a reference monitor?&lt;/h1&gt;
+
+&lt;p&gt;Code/hardware that mediates all operations according to a security policy. The
+monitor should generally be small (easy to audit, since this is the TCB),
+self-protecting and correct.&lt;/p&gt;
+
+&lt;h1 id=&#34;what-are-downsides-to-implementing-a-reference-monitor-in-software&#34;&gt;What are downsides to implementing a reference monitor in software?&lt;/h1&gt;
+
+&lt;p&gt;Performance and security.&lt;/p&gt;
+
+&lt;h1 id=&#34;what-are-the-3-machine-classes-that-the-authors-present-as-part-of-their-methodology&#34;&gt;What are the 3 machine classes that the authors present as part of their methodology?&lt;/h1&gt;
+
+&lt;p&gt;Abstract machine, symbolic machine, concrete machine.&lt;/p&gt;
+
+&lt;h1 id=&#34;why-do-the-authors-split-it-up-into-3-parts-how-is-it-useful&#34;&gt;Why do the authors split it up into 3 parts? How is it useful?&lt;/h1&gt;
+
+&lt;p&gt;The abstraction level helps with reasoning about security policies at a high
+level irrespective of the implementation. The symbolic layer specifies the
+micro-policies in terms of symbolic tags. FInally, the concrete is the
+implementation that reflects the hardware. All layers are written in Coq,
+allowing proofs of security policies.&lt;/p&gt;
+
+&lt;h1 id=&#34;what-is-the-purpose-of-backward-refinement&#34;&gt;What is the purpose of backward refinement?&lt;/h1&gt;
+
+&lt;p&gt;To prove that any program that is safe (and thus takes a step) in a low-level
+machine can take a step in the high-level machine. When a program is about to
+violate security, it gets stuck.&lt;/p&gt;
+
+&lt;h1 id=&#34;why-can-t-don-t-they-use-forward-refinement&#34;&gt;Why can&amp;rsquo;t/don&amp;rsquo;t they use forward refinement?&lt;/h1&gt;
+
+&lt;p&gt;Forward refinement would require that the abstract levels account for details
+in the lower, more concrete level. That would defeat the purpose of having
+abstract levels that hide details of implementation.&lt;/p&gt;
+
+&lt;h1 id=&#34;what-is-the-abstract-machine&#34;&gt;What is the abstract machine?&lt;/h1&gt;
+
+&lt;p&gt;The basic RISC machine with added instruction primitives and pre-conditions
+specific to a security policy (e.g. mkkey, seal, and unseal for the Sealing
+Machine example).&lt;/p&gt;
+
+&lt;h1 id=&#34;what-is-a-monitor-service&#34;&gt;What is a monitor service?&lt;/h1&gt;
+
+&lt;p&gt;A monitor service is the added instruction primitives that are implemented as a
+rule in the symbolic machine.&lt;/p&gt;
+
+&lt;h1 id=&#34;what-are-the-assumptions-they-make-with-the-monitor-services&#34;&gt;What are the assumptions they make with the monitor services?&lt;/h1&gt;
+
+&lt;p&gt;That the service code is good and safe as provided by the micro-policy
+designer. The encoding has to be correct to some degree, but their backwards
+refinement proof also help ensure that a bad implementation can&amp;rsquo;t be proved
+correct.&lt;/p&gt;
+
+&lt;h1 id=&#34;why-do-they-use-a-rule-cache-in-the-concrete-machine&#34;&gt;Why do they use a rule cache in the concrete machine?&lt;/h1&gt;
+
+&lt;p&gt;To improve performance.&lt;/p&gt;
+
+&lt;h1 id=&#34;what-is-the-job-of-the-miss-handler&#34;&gt;What is the job of the miss-handler?&lt;/h1&gt;
+
+&lt;p&gt;The miss handler retrieves rules if they are missed in the rule cache and
+compares the rules to the attempted instruction. Because of this mixed hardware
+software approach, they can&amp;rsquo;t actually address covert channel information
+leakage attacks (that you may care about in an IFC system).&lt;/p&gt;
+
+&lt;h1 id=&#34;what-are-the-four-types-of-tags&#34;&gt;What are the four types of tags?&lt;/h1&gt;
+
+&lt;p&gt;Memory, registers, PC, and services.&lt;/p&gt;
+
+&lt;h1 id=&#34;do-micro-policies-associate-with-memory-contents-or-with-memory-locations-would-this-matter-for-implementation-for-concrete-machines&#34;&gt;Do micro-policies associate with memory contents or with memory locations? Would this matter for implementation for concrete machines?&lt;/h1&gt;
+
+&lt;p&gt;They could be associated with both. Yes, it just means it is implemented
+differently in concrete machines, but it is the same syntax in the symbolic
+machine.&lt;/p&gt;
+
+&lt;h1 id=&#34;why-do-they-need-monitor-self-protection-how-do-they-implement-monitor-self-protection&#34;&gt;Why do they need monitor self-protection? How do they implement monitor self-protection?&lt;/h1&gt;
+
+&lt;p&gt;The monitor code/data lives in ordinary memory. Monitor code/data is tagged
+with a monitor tag so that untrusted code cannot access it. DS: Your memory
+better have ECC, otherwise this is prone to the rowhammer.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>SecVerilog questions</title>
@@ -25,6 +121,187 @@ about these?&lt;/p&gt;&lt;/li&gt;
 are 2 challenges with such an approach (e.g., in trying to implement a MIPS
 processor)?&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>SecVerilog</title>
+      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/secverilog/</link>
+      <pubDate>Tue, 22 Nov 2016 01:37:21 -0702</pubDate>
+      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
+      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/secverilog/</guid>
+      <description>
+
+&lt;p&gt;Author: Abdulrahman Alkhelaifi&lt;/p&gt;
+
+&lt;h4 id=&#34;why-do-the-authors-want-to-implement-ifc-at-the-hardware-level&#34;&gt;Why do the authors want to implement IFC at the hardware level?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Hardware can be leveraged to create additional information flows that violate
+a security policy such as timing channels if one only enforces this policy in
+software.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;IFC allows sharing resources as opposed to separating the hardware resources
+into completely different levels/partitions which adds overhead and complexity.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-is-the-goal-of-secverilog&#34;&gt;What is the goal of SecVerilog?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Enforce fine-grained information flow control for hardware designs in a
+statically verifiable fashion.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;how-does-secverilog-achieve-that-goal&#34;&gt;How does SecVerilog achieve that goal?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Variables (registers and wires) are labeled (e.g. low and high) such that the
+labels specify a security lattice. The type system statically verifies that the
+information flow does not violate the security policy defined by the labels.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-is-their-attacker-model-what-attacks-they-do-not-consider&#34;&gt;What is their attacker model? What attacks they do not consider?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;The authors consider a software level adversary who can observe all public
+information labeled low (storage channel) as well as measure the timing of
+hardware operations (timing channel).&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The authors do not consider physical attacks such as differential power analysis.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;is-this-a-valid-attacker-model&#34;&gt;Is this a valid attacker model?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The authors mention power consumption analysis as physical attack, however,
+it is possible to learn information about power consumption through software
+on many real systems (e.g., battery information).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-is-a-cache-probing-attack&#34;&gt;What is a cache probing attack?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The cache is shared between processes and hence one process can affect the
+timing of another process&amp;rsquo; memory access operations in an observable way that
+can be measured and potentially leak secret information.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;why-are-timing-channels-difficult-to-control&#34;&gt;Why are timing channels difficult to control?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Timing channels are difficult because secret information can affect timing in
+many ways. For example, in software, a loop or an if statement with a secret
+condition; in hardware, a shared cache as explained in the previous question.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;how-do-the-author-solve-timing-channels&#34;&gt;How do the author solve timing channels?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;They separate shared hardware resources (such as cache) into multiple
+partitions corresponding to multiple security levels (such as high and low)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The hardware design follows a set of restrictions that prevent information in
+the high partition (secret) from affecting the outcome or timing of information
+in the low partition (public).&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;They introduce labels for the Verilog HDL that define information flow policies
+and enforce them at statically.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;why-is-if-h1-labeled-l-not-considered-a-timing-channel-even-though-h1-is-in-the-h-partition&#34;&gt;Why is &lt;code&gt;if (h1)&lt;/code&gt; (labeled L) not considered a timing channel even though h1 is in the H partition?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Because the timing of the if statement is determined by the existence of h1
+and not the value of h1 hence no secret information can be learned by
+measuring the execution time.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-are-dynamic-labels-and-why-are-they-needed&#34;&gt;What are dynamic labels and why are they needed?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Dynamic labels are labels that can change at run time and are expressed as
+functions of some input.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;They allow for sharing hardware resources between multiple security levels.
+For example, a register can have a dynamic label if during run time it can
+store both a low and a high value.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Importantly, there are no static checks to ensure IFC safety even if
+registers can take on different labels at run time. The static system ensure
+that IFC cannot be violated.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-are-dependent-types&#34;&gt;What are dependent types?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;They are types whose definition depend on some value. The authors define labels
+with type that can be H or L depending on some value.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-is-implicit-declassification-how-do-they-solve-it&#34;&gt;What is implicit declassification? How do they solve it?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Implicit declassification happens when a secret value is copied into a
+variable with a dynamic label that can change label from high to low at
+run time and potentially leak the secret value.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;They insert code that dynamically deletes the content of the register if
+implicit declassification is detected during the static analysis.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;what-are-label-channels&#34;&gt;What are label channels?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Label channels exist when the labels change dynamically and can consequently
+encode and leak information.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;describe-two-approaches-to-mitigate-label-channels-and-their-shortcomings&#34;&gt;Describe two approaches to mitigate label channels and their shortcomings?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;No-sensitive upgrade: forbids raising a label in a high context. Rejects safe
+code where a variable can safely raise its label in a high context if the
+variable starts with a low label before the context.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Flow-sensitive: raises the label of a variable to the context label. Rejects
+code where a label raise can cause a flow violation in a later code that
+was caused by the raised label.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;how-do-the-authors-solve-label-channels&#34;&gt;How do the authors solve label channels?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;They modify the above two to check the label of a variable at the merge
+point of a branch and verify that the new label is at least as high as the
+context label.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;how-do-the-authors-evaluate-secverilog&#34;&gt;How do the authors evaluate SecVerilog?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;They implement and verify a MIPS processor using SecVerilog and compare its
+overhead against an unverified MIPS implemented with Verilog. They find that
+the overhead in terms of delay, area, and power to be very small.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;They compare the performance of their secure MIPS against a regular MIPS
+which shows significant overhead.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;why-is-their-mips-processor-slower-than-a-regular-mips-process&#34;&gt;Why is their MIPS processor slower than a regular MIPS process?&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Their implementation includes timing channel protections added to the cache
+and the pipeline.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;They partition the cache into high and low. When the timing label is high,
+both high and low partitions can be accessed. However, when the timing
+label is low, a cache access to the high always returns a miss. This clearly
+adds overhead to the cache.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;For the pipeline, they flush it whenever there is a change in the timing label
+in order to disallow a high instruction from stalling a low instruction
+which can leak information. This is also a clear performance overhead.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </description>
     </item>
     
@@ -918,56 +1195,6 @@ assignment for inspiration.) Bonus: What about untrusted JavaScript?&lt;/p&gt;&l
 Label&lt;/code&gt;) to side-effecting ones (&lt;code&gt;Document -&amp;gt; LIO Label&lt;/code&gt;)?  What is a
 negative trade-offs due to this?&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Resin questions</title>
-      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/resin/</link>
-      <pubDate>Wed, 28 Sep 2016 15:44:04 -0704</pubDate>
-      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
-      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/resin/</guid>
-      <description>&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;An alternative approach to hacking the runtime to implement Resin is to use
-code rewriting, i.e., rewrite applications to perform the data flow tracking
-inline. What are 2-3 challenges with this approach? (Hint: some language
-features may make this more difficult than others.)&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;What are some advantages and disadvantages to Resin&amp;rsquo;s policy specification
-approach when compared to label based approaches like LIO?&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>LIO questions</title>
-      <link>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/lio/</link>
-      <pubDate>Wed, 28 Sep 2016 15:44:04 -0702</pubDate>
-      <author>deian&#43;cse291@cs.ucsd.edu (Deian Stefan)</author>
-      <guid>https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments/lio/</guid>
-      <description>&lt;p&gt;Please answer any 2 questions from the following list. We will discuss all of
-them in class.&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;LIO has a notion of clearance. Why? What is the purpose of clearance at a
-high level?&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;How does LIO side-step the &lt;em&gt;implicit flows problem&lt;/em&gt;? What&amp;rsquo;s the downside to
-the approach?&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;What is the difference between the termination channel, the internal timing
-channel, and the external timing channel?&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;How can hardware features such as the cache be used to re-introduce the
-internal timing channel?&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;LIO only mitigates the external timing channel. Can you think of a way to
-eliminate the channel? And what is the trade-off to your approach?&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;For some of these you may want to look at the journal version of the
-&lt;a href=&#34;https://cseweb.ucsd.edu/~dstefan/pubs/stefan:2012:flexible.pdf&#34;&gt;sequential LIO
-system&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     
