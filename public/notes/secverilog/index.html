@@ -19,7 +19,7 @@
 
 <meta property="og:title" content="SecVerilog  &middot; CSE 291 ">
 <meta property="og:site_name" content="CSE 291"/>
-<meta property="og:url" content="https://cse291.programming.systems/notes/secverilog/" />
+<meta property="og:url" content="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/secverilog/" />
 <meta property="og:locale" content="en-us">
 
 
@@ -36,8 +36,8 @@
 <meta name="twitter:creator" content="@deiandelmars" />
 <meta name="twitter:title" content="SecVerilog" />
 <meta name="twitter:description" content="" />
-<meta name="twitter:url" content="https://cse291.programming.systems/notes/secverilog/" />
-<meta name="twitter:domain" content="https://cse291.programming.systems">
+<meta name="twitter:url" content="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/secverilog/" />
+<meta name="twitter:domain" content="https://cseweb.ucsd.edu/~dstefan/cse291-fall16">
   
 
 <script type="application/ld+json">
@@ -57,10 +57,10 @@
 
 
 
-<link rel="canonical" href="https://cse291.programming.systems/notes/secverilog/" />
+<link rel="canonical" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/secverilog/" />
 
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://cse291.programming.systems/touch-icon-144-precomposed.png">
-<link href="https://cse291.programming.systems/favicon.png" rel="icon">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/touch-icon-144-precomposed.png">
+<link href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/favicon.png" rel="icon">
 <meta name="theme-color" content="#2053AB">
 <meta name="generator" content="Hugo 0.16" />
 
@@ -70,9 +70,9 @@
 <![endif]-->
 
 <link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="https://cse291.programming.systems/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cse291.programming.systems/css/style.css">
-<link rel="stylesheet" href="https://cse291.programming.systems/css/highlight/default.css">
+<link rel="stylesheet" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/css/style.css">
+<link rel="stylesheet" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/css/highlight/default.css">
 
   
 </head>
@@ -81,7 +81,7 @@
     <header id="main-header" class="container main_header">
   <div class="container brand">
   <div class="container title h1-like">
-  <a class="baselink" href="https://cse291.programming.systems">
+  <a class="baselink" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16">
   CSE 291
 
 </a>
@@ -104,17 +104,17 @@
 
 
   
-<a href="https://cse291.programming.systems/about">Organization</a>
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/about">Organization</a>
 
-<a href="https://cse291.programming.systems/syllabus" title="Course syllabus">Syllabus</a>
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/syllabus" title="Course syllabus">Syllabus</a>
 
-<a href="https://cse291.programming.systems/contact">Contact</a>
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/contact">Contact</a>
 
-<a href="https://cse291.programming.systems/notes">Notes</a>
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes">Notes</a>
 
-<a href="https://cse291.programming.systems/assignments">Assignments</a>
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments">Assignments</a>
 
-<a href="https://cse291.programming.systems/ideas">Project ideas</a>
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/ideas">Project ideas</a>
 
 
 </nav>
@@ -185,18 +185,14 @@ into completely different levels/partitions which adds overhead and complexity.<
 
 <h4 id="what-is-the-goal-of-secverilog">What is the goal of SecVerilog?</h4>
 
-<ul>
-<li>Enforce fine-grained information flow control for hardware designs in a
-statically verifiable fashion.</li>
-</ul>
+<p>Enforce fine-grained information flow control for hardware designs in a
+statically verifiable fashion.</p>
 
 <h4 id="how-does-secverilog-achieve-that-goal">How does SecVerilog achieve that goal?</h4>
 
-<ul>
-<li>Variables (registers and wires) are labeled (e.g. low and high) such that the
+<p>Variables (registers and wires) are labeled (e.g. low and high) such that the
 labels specify a security lattice. The type system statically verifies that the
-information flow does not violate the security policy defined by the labels.</li>
-</ul>
+information flow does not violate the security policy defined by the labels.</p>
 
 <h4 id="what-is-their-attacker-model-what-attacks-they-do-not-consider">What is their attacker model? What attacks they do not consider?</h4>
 
@@ -218,19 +214,15 @@ on many real systems (e.g., battery information).</li>
 
 <h4 id="what-is-a-cache-probing-attack">What is a cache probing attack?</h4>
 
-<ul>
-<li>The cache is shared between processes and hence one process can affect the
+<p>The cache is shared between processes and hence one process can affect the
 timing of another process&rsquo; memory access operations in an observable way that
-can be measured and potentially leak secret information.</li>
-</ul>
+can be measured and potentially leak secret information.</p>
 
 <h4 id="why-are-timing-channels-difficult-to-control">Why are timing channels difficult to control?</h4>
 
-<ul>
-<li>Timing channels are difficult because secret information can affect timing in
+<p>Timing channels are difficult because secret information can affect timing in
 many ways. For example, in software, a loop or an if statement with a secret
-condition; in hardware, a shared cache as explained in the previous question.</li>
-</ul>
+condition; in hardware, a shared cache as explained in the previous question.</p>
 
 <h4 id="how-do-the-author-solve-timing-channels">How do the author solve timing channels?</h4>
 
@@ -248,11 +240,9 @@ and enforce them at statically.</p></li>
 
 <h4 id="why-is-if-h1-labeled-l-not-considered-a-timing-channel-even-though-h1-is-in-the-h-partition">Why is <code>if (h1)</code> (labeled L) not considered a timing channel even though h1 is in the H partition?</h4>
 
-<ul>
-<li>Because the timing of the if statement is determined by the existence of h1
+<p>Because the timing of the if statement is determined by the existence of h1
 and not the value of h1 hence no secret information can be learned by
-measuring the execution time.</li>
-</ul>
+measuring the execution time.</p>
 
 <h4 id="what-are-dynamic-labels-and-why-are-they-needed">What are dynamic labels and why are they needed?</h4>
 
@@ -271,10 +261,8 @@ that IFC cannot be violated.</p></li>
 
 <h4 id="what-are-dependent-types">What are dependent types?</h4>
 
-<ul>
-<li>They are types whose definition depend on some value. The authors define labels
-with type that can be H or L depending on some value.</li>
-</ul>
+<p>They are types whose definition depend on some value. The authors define labels
+with type that can be H or L depending on some value.</p>
 
 <h4 id="what-is-implicit-declassification-how-do-they-solve-it">What is implicit declassification? How do they solve it?</h4>
 
@@ -289,10 +277,8 @@ implicit declassification is detected during the static analysis.</p></li>
 
 <h4 id="what-are-label-channels">What are label channels?</h4>
 
-<ul>
-<li>Label channels exist when the labels change dynamically and can consequently
-encode and leak information.</li>
-</ul>
+<p>Label channels exist when the labels change dynamically and can consequently
+encode and leak information.</p>
 
 <h4 id="describe-two-approaches-to-mitigate-label-channels-and-their-shortcomings">Describe two approaches to mitigate label channels and their shortcomings?</h4>
 
@@ -308,11 +294,9 @@ was caused by the raised label.</p></li>
 
 <h4 id="how-do-the-authors-solve-label-channels">How do the authors solve label channels?</h4>
 
-<ul>
-<li>They modify the above two to check the label of a variable at the merge
+<p>They modify the above two to check the label of a variable at the merge
 point of a branch and verify that the new label is at least as high as the
-context label.</li>
-</ul>
+context label.</p>
 
 <h4 id="how-do-the-authors-evaluate-secverilog">How do the authors evaluate SecVerilog?</h4>
 
@@ -374,7 +358,7 @@ which can leak information. This is also a clear performance overhead.</p></li>
     
 
 
-<script src="https://cse291.programming.systems/js/highlight.pack.js"></script>
+<script src="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/js/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
 

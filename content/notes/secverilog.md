@@ -20,14 +20,14 @@ Author: Abdulrahman Alkhelaifi
 
 #### What is the goal of SecVerilog?
 
-- Enforce fine-grained information flow control for hardware designs in a
-  statically verifiable fashion.
+Enforce fine-grained information flow control for hardware designs in a
+statically verifiable fashion.
 
 #### How does SecVerilog achieve that goal?
 
-- Variables (registers and wires) are labeled (e.g. low and high) such that the
-  labels specify a security lattice. The type system statically verifies that the
-  information flow does not violate the security policy defined by the labels.
+Variables (registers and wires) are labeled (e.g. low and high) such that the
+labels specify a security lattice. The type system statically verifies that the
+information flow does not violate the security policy defined by the labels.
 
 #### What is their attacker model? What attacks they do not consider?
 
@@ -45,15 +45,15 @@ Author: Abdulrahman Alkhelaifi
 
 #### What is a cache probing attack?
 
-- The cache is shared between processes and hence one process can affect the
-  timing of another process' memory access operations in an observable way that
-  can be measured and potentially leak secret information.
+The cache is shared between processes and hence one process can affect the
+timing of another process' memory access operations in an observable way that
+can be measured and potentially leak secret information.
 
 #### Why are timing channels difficult to control?
 
-- Timing channels are difficult because secret information can affect timing in
-  many ways. For example, in software, a loop or an if statement with a secret
-  condition; in hardware, a shared cache as explained in the previous question.
+Timing channels are difficult because secret information can affect timing in
+many ways. For example, in software, a loop or an if statement with a secret
+condition; in hardware, a shared cache as explained in the previous question.
 
 #### How do the author solve timing channels?
 
@@ -69,9 +69,9 @@ Author: Abdulrahman Alkhelaifi
 
 #### Why is `if (h1)` (labeled L) not considered a timing channel even though h1 is in the H partition?
 
-- Because the timing of the if statement is determined by the existence of h1
-  and not the value of h1 hence no secret information can be learned by
-  measuring the execution time.
+Because the timing of the if statement is determined by the existence of h1
+and not the value of h1 hence no secret information can be learned by
+measuring the execution time.
 
 #### What are dynamic labels and why are they needed?
 
@@ -88,8 +88,8 @@ Author: Abdulrahman Alkhelaifi
 
 #### What are dependent types?
 
-- They are types whose definition depend on some value. The authors define labels
-  with type that can be H or L depending on some value.
+They are types whose definition depend on some value. The authors define labels
+with type that can be H or L depending on some value.
 
 #### What is implicit declassification? How do they solve it?
 
@@ -102,8 +102,8 @@ Author: Abdulrahman Alkhelaifi
 
 #### What are label channels?
 
-- Label channels exist when the labels change dynamically and can consequently
-  encode and leak information.
+Label channels exist when the labels change dynamically and can consequently
+encode and leak information.
 
 #### Describe two approaches to mitigate label channels and their shortcomings?
 
@@ -117,9 +117,9 @@ Author: Abdulrahman Alkhelaifi
 
 #### How do the authors solve label channels?
 
-- They modify the above two to check the label of a variable at the merge
-  point of a branch and verify that the new label is at least as high as the
-  context label.
+They modify the above two to check the label of a variable at the merge
+point of a branch and verify that the new label is at least as high as the
+context label.
 
 #### How do the authors evaluate SecVerilog?
 
