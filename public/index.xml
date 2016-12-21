@@ -21,7 +21,7 @@
 
 &lt;p&gt;Author: Atyansh Jaiswal&lt;/p&gt;
 
-&lt;p&gt;##What is TLS?&lt;/p&gt;
+&lt;h2 id=&#34;what-is-tls&#34;&gt;What is TLS?&lt;/h2&gt;
 
 &lt;p&gt;TLS stands for &amp;ldquo;Transport Layer Security&amp;rdquo; and is the most used protocol for
 secure communication. It&amp;rsquo;s primarily used for communication over web in the
