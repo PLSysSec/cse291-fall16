@@ -19,7 +19,7 @@
 
 <meta property="og:title" content="miTLS  &middot; CSE 291 ">
 <meta property="og:site_name" content="CSE 291"/>
-<meta property="og:url" content="https://cse291.programming.systems/notes/mitls/" />
+<meta property="og:url" content="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/mitls/" />
 <meta property="og:locale" content="en-us">
 
 
@@ -36,8 +36,8 @@
 <meta name="twitter:creator" content="@deiandelmars" />
 <meta name="twitter:title" content="miTLS" />
 <meta name="twitter:description" content="" />
-<meta name="twitter:url" content="https://cse291.programming.systems/notes/mitls/" />
-<meta name="twitter:domain" content="https://cse291.programming.systems">
+<meta name="twitter:url" content="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/mitls/" />
+<meta name="twitter:domain" content="https://cseweb.ucsd.edu/~dstefan/cse291-fall16">
   
 
 <script type="application/ld+json">
@@ -57,10 +57,10 @@
 
 
 
-<link rel="canonical" href="https://cse291.programming.systems/notes/mitls/" />
+<link rel="canonical" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes/mitls/" />
 
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://cse291.programming.systems/touch-icon-144-precomposed.png">
-<link href="https://cse291.programming.systems/favicon.png" rel="icon">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/touch-icon-144-precomposed.png">
+<link href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/favicon.png" rel="icon">
 <meta name="theme-color" content="#2053AB">
 <meta name="generator" content="Hugo 0.16" />
 
@@ -70,9 +70,9 @@
 <![endif]-->
 
 <link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="https://cse291.programming.systems/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cse291.programming.systems/css/style.css">
-<link rel="stylesheet" href="https://cse291.programming.systems/css/highlight/default.css">
+<link rel="stylesheet" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/css/style.css">
+<link rel="stylesheet" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/css/highlight/default.css">
 
   
 </head>
@@ -81,7 +81,7 @@
     <header id="main-header" class="container main_header">
   <div class="container brand">
   <div class="container title h1-like">
-  <a class="baselink" href="https://cse291.programming.systems">
+  <a class="baselink" href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16">
   CSE 291
 
 </a>
@@ -104,17 +104,17 @@
 
 
   
-<a href="https://cse291.programming.systems/about">Organization</a>
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/about">Organization</a>
 
-<a href="https://cse291.programming.systems/syllabus" title="Course syllabus">Syllabus</a>
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/syllabus" title="Course syllabus">Syllabus</a>
 
-<a href="https://cse291.programming.systems/contact">Contact</a>
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/contact">Contact</a>
 
-<a href="https://cse291.programming.systems/notes">Notes</a>
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/notes">Notes</a>
 
-<a href="https://cse291.programming.systems/assignments">Assignments</a>
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/assignments">Assignments</a>
 
-<a href="https://cse291.programming.systems/ideas">Project ideas</a>
+<a href="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/ideas">Project ideas</a>
 
 
 </nav>
@@ -194,26 +194,27 @@ insecure algorithms still being supported for compatibility purpose.</p>
 
 <p>TLS has had a long history of security breaking bugs, usually to defects in the
 implementation of the protocol. The miTLS paper presents a verified reference
-implementation of TLS 1.2 written in F#. They create a modular implementation of
-TLS and use PL abstractions (in particular refinement types and abstract types)
-to prove soundness and security of their implementation of the protocol. They
-also discuss some interesting attacks and how their implementation fixes them.</p>
+implementation of TLS 1.2 written in F#. They create a modular implementation
+of TLS and use PL abstractions (in particular refinement types and abstract
+types) to prove soundness and security of their implementation of the protocol.
+They also discuss some interesting attacks and how their implementation fixes
+them.</p>
 
 <h2 id="what-are-the-main-goals-of-mitls">What are the main goals of miTLS?</h2>
 
 <p>miTLS creates a reference implementation of TLS with the 2 main goals in mind-</p>
 
 <ol>
-<li><p>Standard Compliance - Their implementation is compatible with the current TLS
-RFC and can be used with various systems that use TLS. As such, their protocol
-supports some ciphersuites such as RC4, which is known to be weak, but they mark
-these as weak in their type system.</p></li>
+<li><p>Standard Compliance - Their implementation is compatible with the current
+TLS RFC and can be used with various systems that use TLS. As such, their
+protocol supports some ciphersuites such as RC4, which is known to be weak,
+but they mark these as weak in their type system.</p></li>
 
-<li><p>Verified Security - The security of the protocol is provably secure, i.e. the
-privacy and integrity of data sent over TLS is preserved provided that strong
-cryptographic ciphersuites were used to establish the handshake and connection
-keys. They do this by designing classic indistinguishability and integrity games
-using their typed primitives.</p></li>
+<li><p>Verified Security - The security of the protocol is provably secure, i.e.
+the privacy and integrity of data sent over TLS is preserved provided that
+strong cryptographic ciphersuites were used to establish the handshake and
+connection keys. They do this by designing classic indistinguishability and
+integrity games using their typed primitives.</p></li>
 </ol>
 
 <h2 id="modular-implementation-of-mitls">Modular Implementation of miTLS</h2>
@@ -246,13 +247,14 @@ secure implementations of StAE and HS.</p>
 <li><p>The authors discuss an Alert Fragmentation attack where an attacker could
 insert an alert fragment as part of the communication which is buffered, so
 when the correct alert comes in, it&rsquo;s seen as a continuation of the previous
-alert fragment, which breaks alert authentication. They fixed this by verifying
-that alert buffer is empty at the completion of a handshake.</p></li>
+alert fragment, which breaks alert authentication. They fixed this by
+verifying that alert buffer is empty at the completion of a handshake.</p></li>
 
-<li><p>Fingerprinting attack using compression - Not all ciphertexts provide security
-against this. The amount that the plaintext can be compressed can reveal the
-entropy of the plaintext which breaks the indistinguishability principle. They
-fixed this by disabling TLS level compression in their implementation.</p></li>
+<li><p>Fingerprinting attack using compression - Not all ciphertexts provide
+security against this. The amount that the plaintext can be compressed can
+reveal the entropy of the plaintext which breaks the indistinguishability
+principle. They fixed this by disabling TLS level compression in their
+implementation.</p></li>
 </ul>
 
 <h2 id="cryptographic-security-by-typing">Cryptographic Security by Typing</h2>
@@ -261,29 +263,31 @@ fixed this by disabling TLS level compression in their implementation.</p></li>
 abstractions in type theory to prove security properties-</p>
 
 <ol>
-<li><p>Refinements Types - These are types with predicates attached to them that can
-be typechecked. As such, a type c:cert(Authorized(u,c)) specifies c to be of
-type cert, such that c is an authorized cert for user u. This way, they can
-encode the security properties of the primitives as part of the type system.</p></li>
+<li><p>Refinements Types - These are types with predicates attached to them that
+can be typechecked. As such, a type c:cert(Authorized(u,c)) specifies c to
+be of type cert, such that c is an authorized cert for user u. This way,
+they can encode the security properties of the primitives as part of the
+type system.</p></li>
 
 <li><p>Abstract Types - Types can be declared as abstract which keeps the
-representation of the type private, which ensures that any module will treat them
-as opaque values, which provides secrecy and integrity.</p></li>
+representation of the type private, which ensures that any module will treat
+them as opaque values, which provides secrecy and integrity.</p></li>
 </ol>
 
 <h2 id="how-they-use-typing-rules">How they use typing rules</h2>
 
-<p>The main property of their type system is that a well-typed expression is always
-safe (Theorem 1).</p>
+<p>The main property of their type system is that a well-typed expression is
+always safe (Theorem 1).</p>
 
 <p>Theorem 2 provides the property that a program interacting with secrets kept
 within 2 different modules cannot distinguish between the two.</p>
 
 <p>They then define cryptographic games in their type system and show that the
 security properties can be proven by the types alone rather than the
-implementation. They represent weak cryptographic suites with not(Strong), which
-allows the type checker to represent their weakness. They also define LEAK and
-COERCE to represent key compromise and provide security guarantees against them.</p>
+implementation. They represent weak cryptographic suites with not(Strong),
+which allows the type checker to represent their weakness. They also define
+LEAK and COERCE to represent key compromise and provide security guarantees
+against them.</p>
 
 </div>
 
@@ -318,7 +322,7 @@ COERCE to represent key compromise and provide security guarantees against them.
     
 
 
-<script src="https://cse291.programming.systems/js/highlight.pack.js"></script>
+<script src="https://cseweb.ucsd.edu/~dstefan/cse291-fall16/js/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
 

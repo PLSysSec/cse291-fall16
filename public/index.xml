@@ -43,26 +43,27 @@ insecure algorithms still being supported for compatibility purpose.&lt;/p&gt;
 
 &lt;p&gt;TLS has had a long history of security breaking bugs, usually to defects in the
 implementation of the protocol. The miTLS paper presents a verified reference
-implementation of TLS 1.2 written in F#. They create a modular implementation of
-TLS and use PL abstractions (in particular refinement types and abstract types)
-to prove soundness and security of their implementation of the protocol. They
-also discuss some interesting attacks and how their implementation fixes them.&lt;/p&gt;
+implementation of TLS 1.2 written in F#. They create a modular implementation
+of TLS and use PL abstractions (in particular refinement types and abstract
+types) to prove soundness and security of their implementation of the protocol.
+They also discuss some interesting attacks and how their implementation fixes
+them.&lt;/p&gt;
 
 &lt;h2 id=&#34;what-are-the-main-goals-of-mitls&#34;&gt;What are the main goals of miTLS?&lt;/h2&gt;
 
 &lt;p&gt;miTLS creates a reference implementation of TLS with the 2 main goals in mind-&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;&lt;p&gt;Standard Compliance - Their implementation is compatible with the current TLS
-RFC and can be used with various systems that use TLS. As such, their protocol
-supports some ciphersuites such as RC4, which is known to be weak, but they mark
-these as weak in their type system.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Standard Compliance - Their implementation is compatible with the current
+TLS RFC and can be used with various systems that use TLS. As such, their
+protocol supports some ciphersuites such as RC4, which is known to be weak,
+but they mark these as weak in their type system.&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;Verified Security - The security of the protocol is provably secure, i.e. the
-privacy and integrity of data sent over TLS is preserved provided that strong
-cryptographic ciphersuites were used to establish the handshake and connection
-keys. They do this by designing classic indistinguishability and integrity games
-using their typed primitives.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Verified Security - The security of the protocol is provably secure, i.e.
+the privacy and integrity of data sent over TLS is preserved provided that
+strong cryptographic ciphersuites were used to establish the handshake and
+connection keys. They do this by designing classic indistinguishability and
+integrity games using their typed primitives.&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;h2 id=&#34;modular-implementation-of-mitls&#34;&gt;Modular Implementation of miTLS&lt;/h2&gt;
@@ -95,13 +96,14 @@ secure implementations of StAE and HS.&lt;/p&gt;
 &lt;li&gt;&lt;p&gt;The authors discuss an Alert Fragmentation attack where an attacker could
 insert an alert fragment as part of the communication which is buffered, so
 when the correct alert comes in, it&amp;rsquo;s seen as a continuation of the previous
-alert fragment, which breaks alert authentication. They fixed this by verifying
-that alert buffer is empty at the completion of a handshake.&lt;/p&gt;&lt;/li&gt;
+alert fragment, which breaks alert authentication. They fixed this by
+verifying that alert buffer is empty at the completion of a handshake.&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;Fingerprinting attack using compression - Not all ciphertexts provide security
-against this. The amount that the plaintext can be compressed can reveal the
-entropy of the plaintext which breaks the indistinguishability principle. They
-fixed this by disabling TLS level compression in their implementation.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Fingerprinting attack using compression - Not all ciphertexts provide
+security against this. The amount that the plaintext can be compressed can
+reveal the entropy of the plaintext which breaks the indistinguishability
+principle. They fixed this by disabling TLS level compression in their
+implementation.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&#34;cryptographic-security-by-typing&#34;&gt;Cryptographic Security by Typing&lt;/h2&gt;
@@ -110,29 +112,31 @@ fixed this by disabling TLS level compression in their implementation.&lt;/p&gt;
 abstractions in type theory to prove security properties-&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;&lt;p&gt;Refinements Types - These are types with predicates attached to them that can
-be typechecked. As such, a type c:cert(Authorized(u,c)) specifies c to be of
-type cert, such that c is an authorized cert for user u. This way, they can
-encode the security properties of the primitives as part of the type system.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Refinements Types - These are types with predicates attached to them that
+can be typechecked. As such, a type c:cert(Authorized(u,c)) specifies c to
+be of type cert, such that c is an authorized cert for user u. This way,
+they can encode the security properties of the primitives as part of the
+type system.&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;Abstract Types - Types can be declared as abstract which keeps the
-representation of the type private, which ensures that any module will treat them
-as opaque values, which provides secrecy and integrity.&lt;/p&gt;&lt;/li&gt;
+representation of the type private, which ensures that any module will treat
+them as opaque values, which provides secrecy and integrity.&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;h2 id=&#34;how-they-use-typing-rules&#34;&gt;How they use typing rules&lt;/h2&gt;
 
-&lt;p&gt;The main property of their type system is that a well-typed expression is always
-safe (Theorem 1).&lt;/p&gt;
+&lt;p&gt;The main property of their type system is that a well-typed expression is
+always safe (Theorem 1).&lt;/p&gt;
 
 &lt;p&gt;Theorem 2 provides the property that a program interacting with secrets kept
 within 2 different modules cannot distinguish between the two.&lt;/p&gt;
 
 &lt;p&gt;They then define cryptographic games in their type system and show that the
 security properties can be proven by the types alone rather than the
-implementation. They represent weak cryptographic suites with not(Strong), which
-allows the type checker to represent their weakness. They also define LEAK and
-COERCE to represent key compromise and provide security guarantees against them.&lt;/p&gt;
+implementation. They represent weak cryptographic suites with not(Strong),
+which allows the type checker to represent their weakness. They also define
+LEAK and COERCE to represent key compromise and provide security guarantees
+against them.&lt;/p&gt;
 </description>
     </item>
     

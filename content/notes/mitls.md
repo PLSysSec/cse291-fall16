@@ -31,25 +31,26 @@ insecure algorithms still being supported for compatibility purpose.
 
 TLS has had a long history of security breaking bugs, usually to defects in the
 implementation of the protocol. The miTLS paper presents a verified reference
-implementation of TLS 1.2 written in F#. They create a modular implementation of
-TLS and use PL abstractions (in particular refinement types and abstract types)
-to prove soundness and security of their implementation of the protocol. They
-also discuss some interesting attacks and how their implementation fixes them.
+implementation of TLS 1.2 written in F#. They create a modular implementation
+of TLS and use PL abstractions (in particular refinement types and abstract
+types) to prove soundness and security of their implementation of the protocol.
+They also discuss some interesting attacks and how their implementation fixes
+them.
 
 ## What are the main goals of miTLS?
 
 miTLS creates a reference implementation of TLS with the 2 main goals in mind-
 
-1. Standard Compliance - Their implementation is compatible with the current TLS
-RFC and can be used with various systems that use TLS. As such, their protocol
-supports some ciphersuites such as RC4, which is known to be weak, but they mark
-these as weak in their type system.
+1. Standard Compliance - Their implementation is compatible with the current
+   TLS RFC and can be used with various systems that use TLS. As such, their
+   protocol supports some ciphersuites such as RC4, which is known to be weak,
+   but they mark these as weak in their type system.
 
-2. Verified Security - The security of the protocol is provably secure, i.e. the
-privacy and integrity of data sent over TLS is preserved provided that strong
-cryptographic ciphersuites were used to establish the handshake and connection
-keys. They do this by designing classic indistinguishability and integrity games
-using their typed primitives.
+2. Verified Security - The security of the protocol is provably secure, i.e.
+   the privacy and integrity of data sent over TLS is preserved provided that
+   strong cryptographic ciphersuites were used to establish the handshake and
+   connection keys. They do this by designing classic indistinguishability and
+   integrity games using their typed primitives.
 
 ## Modular Implementation of miTLS
 
@@ -78,40 +79,43 @@ secure implementations of StAE and HS.
 ## What new attacks did they discover?
 
 * The authors discuss an Alert Fragmentation attack where an attacker could
-insert an alert fragment as part of the communication which is buffered, so
-when the correct alert comes in, it's seen as a continuation of the previous
-alert fragment, which breaks alert authentication. They fixed this by verifying
-that alert buffer is empty at the completion of a handshake.
+  insert an alert fragment as part of the communication which is buffered, so
+  when the correct alert comes in, it's seen as a continuation of the previous
+  alert fragment, which breaks alert authentication. They fixed this by
+  verifying that alert buffer is empty at the completion of a handshake.
 
-* Fingerprinting attack using compression - Not all ciphertexts provide security
-against this. The amount that the plaintext can be compressed can reveal the
-entropy of the plaintext which breaks the indistinguishability principle. They
-fixed this by disabling TLS level compression in their implementation.
+* Fingerprinting attack using compression - Not all ciphertexts provide
+  security against this. The amount that the plaintext can be compressed can
+  reveal the entropy of the plaintext which breaks the indistinguishability
+  principle. They fixed this by disabling TLS level compression in their
+  implementation.
 
 ## Cryptographic Security by Typing
 
 The authors use F7, which is a refinement typechecker for F#. They take of two
 abstractions in type theory to prove security properties-
 
-1. Refinements Types - These are types with predicates attached to them that can
-be typechecked. As such, a type c:cert(Authorized(u,c)) specifies c to be of
-type cert, such that c is an authorized cert for user u. This way, they can
-encode the security properties of the primitives as part of the type system.
+1. Refinements Types - These are types with predicates attached to them that
+   can be typechecked. As such, a type c:cert(Authorized(u,c)) specifies c to
+   be of type cert, such that c is an authorized cert for user u. This way,
+   they can encode the security properties of the primitives as part of the
+   type system.
 
 2. Abstract Types - Types can be declared as abstract which keeps the
-representation of the type private, which ensures that any module will treat them
-as opaque values, which provides secrecy and integrity.
+   representation of the type private, which ensures that any module will treat
+   them as opaque values, which provides secrecy and integrity.
 
 ## How they use typing rules
 
-The main property of their type system is that a well-typed expression is always
-safe (Theorem 1).
+The main property of their type system is that a well-typed expression is
+always safe (Theorem 1).
 
 Theorem 2 provides the property that a program interacting with secrets kept
 within 2 different modules cannot distinguish between the two.
 
 They then define cryptographic games in their type system and show that the
 security properties can be proven by the types alone rather than the
-implementation. They represent weak cryptographic suites with not(Strong), which
-allows the type checker to represent their weakness. They also define LEAK and
-COERCE to represent key compromise and provide security guarantees against them.
+implementation. They represent weak cryptographic suites with not(Strong),
+which allows the type checker to represent their weakness. They also define
+LEAK and COERCE to represent key compromise and provide security guarantees
+against them.
